@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Selected Book Page should compile 1`] = `
+<bc-selected-book-page
+  book$={[Function Store]}
+  isSelectedBookInCollection$={[Function Store]}
+  store={[Function MockStore]}
+>
+  <bc-book-detail>
+    
+  </bc-book-detail>
+</bc-selected-book-page>
+`;

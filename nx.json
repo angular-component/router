@@ -28,6 +28,13 @@
     "getting-started-e2e": {
       "tags": [],
       "implicitDependencies": ["getting-started"]
+    },
+    "example-app": {
+      "tags": []
+    },
+    "example-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["example-app"]
     }
   }
 }
