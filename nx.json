@@ -18,5 +18,9 @@
       }
     }
   },
-  "projects": {}
+  "projects": {
+    "router": {
+      "tags": []
+    }
+  }
 }

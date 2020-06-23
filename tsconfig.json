@@ -15,7 +15,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@reactiveangular/router": ["libs/router/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
