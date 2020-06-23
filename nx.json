@@ -21,6 +21,13 @@
   "projects": {
     "router": {
       "tags": []
+    },
+    "getting-started": {
+      "tags": []
+    },
+    "getting-started-e2e": {
+      "tags": [],
+      "implicitDependencies": ["getting-started"]
     }
   }
 }
