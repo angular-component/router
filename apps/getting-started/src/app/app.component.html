@@ -1,7 +1,20 @@
 <app-top-bar></app-top-bar>
 
 <div class="container">
-  <router-outlet></router-outlet>
+  <router>
+    <route path="/products/:productId">
+      <app-product-details *routeComponent></app-product-details>
+    </route>
+    <route path="/cart">
+      <app-cart *routeComponent></app-cart>
+    </route>
+    <route path="/shipping">
+      <app-shipping *routeComponent></app-shipping>
+    </route>
+    <route path="/">
+      <app-product-list *routeComponent></app-product-list>
+    </route>
+  </router>
 </div>
 
 <!-- 
