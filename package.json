@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "nx",
-    "postinstall": "node ./decorate-angular-cli.js",
+    "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "nx": "nx",
     "start": "ng serve",
     "build": "ng build",
@@ -28,7 +28,19 @@
     "help": "nx help"
   },
   "private": true,
-  "dependencies": {},
+  "dependencies": {
+    "@nrwl/angular": "^9.4.5",
+    "@angular/animations": "^9.1.0",
+    "@angular/common": "^9.1.0",
+    "@angular/compiler": "^9.1.0",
+    "@angular/core": "^9.1.0",
+    "@angular/forms": "^9.1.0",
+    "@angular/platform-browser": "^9.1.0",
+    "@angular/platform-browser-dynamic": "^9.1.0",
+    "@angular/router": "^9.1.0",
+    "rxjs": "~6.5.4",
+    "zone.js": "^0.10.2"
+  },
   "devDependencies": {
     "@angular/cli": "9.1.0",
     "@nrwl/workspace": "9.4.5",
@@ -38,6 +50,17 @@
     "tslint": "~6.0.0",
     "eslint": "6.8.0",
     "typescript": "~3.8.3",
-    "prettier": "2.0.4"
+    "prettier": "2.0.4",
+    "@angular/compiler-cli": "^9.1.0",
+    "@angular/language-service": "^9.1.0",
+    "@angular-devkit/build-angular": "0.901.0",
+    "codelyzer": "~5.0.1",
+    "jest-preset-angular": "8.1.2",
+    "@nrwl/jest": "9.4.5",
+    "jest": "25.2.3",
+    "@types/jest": "25.1.4",
+    "ts-jest": "25.2.1",
+    "cypress": "^4.1.0",
+    "@nrwl/cypress": "9.4.5"
   }
 }
