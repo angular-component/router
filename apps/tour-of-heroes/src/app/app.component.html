@@ -1,9 +1,20 @@
 <h1>{{title}}</h1>
 <nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/heroes">Heroes</a>
+  <a linkTo="/dashboard">Dashboard</a>
+  <a linkTo="/heroes">Heroes</a>
 </nav>
-<router-outlet></router-outlet>
+<router>
+  <route path="/dashboard">
+    <app-dashboard *routeComponent></app-dashboard>
+  </route>
+  <route path="/detail/:id">
+    <app-hero-detail *routeComponent></app-hero-detail>
+  </route>
+  <route path="/heroes">
+    <app-heroes *routeComponent></app-heroes>
+  </route>
+  <route path="/" redirectTo="/dashboard"></route>
+</router>
 <app-messages></app-messages>
 
 
