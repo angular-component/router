@@ -35,6 +35,13 @@
     "example-app-e2e": {
       "tags": [],
       "implicitDependencies": ["example-app"]
+    },
+    "tour-of-heroes": {
+      "tags": []
+    },
+    "tour-of-heroes-e2e": {
+      "tags": [],
+      "implicitDependencies": ["tour-of-heroes"]
     }
   }
 }
