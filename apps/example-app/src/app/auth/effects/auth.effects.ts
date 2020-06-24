@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router } from '@reactiveangular/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
@@ -33,7 +33,7 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthApiActions.loginSuccess),
-        tap(() => this.router.navigate(['/']))
+        tap(() => this.router.go('/books'))
       ),
     { dispatch: false }
   );
@@ -43,7 +43,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthApiActions.loginRedirect, AuthActions.logout),
         tap((authed) => {
-          this.router.navigate(['/login']);
+          this.router.go('/login');
         })
       ),
     { dispatch: false }

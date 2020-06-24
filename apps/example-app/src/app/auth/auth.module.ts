@@ -12,7 +12,6 @@ import {
 import { AuthEffects } from '@example-app/auth/effects';
 import * as fromAuth from '@example-app/auth/reducers';
 import { MaterialModule } from '@example-app/material';
-import { AuthRoutingModule } from './auth-routing.module';
 
 export const COMPONENTS = [
   LoginPageComponent,
@@ -25,11 +24,11 @@ export const COMPONENTS = [
     CommonModule,
     ReactiveFormsModule,
     MaterialModule,
-    AuthRoutingModule,
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducers),
     EffectsModule.forFeature([AuthEffects]),
   ],
   declarations: COMPONENTS,
   entryComponents: [LogoutConfirmationDialogComponent],
+  exports: COMPONENTS
 })
 export class AuthModule {}

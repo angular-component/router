@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule } from '@reactiveangular/router';
 
 import { MaterialModule } from '@example-app/material';
 import {
@@ -13,6 +13,7 @@ import {
   AppComponent,
   NotFoundPageComponent,
 } from '@example-app/core/containers';
+import { AuthModule } from '@example-app/auth';
 
 export const COMPONENTS = [
   AppComponent,
@@ -24,7 +25,7 @@ export const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MaterialModule],
+  imports: [CommonModule, RouterModule, MaterialModule, AuthModule],
   declarations: COMPONENTS,
   exports: COMPONENTS,
 })

@@ -16,7 +16,7 @@ import { LayoutActions } from '@example-app/core/actions';
         <bc-nav-item
           (navigate)="closeSidenav()"
           *ngIf="loggedIn$ | async"
-          routerLink="/"
+          linkTo="/books"
           icon="book"
           hint="View your book collection"
         >
@@ -25,7 +25,7 @@ import { LayoutActions } from '@example-app/core/actions';
         <bc-nav-item
           (navigate)="closeSidenav()"
           *ngIf="loggedIn$ | async"
-          routerLink="/books/find"
+          linkTo="/books/find"
           icon="search"
           hint="Find your next book!"
         >
@@ -42,11 +42,24 @@ import { LayoutActions } from '@example-app/core/actions';
         Book Collection
       </bc-toolbar>
 
-      <router-outlet></router-outlet>
+      <router>
+        <route path="/books/**" [loadComponent]="components.books"></route>
+        <route path="/login">
+          <bc-login-page *routeComponent></bc-login-page>
+        </route>
+        <route path="/" redirectTo="/books">
+        </route>
+        <route path="**">
+          <bc-not-found-page *routeComponent></bc-not-found-page>
+        </route>
+      </router>
     </bc-layout>
   `,
 })
 export class AppComponent {
+  components = {
+    books: () => import('../../books/books.module').then(m => m.BooksComponent)
+  };
   showSidenav$: Observable<boolean>;
   loggedIn$: Observable<boolean>;
 

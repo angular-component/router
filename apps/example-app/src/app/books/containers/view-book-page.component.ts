@@ -1,6 +1,6 @@
 import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { RouteParams } from '@reactiveangular/router';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -25,8 +25,8 @@ import { ViewBookPageActions } from '@example-app/books/actions';
 export class ViewBookPageComponent implements OnDestroy {
   actionsSubscription: Subscription;
 
-  constructor(store: Store<fromBooks.State>, route: ActivatedRoute) {
-    this.actionsSubscription = route.params
+  constructor(store: Store<fromBooks.State>, routeParams$: RouteParams<{ id: string }>) {
+    this.actionsSubscription = routeParams$
       .pipe(map((params) => ViewBookPageActions.selectBook({ id: params.id })))
       .subscribe((action) => store.dispatch(action));
   }

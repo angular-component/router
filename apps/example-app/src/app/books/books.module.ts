@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { BooksRoutingModule } from '@example-app/books/books-routing.module';
 import {
   BookAuthorsComponent,
   BookDetailComponent,
@@ -18,11 +17,34 @@ import {
   SelectedBookPageComponent,
   ViewBookPageComponent,
 } from '@example-app/books/containers';
-import { BookEffects, CollectionEffects } from '@example-app/books/effects';
 
-import * as fromBooks from '@example-app/books/reducers';
 import { MaterialModule } from '@example-app/material';
 import { PipesModule } from '@example-app/shared/pipes';
+import { RouterModule } from '@reactiveangular/router';
+import { AuthGuard } from '@example-app/auth/services';
+
+
+@Component({
+  selector: 'app-books',
+  template: `
+    <router *ngIf="loggedIn$ | async">
+      <route path="/find">
+        <bc-find-book-page *routeComponent></bc-find-book-page>
+      </route>
+      <route path="/:id">
+        <bc-view-book-page *routeComponent></bc-view-book-page>
+      </route>
+      <route path="/">
+        <bc-collection-page *routeComponent></bc-collection-page>
+      </route>
+    </router>
+  `
+})
+export class BooksComponent {
+  loggedIn$ = this.authGuard.canActivate();
+
+  constructor(private authGuard: AuthGuard) {}
+}
 
 export const COMPONENTS = [
   BookAuthorsComponent,
@@ -30,6 +52,7 @@ export const COMPONENTS = [
   BookPreviewComponent,
   BookPreviewListComponent,
   BookSearchComponent,
+  BooksComponent
 ];
 
 export const CONTAINERS = [
@@ -37,33 +60,17 @@ export const CONTAINERS = [
   ViewBookPageComponent,
   SelectedBookPageComponent,
   CollectionPageComponent,
+  BooksComponent
 ];
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
-    BooksRoutingModule,
-
-    /**
-     * StoreModule.forFeature is used for composing state
-     * from feature modules. These modules can be loaded
-     * eagerly or lazily and will be dynamically added to
-     * the existing state.
-     */
-    StoreModule.forFeature(fromBooks.booksFeatureKey, fromBooks.reducers),
-
-    /**
-     * Effects.forFeature is used to register effects
-     * from feature modules. Effects can be loaded
-     * eagerly or lazily and will be started immediately.
-     *
-     * All Effects will only be instantiated once regardless of
-     * whether they are registered once or multiple times.
-     */
-    EffectsModule.forFeature([BookEffects, CollectionEffects]),
+    RouterModule,
     PipesModule,
   ],
   declarations: [COMPONENTS, CONTAINERS],
+  entryComponents: [BooksComponent]
 })
 export class BooksModule {}

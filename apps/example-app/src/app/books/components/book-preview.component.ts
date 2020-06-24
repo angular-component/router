@@ -5,7 +5,7 @@ import { Book } from '@example-app/books/models';
 @Component({
   selector: 'bc-book-preview',
   template: `
-    <a [routerLink]="['/books', id]">
+    <a linkTo="/books/{{id}}">
       <mat-card>
         <mat-card-title-group>
           <img mat-card-sm-image *ngIf="thumbnail" [src]="thumbnail" />

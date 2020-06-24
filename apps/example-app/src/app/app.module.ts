@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@reactiveangular/router';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -14,9 +15,12 @@ import { AuthModule } from '@example-app/auth';
 import { ROOT_REDUCERS, metaReducers } from '@example-app/reducers';
 
 import { CoreModule } from '@example-app/core';
-import { AppRoutingModule } from '@example-app/app-routing.module';
 import { UserEffects, RouterEffects } from '@example-app/core/effects';
 import { AppComponent } from '@example-app/core/containers';
+import * as fromAuth from '@example-app/auth/reducers';
+import { BookEffects, CollectionEffects } from '@example-app/books/effects';
+
+import * as fromBooks from '@example-app/books/reducers';
 
 @NgModule({
   imports: [
@@ -24,8 +28,7 @@ import { AppComponent } from '@example-app/core/containers';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AuthModule,
-    AppRoutingModule,
+    RouterModule.forRoot(),
 
     /**
      * StoreModule.forRoot is imported once in the root module, accepting a reducer
@@ -48,7 +51,7 @@ import { AppComponent } from '@example-app/core/containers';
     /**
      * @ngrx/router-store keeps router state up-to-date in the store.
      */
-    StoreRouterConnectingModule.forRoot(),
+    // StoreRouterConnectingModule.forRoot(),
 
     /**
      * Store devtools instrument the store retaining past versions of state
@@ -74,7 +77,25 @@ import { AppComponent } from '@example-app/core/containers';
      *
      * See: https://ngrx.io/guide/effects#registering-root-effects
      */
-    EffectsModule.forRoot([UserEffects, RouterEffects]),
+    EffectsModule.forRoot([UserEffects]),
+
+    /**
+     * StoreModule.forFeature is used for composing state
+     * from feature modules. These modules can be loaded
+     * eagerly or lazily and will be dynamically added to
+     * the existing state.
+     */
+    StoreModule.forFeature(fromBooks.booksFeatureKey, fromBooks.reducers),
+
+    /**
+     * Effects.forFeature is used to register effects
+     * from feature modules. Effects can be loaded
+     * eagerly or lazily and will be started immediately.
+     *
+     * All Effects will only be instantiated once regardless of
+     * whether they are registered once or multiple times.
+     */
+    EffectsModule.forFeature([BookEffects, CollectionEffects]),
     CoreModule,
   ],
   bootstrap: [AppComponent],
