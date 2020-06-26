@@ -14,7 +14,7 @@ import { UrlParser } from './url-parser';
 import { QueryParams } from './route-params.service';
 import { Router } from './router.service';
 
-const components = [
+export const components = [
   RouterComponent,
   RouteComponent,
   LinkActive,
@@ -31,10 +31,10 @@ export function getQueryParams(router: Router) {
   declarations: [components],
   exports: [components],
 })
-export class RouterModule {
-  static forRoot(): ModuleWithProviders<RouterModule> {
+export class RoutingModule {
+  static forRoot(): ModuleWithProviders<RoutingModule> {
     return {
-      ngModule: RouterModule,
+      ngModule: RoutingModule,
       providers: [
         UrlParser,
         { provide: LocationStrategy, useClass: PathLocationStrategy },

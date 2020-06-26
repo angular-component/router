@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@reactiveangular/router';
+import { RoutingModule } from 'angular-routing';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -28,7 +28,7 @@ import * as fromBooks from '@example-app/books/reducers';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    RouterModule.forRoot(),
+    RoutingModule.forRoot(),
 
     /**
      * StoreModule.forRoot is imported once in the root module, accepting a reducer

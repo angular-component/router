@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@reactiveangular/router';
+import { RoutingModule } from 'angular-routing';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -18,7 +18,7 @@ import { ShippingComponent } from './shipping/shipping.component';
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RouterModule.forRoot()
+    RoutingModule.forRoot()
   ],
   declarations: [
     AppComponent,

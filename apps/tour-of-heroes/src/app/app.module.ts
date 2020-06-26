@@ -2,7 +2,7 @@ import { NgModule }       from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { HttpClientModule }    from '@angular/common/http';
-import { RouterModule } from '@reactiveangular/router';
+import { RoutingModule } from 'angular-routing';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService }  from './in-memory-data.service';
@@ -21,7 +21,7 @@ import { MessagesComponent }    from './messages/messages.component';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(),
+    RoutingModule.forRoot(),
 
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.

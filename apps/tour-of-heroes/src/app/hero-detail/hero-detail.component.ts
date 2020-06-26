@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { RouteParams } from '@reactiveangular/router';
+import { RouteParams } from 'angular-routing';
 import { Location } from '@angular/common';
 
 import { Hero } from '../hero';

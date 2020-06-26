@@ -16,7 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@reactiveangular/router": ["libs/router/src/index.ts"],
+      "angular-routing": ["libs/angular-routing/src/index.ts"],
       "@example-app/*": ["./apps/example-app/src/app/*"]
     }
   },

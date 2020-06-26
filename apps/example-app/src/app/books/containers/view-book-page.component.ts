@@ -1,6 +1,6 @@
 import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { RouteParams } from '@reactiveangular/router';
+import { RouteParams } from 'angular-routing';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 

@@ -20,7 +20,7 @@ import {
 
 import { MaterialModule } from '@example-app/material';
 import { PipesModule } from '@example-app/shared/pipes';
-import { RouterModule } from '@reactiveangular/router';
+import { RoutingModule } from 'angular-routing';
 import { AuthGuard } from '@example-app/auth/services';
 
 
@@ -67,7 +67,7 @@ export const CONTAINERS = [
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule,
+    RoutingModule,
     PipesModule,
   ],
   declarations: [COMPONENTS, CONTAINERS],

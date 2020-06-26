@@ -1,20 +1,32 @@
 {
   "version": 1,
   "projects": {
-    "router": {
+    "angular-routing": {
       "projectType": "library",
-      "root": "libs/router",
-      "sourceRoot": "libs/router/src",
+      "root": "libs/angular-routing",
+      "sourceRoot": "libs/angular-routing/src",
       "prefix": "reactiveangular",
       "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "options": {
+            "tsConfig": "libs/angular-routing/tsconfig.lib.json",
+            "project": "libs/angular-routing/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/angular-routing/tsconfig.lib.prod.json"
+            }
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/router/tsconfig.lib.json",
-              "libs/router/tsconfig.spec.json"
+              "libs/angular-routing/tsconfig.lib.json",
+              "libs/angular-routing/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/router/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/angular-routing/**/*"]
           }
         },
         "test": {

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@reactiveangular/router';
+import { RoutingModule } from 'angular-routing';
 
 import { MaterialModule } from '@example-app/material';
 import {
@@ -25,7 +25,7 @@ export const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule, MaterialModule, AuthModule],
+  imports: [CommonModule, RoutingModule, MaterialModule, AuthModule],
   declarations: COMPONENTS,
   exports: COMPONENTS,
 })

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@reactiveangular/router';
+import { Router } from 'angular-routing';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
