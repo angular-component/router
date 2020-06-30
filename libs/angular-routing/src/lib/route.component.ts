@@ -9,9 +9,11 @@ import {
   TemplateRef,
   ChangeDetectionStrategy,
   Self,
+  NgModuleFactory,
+  Compiler,
 } from '@angular/core';
 
-import { Subject, BehaviorSubject, merge, of } from 'rxjs';
+import { Subject, BehaviorSubject, merge, of, from } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
@@ -20,7 +22,7 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
-import { LoadComponent, Route } from './route';
+import { Load, Route } from './route';
 import { Params, RouteParams } from './route-params.service';
 import { RouterComponent } from './router.component';
 import { Router } from './router.service';
@@ -49,7 +51,7 @@ export class RouteComponent implements OnInit {
   @ContentChild(TemplateRef) template: TemplateRef<any> | null;
   @Input() path: string;
   @Input() component: Type<any>;
-  @Input() loadComponent: LoadComponent;
+  @Input() load: Load;
   @Input() reuse = true;
   @Input() redirectTo!: string;
 
@@ -65,7 +67,8 @@ export class RouteComponent implements OnInit {
     private router: Router,
     private routerComponent: RouterComponent,
     private resolver: ComponentFactoryResolver,
-    private viewContainerRef: ViewContainerRef
+    private viewContainerRef: ViewContainerRef,
+    private compiler: Compiler
   ) {}
 
   ngOnInit(): void {
@@ -76,7 +79,7 @@ export class RouteComponent implements OnInit {
 
     this.route = this.routerComponent.registerRoute({
       path,
-      loadComponent: this.loadComponent,
+      load: this.load,
     });
 
     const activeRoute$ = this.routerComponent.activeRoute$.pipe(
@@ -99,6 +102,8 @@ export class RouteComponent implements OnInit {
 
             return this.loadAndRender(current.route);
           }
+
+          return of(null);
         } else if (rendered) {
           return of(this.clearView());
         }
@@ -115,12 +120,30 @@ export class RouteComponent implements OnInit {
   }
 
   private loadAndRender(route: Route) {
-    if (route.loadComponent) {
-      return route.loadComponent().then((component) => {
-        return this.renderComponent(component);
-      });
+    if (route.load) {
+      return from(route.load().then(componentOrModule => {
+        if (componentOrModule instanceof NgModuleFactory) {
+          const moduleRef = componentOrModule.create(this.viewContainerRef.injector);
+          const component = moduleRef.instance.routeComponent;
+
+          this.renderComponent(component);
+        } else if (componentOrModule.ɵmod) {
+          return this.compiler.compileModuleAsync(componentOrModule as Type<any>).then(moduleFactory => {
+            const moduleRef = moduleFactory.create(this.viewContainerRef.injector);
+            const component = moduleRef.instance.routeComponent;
+            this.renderComponent(component);
+
+            return true;
+          });
+        } else {
+          this.renderComponent(componentOrModule);
+        }
+
+        return true;
+      }));
     } else {
-      return of(this.showTemplate());
+      this.showTemplate();
+      return of(true);
     }
   }
 
@@ -133,8 +156,6 @@ export class RouteComponent implements OnInit {
       this.viewContainerRef.length,
       this.viewContainerRef.injector
     );
-
-    return of(true);
   }
 
   private clearComponent() {
@@ -153,7 +174,7 @@ export class RouteComponent implements OnInit {
   }
 
   private clearView() {
-    if (this.loadComponent) {
+    if (this.load) {
       this.clearComponent();
     } else {
       this.hideTemplate();

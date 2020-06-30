@@ -43,7 +43,7 @@ import { LayoutActions } from '@example-app/core/actions';
       </bc-toolbar>
 
       <router>
-        <route path="/books/**" [loadComponent]="components.books"></route>
+        <route path="/books/**" [load]="components.books"></route>
         <route path="/login">
           <bc-login-page *routeComponent></bc-login-page>
         </route>
@@ -58,7 +58,7 @@ import { LayoutActions } from '@example-app/core/actions';
 })
 export class AppComponent {
   components = {
-    books: () => import('../../books/books.module').then(m => m.BooksComponent)
+    books: () => import('../../books/books.module').then(m => m.BooksModule)
   };
   showSidenav$: Observable<boolean>;
   loggedIn$: Observable<boolean>;

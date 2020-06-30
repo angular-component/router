@@ -18,9 +18,6 @@ import { CoreModule } from '@example-app/core';
 import { UserEffects, RouterEffects } from '@example-app/core/effects';
 import { AppComponent } from '@example-app/core/containers';
 import * as fromAuth from '@example-app/auth/reducers';
-import { BookEffects, CollectionEffects } from '@example-app/books/effects';
-
-import * as fromBooks from '@example-app/books/reducers';
 
 @NgModule({
   imports: [
@@ -78,24 +75,6 @@ import * as fromBooks from '@example-app/books/reducers';
      * See: https://ngrx.io/guide/effects#registering-root-effects
      */
     EffectsModule.forRoot([UserEffects]),
-
-    /**
-     * StoreModule.forFeature is used for composing state
-     * from feature modules. These modules can be loaded
-     * eagerly or lazily and will be dynamically added to
-     * the existing state.
-     */
-    StoreModule.forFeature(fromBooks.booksFeatureKey, fromBooks.reducers),
-
-    /**
-     * Effects.forFeature is used to register effects
-     * from feature modules. Effects can be loaded
-     * eagerly or lazily and will be started immediately.
-     *
-     * All Effects will only be instantiated once regardless of
-     * whether they are registered once or multiple times.
-     */
-    EffectsModule.forFeature([BookEffects, CollectionEffects]),
     CoreModule,
   ],
   bootstrap: [AppComponent],

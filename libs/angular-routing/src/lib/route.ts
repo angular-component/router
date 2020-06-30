@@ -1,17 +1,21 @@
-import { Type } from '@angular/core';
+import { Type, NgModuleFactory } from '@angular/core';
 
 import { Params } from './route-params.service';
 
-export type LoadComponent = () => Promise<Type<any>>;
+export type Load = () => Promise<NgModuleFactory<any>|Type<any>|any>;
 
 export interface Route {
   path: string;
   // component?: Type<any>;
-  loadComponent?: LoadComponent;
+  load?: Load;
   matcher?: RegExp;
 }
 
 export interface ActiveRoute {
   route: Route;
   params: Params;
+}
+
+export interface ModuleWithRoute {
+  routeComponent: Type<any>;
 }
