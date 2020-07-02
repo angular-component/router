@@ -11,6 +11,7 @@ import {
   Self,
   NgModuleFactory,
   Compiler,
+  OnDestroy,
 } from '@angular/core';
 
 import { Subject, BehaviorSubject, merge, of, from } from 'rxjs';
@@ -47,7 +48,7 @@ export function getRouteParams(routeComponent: RouteComponent) {
     },
   ],
 })
-export class RouteComponent implements OnInit {
+export class RouteComponent implements OnInit, OnDestroy {
   @ContentChild(TemplateRef) template: TemplateRef<any> | null;
   @Input() path: string;
   @Input() component: Type<any>;
@@ -60,7 +61,7 @@ export class RouteComponent implements OnInit {
   private _shouldRender$ = new BehaviorSubject<boolean>(false);
 
   readonly shouldRender$ = this._shouldRender$.asObservable();
-  readonly routeParams$ = this._routeParams$.asObservable();
+  readonly routeParams$ = this._routeParams$.pipe(takeUntil(this.destroy$));
   route!: Route;
 
   constructor(

@@ -19,7 +19,7 @@ export class Router {
   private _queryParams$ = new BehaviorSubject<Params>({});
   readonly queryParams$ = this._queryParams$.pipe(distinctUntilChanged());
 
-  private _hash$ = new BehaviorSubject('');
+  private _hash$ = new BehaviorSubject<string>('');
   readonly hash$ = this._hash$.pipe(distinctUntilChanged());
 
   constructor(

@@ -1,98 +1,227 @@
-# Reactiveangular
+# angular-routing
 
-This project was generated using [Nx](https://nx.dev).
+A declarative router for Angular applications.
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+## Install
 
-🔎 **Nx is a set of Extensible Dev Tools for Monorepos.**
+Use your package manager of choice to install the package.
 
-## Quick Start & Documentation
+```sh
+npm install angular-routing
+```
 
-[Nx Documentation](https://nx.dev/angular)
+OR
 
-[10-minute video showing all Nx features](https://nx.dev/angular/getting-started/what-is-nx)
+```sh
+yarn add angular-routing
+```
 
-[Interactive Tutorial](https://nx.dev/angular/tutorial/01-create-application)
+## Usage
 
-## Adding capabilities to your workspace
+To register the Router, add the `RoutingModule.forRoot()` to your AppModule imports.
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+```ts
+import { RoutingModule } from 'angular-routing';
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+@NgModule({
+  imports: [
+    // ... other imports
+    RoutingModule.forRoot()
+  ]
+})
+export class AppModule {}
+```
 
-Below are our core plugins:
+Or in a feature module
 
-- [Angular](https://angular.io)
-  - `ng add @nrwl/angular`
-- [React](https://reactjs.org)
-  - `ng add @nrwl/react`
-- Web (no framework frontends)
-  - `ng add @nrwl/web`
-- [Nest](https://nestjs.com)
-  - `ng add @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `ng add @nrwl/express`
-- [Node](https://nodejs.org)
-  - `ng add @nrwl/node`
+```ts
+import { RoutingModule } from 'angular-routing';
 
-There are also many [community plugins](https://nx.dev/nx-community) you could add.
+@NgModule({
+  imports: [
+    // ... other imports
+    RoutingModule
+  ]
+})
+export class FeatureModule {}
+```
 
-## Generate an application
+After your components are registered, use the `Router` and `Route` components to register some routes. 
 
-Run `ng g @nrwl/angular:app my-app` to generate an application.
+```html
+<router>
+  <route path="/blog/**">
+    <app-blog *routeComponent></app-blog>
+  </route>
+  <route path="/posts/:postId">
+    <app-post *routeComponent></app-post>
+  </route>
+  <route path="/about">
+    <app-about *routeComponent></app-about>
+  </route>
+  <route path="/" redirectTo="/blog">
+  </route>
+  <route path="**">
+    <app-page-not-found *routeComponent></app-page-not-found>
+  </route>
+</router>
+```
 
-> You can use any of the plugins above to generate applications as well.
+## Navigating with Links
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
+Use the `linkTo` directive with a _full path_ to register links handled by the router.
 
-## Generate a library
+```html
+<a linkTo="/">Home</a>
+<a linkTo="/about">About</a>
+<a linkTo="/blog">Blog</a>
+```
 
-Run `ng g @nrwl/angular:lib my-lib` to generate a library.
+## Adding classes to active links
 
-> You can also use any of the plugins above to generate libraries as well.
+To add classes to links that match the current URL path, use the `linkActive` directive.
 
-Libraries are sharable across libraries and applications. They can be imported from `@reactiveangular/mylib`.
+```html
+<a linkTo="/" linkActive="active">Home</a>
+<a linkTo="/about" linkActive="active">About</a>
+<a linkTo="/blog" linkActive="active">Blog</a>
+```
 
-## Development server
+## Using the Router service
 
-Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+To navigate from a component class, or get global route information, such as the current URL, or hash fragment, inject the `Router` service.
 
-## Code scaffolding
+```ts
+import { Component } from '@angular/core';
+import { Router } from 'angular-routing';
 
-Run `ng g component my-component --project=my-app` to generate a new component.
+@Component({...})
+export class MyComponent {
+  constructor(private router: Router) {}
 
-## Build
+  ngOnInit() {
+    this.router.url$.subscribe();
+    this.router.hash$.subscribe();
+  }
 
-Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+  goHome() {
+    this.router.go('/');
+  }
+}
+```
 
-## Running unit tests
+## Using Route Params
 
-Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
+To get the route params, inject the `RouteParams` observable. Provide a type for the shape of the route params object. 
 
-Run `nx affected:test` to execute the unit tests affected by a change.
+```ts
+import { Component } from '@angular/core';
+import { RouteParams } from 'angular-routing';
 
-## Running end-to-end tests
+@Component({...})
+export class MyComponent {
+  constructor(
+    private routeParams$: RouteParams<{ postId: string }>
+  ) {}
 
-Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
+  ngOnInit() {
+    this.routeParams$.subscribe(console.log);
+  }
+}
+```
 
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
+## Using Query Params
 
-## Understand your workspace
+To get the route params, inject the `QueryParams` observable. Provide a type for the shape of the query params object. 
 
-Run `nx dep-graph` to see a diagram of the dependencies of your projects.
+```ts
+import { Component } from '@angular/core';
+import { QueryParams } from 'angular-routing';
 
-## Further help
+@Component({...})
+export class MyComponent {
+  constructor(
+    private queryParams$: QueryParams<{ debug: boolean }>
+  ) {}
 
-Visit the [Nx Documentation](https://nx.dev/angular) to learn more.
+  ngOnInit() {
+    this.queryParams$.subscribe(console.log);
+  }
+}
+```
 
-## ☁ Nx Cloud
+## Lazy Loading Modules
 
-### Computation Memoization in the Cloud
+To lazy load a module, use the `load` binding on the `route` component.
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
+```ts
+import { Component } from '@angular/core';
 
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
+@Component({
+  template: `
+    <router>
+      <route path="/lazy/**" [load]="modules.lazy">
+      </route>
+    </router>
+  `
+})
+export class MyComponent {
+  modules = {
+    lazy: () => import('./lazy/lazy.module').then(m => m.LazyModule)
+  }
+}
+```
 
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
+Register a component to register the child routes.
 
-Visit [Nx Cloud](https://nx.app/) to learn more.
+```ts
+import { NgModule, Component } from '@angular/core';
+import { ModuleWithRoute } from 'angular-routing';
+
+@Component({
+  template: `
+    <router>
+      <route path="/">
+        <app-lazy *routeComponent></app-lazy>
+      </route>
+    </router>  
+  `
+})
+export class LazyRouteComponent { }
+```
+
+Implement the `ModuleWithRoute` interface for the route component to render after the module is loaded.
+
+```ts
+@NgModule({
+  declarations: [
+    LazyRouteComponent,
+    LazyComponent
+  ]
+})
+export class LazyModule implements ModuleWithRoute {
+  routeComponent = LazyRouteComponent;
+}
+```
+
+## Lazy Loading Components
+
+To lazy load a component, use the `load` binding on the `route` component.
+
+```ts
+import { Component } from '@angular/core';
+
+@Component({
+  template: `
+    <router>
+      <route path="/lazy" [load]="components.lazy">
+      </route>
+    </router>
+  `
+})
+export class MyComponent {
+  components = {
+    lazy: () => import('./lazy/lazy.component').then(m => m.LazyComponent)
+  }
+}
+```
