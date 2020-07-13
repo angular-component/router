@@ -35,10 +35,6 @@ export class Router {
   }
 
   go(url: string, queryParams?: Params, hash?: string) {
-    // if relative path
-    if (!url.startsWith('/')) {
-      url = this.urlParser.joinUrls(this.location.path(), url);
-    }
     this.location.go(this.serializeUrl(url, queryParams, hash));
 
     this.nextState(this.getLocation());
@@ -51,6 +47,10 @@ export class Router {
   }
 
   serializeUrl(url: string, queryParams?: Params, hash?: string) {
+    // if relative path
+    if (!url.startsWith('/')) {
+      url = this.urlParser.joinUrls(this.location.path(), url);
+    }
     return (
       url +
       (queryParams ? `?${queryString.stringify(queryParams)}` : '') +
