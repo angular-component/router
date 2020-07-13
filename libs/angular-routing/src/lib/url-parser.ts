@@ -7,7 +7,10 @@ export class UrlParser {
   }
 
   joinUrls(currentUrl: string, url: string): string {
-    const currentUrlSegments = currentUrl.split('?')[0].split('/');
+    const currentUrlSegments = currentUrl
+      .split('#')[0] // remove hash
+      .split('?')[0] // remove query params
+      .split('/');
     const urlSegments = url.split('/');
 
     return urlSegments
