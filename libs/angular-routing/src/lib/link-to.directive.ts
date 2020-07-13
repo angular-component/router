@@ -60,9 +60,9 @@ export class LinkToDirective {
   }
 
   private _updateHref() {
-    let path = this._cleanUpHref(this._href);
+    const path = this._cleanUpHref(this._href);
 
-    let url = this.router.serializeUrl(path, this._query, this._hash);
+    const url = this.router.serializeUrl(path, this._query, this._hash);
     this.linkHref = url;
 
     this.hrefUpdated.emit(this.linkHref);
@@ -72,18 +72,13 @@ export class LinkToDirective {
    * Determines whether the click event happened with a combination of other keys
    */
   private _comboClick(event) {
-    let buttonEvent = event.which || event.button;
+    const buttonEvent = event.which || event.button;
 
     return buttonEvent > 1 || event.ctrlKey || event.metaKey || event.shiftKey;
   }
 
   private _cleanUpHref(href: string = ''): string {
-    // Check for trailing slashes in the path
-    while (href.length > 1 && href.substr(-1) === '/') {
-      // Remove trailing slashes
-      href = href.substring(0, href.length - 1);
-    }
-
-    return href;
+    // Trim whitespaces and remove trailing slashes
+    return href.trim().replace(/[\/]+$/, '')
   }
 }
