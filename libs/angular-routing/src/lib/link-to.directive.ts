@@ -60,10 +60,9 @@ export class LinkToDirective {
   }
 
   private _updateHref() {
-    const path = this._cleanUpHref(this._href);
+    const href = this._cleanUpHref(this._href);
 
-    const url = this.router.serializeUrl(path, this._query, this._hash);
-    this.linkHref = url;
+    this.linkHref = this.router.serializeUrl(href, this._query, this._hash);
 
     this.hrefUpdated.emit(this.linkHref);
   }
