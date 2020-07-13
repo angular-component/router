@@ -10,7 +10,7 @@ import { Router } from './router.service';
 import { Params } from './route-params.service';
 
 /**
- * The LinkTo directive links to routes in your app
+ * The LinkToDirective directive links to routes in your app
  *
  * Links are pushed to the `Router` service to trigger a route change.
  * Query params can be represented as an object or a string of names/values
@@ -19,7 +19,7 @@ import { Params } from './route-params.service';
  * <a [linkTo]="'/pages' + page.id">Page 1</a>
  */
 @Directive({ selector: 'a[linkTo]' })
-export class LinkTo {
+export class LinkToDirective {
   @Input() target: string;
   @HostBinding('href') linkHref: string;
 

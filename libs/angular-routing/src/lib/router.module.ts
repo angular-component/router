@@ -8,8 +8,8 @@ import {
 import { RouterComponent } from './router.component';
 import { RouteComponent } from './route.component';
 import { RouteComponentTemplate } from './route-component.directive';
-import { LinkActive } from './link-active';
-import { LinkTo } from './link.component';
+import { LinkActiveDirective } from './link-active.directive';
+import { LinkToDirective } from './link-to.directive';
 import { UrlParser } from './url-parser';
 import { QueryParams } from './route-params.service';
 import { Router } from './router.service';
@@ -17,8 +17,8 @@ import { Router } from './router.service';
 export const components = [
   RouterComponent,
   RouteComponent,
-  LinkActive,
-  LinkTo,
+  LinkActiveDirective,
+  LinkToDirective,
   RouteComponentTemplate,
 ];
 

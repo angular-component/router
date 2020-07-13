@@ -1,20 +1,20 @@
 import {
   AfterContentInit,
+  ContentChildren,
   Directive,
   ElementRef,
-  Input,
-  OnDestroy,
-  QueryList,
-  Renderer2,
-  Optional,
   Inject,
-  ContentChildren,
-  EventEmitter
+  Input,
+  OnChanges,
+  OnDestroy,
+  Optional,
+  QueryList,
+  Renderer2
 } from '@angular/core';
-import { LinkTo } from './link.component';
+import { LinkToDirective } from './link-to.directive';
 import { Router } from './router.service';
-import { from, Subject, Subscription, EMPTY, of, merge, combineLatest } from 'rxjs';
-import { mergeAll, map, withLatestFrom, takeUntil, startWith, switchMapTo, mapTo, mergeMap, tap, combineAll, toArray, switchMap, switchAll } from 'rxjs/operators';
+import { combineLatest, of, Subject, Subscription } from 'rxjs';
+import { map, mapTo, startWith, takeUntil } from 'rxjs/operators';
 
 export interface LinkActiveOptions {
   exact: boolean;
@@ -25,7 +25,7 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
 };
 
 /**
- * The LinkActive directive toggles classes on elements that contain an active linkTo directive
+ * The LinkActiveDirective directive toggles classes on elements that contain an active linkTo directive
  *
  * <a linkActive="active" linkTo="/home/page">Home Page</a>
  * <ol>
@@ -35,9 +35,9 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
  * </ol>
  */
 @Directive({ selector: '[linkActive]' })
-export class LinkActive implements AfterContentInit, OnDestroy {
-  @ContentChildren(LinkTo, { descendants: true }) public links: QueryList<LinkTo>;
-  @Input('linkActive') activeClass: string = 'active';
+export class LinkActiveDirective implements AfterContentInit, OnDestroy, OnChanges {
+  @ContentChildren(LinkToDirective, { descendants: true }) public links: QueryList<LinkToDirective>;
+  @Input('linkActive') activeClass = 'active';
   @Input() activeOptions: LinkActiveOptions;
   private _activeOptions: LinkActiveOptions = { exact: true };
   private _destroy$ = new Subject();
@@ -50,7 +50,7 @@ export class LinkActive implements AfterContentInit, OnDestroy {
     @Optional()
     @Inject(LINK_ACTIVE_OPTIONS)
     private defaultActiveOptions: LinkActiveOptions,
-    @Optional() private link: LinkTo
+    @Optional() private link: LinkToDirective
   ) { }
 
   ngAfterContentInit() {
@@ -89,7 +89,7 @@ export class LinkActive implements AfterContentInit, OnDestroy {
   }
 
   checkActive(linkHrefs: string[], path: string) {
-    let active = linkHrefs.reduce((isActive, current) => {
+    const active = linkHrefs.reduce((isActive, current) => {
       const [href] = current.split('?');
 
       if (this._activeOptions.exact) {
@@ -105,7 +105,7 @@ export class LinkActive implements AfterContentInit, OnDestroy {
   }
 
   updateClasses(active: boolean) {
-    let activeClasses = this.activeClass.split(' ');
+    const activeClasses = this.activeClass.split(' ');
     activeClasses.forEach((activeClass) => {
       if (active) {
         this.renderer.addClass(this.element.nativeElement, activeClass);
