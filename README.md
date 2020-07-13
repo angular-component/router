@@ -50,6 +50,7 @@ After your components are registered, use the `Router` and `Route` components to
 
 ```html
 <router>
+  <!-- For nested routes use suffix '/**' -->
   <route path="/blog/**">
     <app-blog *routeComponent></app-blog>
   </route>
@@ -84,7 +85,7 @@ To add classes to links that match the current URL path, use the `linkActive` di
 ```html
 <a linkTo="/" linkActive="active">Home</a>
 <a linkTo="/about" linkActive="active">About</a>
-<a linkTo="/blog" linkActive="active">Blog</a>
+<a linkTo="/blog" linkActive="active" [activeOptions]="{ exact: false }">Blog</a>
 ```
 
 ## Using the Router service
