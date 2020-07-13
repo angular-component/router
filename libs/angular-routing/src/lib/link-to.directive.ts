@@ -9,6 +9,8 @@ import {
 import { Router } from './router.service';
 import { Params } from './route-params.service';
 
+const DEFAULT_TARGET = '_self';
+
 /**
  * The LinkToDirective directive links to routes in your app
  *
@@ -20,7 +22,7 @@ import { Params } from './route-params.service';
  */
 @Directive({ selector: 'a[linkTo]' })
 export class LinkToDirective {
-  @Input() target: string;
+  @Input() target = DEFAULT_TARGET;
   @HostBinding('href') linkHref: string;
 
   @Input() set linkTo(href: string) {
@@ -52,7 +54,7 @@ export class LinkToDirective {
    */
   @HostListener('click', ['$event'])
   onClick(event: any) {
-    if (!this._comboClick(event) && !this.target) {
+    if (!this._comboClick(event) && this.target === DEFAULT_TARGET) {
       this.router.go(this._href, this._query, this._hash);
 
       event.preventDefault();
