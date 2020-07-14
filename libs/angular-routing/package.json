@@ -2,6 +2,10 @@
   "name": "angular-routing",
   "version": "0.2.0",
   "description": "A declarative router for Angular applications",
+  "schematics": "./schematics/collection.json",
+  "ng-add": {
+    "save": "dependencies"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/brandonroberts/angular-routing.git"

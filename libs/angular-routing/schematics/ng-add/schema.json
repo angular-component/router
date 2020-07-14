@@ -1,0 +1,22 @@
+  {
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchematicsNgRxRootEffect",
+    "title": "NgRx Root Effect Options Schema",
+    "type": "object",
+    "properties": {
+      "project": {
+        "type": "string",
+        "description": "The name of the project.",
+        "aliases": [
+          "p"
+        ]
+      },
+      "module": {
+        "type": "string",
+        "default": "app",
+        "description": "Allows specification of the declaring module.",
+        "alias": "m",
+        "subtype": "filepath"
+      }
+    }
+  }
