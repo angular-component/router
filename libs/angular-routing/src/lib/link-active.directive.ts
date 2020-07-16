@@ -11,7 +11,7 @@ import {
   QueryList,
   Renderer2
 } from '@angular/core';
-import { LinkToDirective } from './link-to.directive';
+import { LinkTo } from './link-to.directive';
 import { Router } from './router.service';
 import { combineLatest, of, Subject, Subscription } from 'rxjs';
 import { map, mapTo, startWith, takeUntil } from 'rxjs/operators';
@@ -25,7 +25,7 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
 };
 
 /**
- * The LinkActiveDirective directive toggles classes on elements that contain an active linkTo directive
+ * The LinkActive directive toggles classes on elements that contain an active linkTo directive
  *
  * <a linkActive="active" linkTo="/home/page">Home Page</a>
  * <ol>
@@ -35,8 +35,8 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
  * </ol>
  */
 @Directive({ selector: '[linkActive]' })
-export class LinkActiveDirective implements AfterContentInit, OnDestroy, OnChanges {
-  @ContentChildren(LinkToDirective, { descendants: true }) public links: QueryList<LinkToDirective>;
+export class LinkActive implements AfterContentInit, OnDestroy, OnChanges {
+  @ContentChildren(LinkTo, { descendants: true }) public links: QueryList<LinkTo>;
   @Input('linkActive') activeClass = 'active';
   @Input() activeOptions: LinkActiveOptions;
   private _activeOptions: LinkActiveOptions = { exact: true };
@@ -50,7 +50,7 @@ export class LinkActiveDirective implements AfterContentInit, OnDestroy, OnChang
     @Optional()
     @Inject(LINK_ACTIVE_OPTIONS)
     private defaultActiveOptions: LinkActiveOptions,
-    @Optional() private link: LinkToDirective
+    @Optional() private link: LinkTo
   ) { }
 
   ngAfterContentInit() {

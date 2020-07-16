@@ -12,7 +12,7 @@ import { Params } from './route-params.service';
 const DEFAULT_TARGET = '_self';
 
 /**
- * The LinkToDirective directive links to routes in your app
+ * The LinkTo directive links to routes in your app
  *
  * Links are pushed to the `Router` service to trigger a route change.
  * Query params can be represented as an object or a string of names/values
@@ -21,7 +21,7 @@ const DEFAULT_TARGET = '_self';
  * <a [linkTo]="'/pages' + page.id">Page 1</a>
  */
 @Directive({ selector: 'a[linkTo]' })
-export class LinkToDirective {
+export class LinkTo {
   @Input() target = DEFAULT_TARGET;
   @HostBinding('href') linkHref: string;
 
