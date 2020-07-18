@@ -17,6 +17,12 @@
         "description": "Allows specification of the declaring module.",
         "alias": "m",
         "subtype": "filepath"
+      },
+      "path": {
+        "type": "string",
+        "format": "path",
+        "description": "The path to create the state.",
+        "visible": false
       }
     }
   }
