@@ -32,10 +32,10 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/router/jest.config.js",
-            "tsConfig": "libs/router/tsconfig.spec.json",
+            "jestConfig": "libs/angular-routing/jest.config.js",
+            "tsConfig": "libs/angular-routing/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "libs/router/src/test-setup.ts"
+            "setupFile": "libs/angular-routing/src/test-setup.ts"
           }
         }
       },
