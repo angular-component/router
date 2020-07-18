@@ -9,6 +9,8 @@ import {
 import { Router } from './router.service';
 import { Params } from './route-params.service';
 
+const DEFAULT_TARGET = '_self';
+
 /**
  * The LinkTo directive links to routes in your app
  *
@@ -20,7 +22,7 @@ import { Params } from './route-params.service';
  */
 @Directive({ selector: 'a[linkTo]' })
 export class LinkTo {
-  @Input() target: string;
+  @Input() target = DEFAULT_TARGET;
   @HostBinding('href') linkHref: string;
 
   @Input() set linkTo(href: string) {
@@ -52,7 +54,7 @@ export class LinkTo {
    */
   @HostListener('click', ['$event'])
   onClick(event: any) {
-    if (!this._comboClick(event) && !this.target) {
+    if (!this._comboClick(event) && this.target === DEFAULT_TARGET) {
       this.router.go(this._href, this._query, this._hash);
 
       event.preventDefault();
@@ -60,10 +62,9 @@ export class LinkTo {
   }
 
   private _updateHref() {
-    let path = this._cleanUpHref(this._href);
+    const href = this._cleanUpHref(this._href);
 
-    let url = this.router.serializeUrl(path, this._query, this._hash);
-    this.linkHref = url;
+    this.linkHref = this.router.serializeUrl(href, this._query, this._hash);
 
     this.hrefUpdated.emit(this.linkHref);
   }
@@ -72,18 +73,13 @@ export class LinkTo {
    * Determines whether the click event happened with a combination of other keys
    */
   private _comboClick(event) {
-    let buttonEvent = event.which || event.button;
+    const buttonEvent = event.which || event.button;
 
     return buttonEvent > 1 || event.ctrlKey || event.metaKey || event.shiftKey;
   }
 
   private _cleanUpHref(href: string = ''): string {
-    // Check for trailing slashes in the path
-    while (href.length > 1 && href.substr(-1) === '/') {
-      // Remove trailing slashes
-      href = href.substring(0, href.length - 1);
-    }
-
-    return href;
+    // Trim whitespaces and remove trailing slashes
+    return href.trim().replace(/[\/]+$/, '')
   }
 }
