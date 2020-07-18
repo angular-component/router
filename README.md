@@ -26,8 +26,8 @@ import { RoutingModule } from 'angular-routing';
 @NgModule({
   imports: [
     // ... other imports
-    RoutingModule.forRoot()
-  ]
+    RoutingModule.forRoot(),
+  ],
 })
 export class AppModule {}
 ```
@@ -40,18 +40,18 @@ import { RoutingModule } from 'angular-routing';
 @NgModule({
   imports: [
     // ... other imports
-    RoutingModule
-  ]
+    RoutingModule,
+  ],
 })
 export class FeatureModule {}
 ```
 
-After your components are registered, use the `Router` and `Route` components to register some routes. 
+After your components are registered, use the `Router` and `Route` components to register some routes.
 
 ```html
 <router>
-  <!-- For nested routes use suffix '/**' -->
-  <route path="/blog/**">
+  <!-- For nested routes use exact: false -->
+  <route path="/blog" [exact]="false">
     <app-blog *routeComponent></app-blog>
   </route>
   <route path="/posts/:postId">
@@ -60,9 +60,8 @@ After your components are registered, use the `Router` and `Route` components to
   <route path="/about">
     <app-about *routeComponent></app-about>
   </route>
-  <route path="/" redirectTo="/blog">
-  </route>
-  <route path="**">
+  <route path="/" redirectTo="/blog"> </route>
+  <route path="/" [exact]="false">
     <app-page-not-found *routeComponent></app-page-not-found>
   </route>
 </router>
@@ -85,7 +84,9 @@ To add classes to links that match the current URL path, use the `linkActive` di
 ```html
 <a linkTo="/" linkActive="active">Home</a>
 <a linkTo="/about" linkActive="active">About</a>
-<a linkTo="/blog" linkActive="active" [activeOptions]="{ exact: false }">Blog</a>
+<a linkTo="/blog" linkActive="active" [activeOptions]="{ exact: false }"
+  >Blog</a
+>
 ```
 
 ## Using the Router service
@@ -113,7 +114,7 @@ export class MyComponent {
 
 ## Using Route Params
 
-To get the route params, inject the `RouteParams` observable. Provide a type for the shape of the route params object. 
+To get the route params, inject the `RouteParams` observable. Provide a type for the shape of the route params object.
 
 ```ts
 import { Component } from '@angular/core';
@@ -133,7 +134,7 @@ export class MyComponent {
 
 ## Using Query Params
 
-To get the route params, inject the `QueryParams` observable. Provide a type for the shape of the query params object. 
+To get the route params, inject the `QueryParams` observable. Provide a type for the shape of the query params object.
 
 ```ts
 import { Component } from '@angular/core';
@@ -161,15 +162,14 @@ import { Component } from '@angular/core';
 @Component({
   template: `
     <router>
-      <route path="/lazy/**" [load]="modules.lazy">
-      </route>
+      <route path="/lazy" [exact]="false" [load]="modules.lazy"> </route>
     </router>
-  `
+  `,
 })
 export class MyComponent {
   modules = {
-    lazy: () => import('./lazy/lazy.module').then(m => m.LazyModule)
-  }
+    lazy: () => import('./lazy/lazy.module').then((m) => m.LazyModule),
+  };
 }
 ```
 
@@ -185,20 +185,18 @@ import { ModuleWithRoute } from 'angular-routing';
       <route path="/">
         <app-lazy *routeComponent></app-lazy>
       </route>
-    </router>  
-  `
+      <route path="/" [exact]="false" redirectTo="/404"> </route>
+    </router>
+  `,
 })
-export class LazyRouteComponent { }
+export class LazyRouteComponent {}
 ```
 
 Implement the `ModuleWithRoute` interface for the route component to render after the module is loaded.
 
 ```ts
 @NgModule({
-  declarations: [
-    LazyRouteComponent,
-    LazyComponent
-  ]
+  declarations: [LazyRouteComponent, LazyComponent],
 })
 export class LazyModule implements ModuleWithRoute {
   routeComponent = LazyRouteComponent;
@@ -215,14 +213,13 @@ import { Component } from '@angular/core';
 @Component({
   template: `
     <router>
-      <route path="/lazy" [load]="components.lazy">
-      </route>
+      <route path="/lazy" [load]="components.lazy"> </route>
     </router>
-  `
+  `,
 })
 export class MyComponent {
   components = {
-    lazy: () => import('./lazy/lazy.component').then(m => m.LazyComponent)
-  }
+    lazy: () => import('./lazy/lazy.component').then((m) => m.LazyComponent),
+  };
 }
 ```

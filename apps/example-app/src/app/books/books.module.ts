@@ -39,8 +39,9 @@ import * as fromBooks from '@example-app/books/reducers';
       <route path="/">
         <bc-collection-page *routeComponent></bc-collection-page>
       </route>
+      <route path="/" [exact]="false" redirectTo="/404"> </route>
     </router>
-  `
+  `,
 })
 export class BooksComponent {
   loggedIn$ = this.authGuard.canActivate();
@@ -54,7 +55,7 @@ export const COMPONENTS = [
   BookPreviewComponent,
   BookPreviewListComponent,
   BookSearchComponent,
-  BooksComponent
+  BooksComponent,
 ];
 
 export const CONTAINERS = [
@@ -62,7 +63,7 @@ export const CONTAINERS = [
   ViewBookPageComponent,
   SelectedBookPageComponent,
   CollectionPageComponent,
-  BooksComponent
+  BooksComponent,
 ];
 
 @NgModule({
@@ -90,7 +91,7 @@ export const CONTAINERS = [
     EffectsModule.forFeature([BookEffects, CollectionEffects]),
   ],
   declarations: [COMPONENTS, CONTAINERS],
-  entryComponents: [BooksComponent]
+  entryComponents: [BooksComponent],
 })
 export class BooksModule implements ModuleWithRoute {
   routeComponent = BooksComponent;

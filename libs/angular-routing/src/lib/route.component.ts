@@ -23,7 +23,7 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
-import { Load, Route } from './route';
+import { Load, Route, RouteOptions } from './route';
 import { Params, RouteParams } from './route-params.service';
 import { RouterComponent } from './router.component';
 import { Router } from './router.service';
@@ -55,6 +55,8 @@ export class RouteComponent implements OnInit, OnDestroy {
   @Input() load: Load;
   @Input() reuse = true;
   @Input() redirectTo!: string;
+  @Input() exact: boolean;
+  @Input() routeOptions: RouteOptions;
 
   private destroy$ = new Subject();
   private _routeParams$ = new BehaviorSubject<Params>({});
@@ -78,10 +80,7 @@ export class RouteComponent implements OnInit, OnDestroy {
       ? this.routerComponent.parentRouterComponent.basePath + this.path
       : this.path;
 
-    this.route = this.routerComponent.registerRoute({
-      path,
-      load: this.load,
-    });
+    this.route = this.registerRoute(path, this.exact, this.load);
 
     const activeRoute$ = this.routerComponent.activeRoute$.pipe(
       filter((ar) => ar !== null),
@@ -120,28 +119,44 @@ export class RouteComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
+  registerRoute(path: string, exact: boolean, load: Load) {
+    return this.routerComponent.registerRoute({
+      path: path,
+      load: load,
+      options: this.routeOptions || { exact: exact },
+    });
+  }
+
   private loadAndRender(route: Route) {
     if (route.load) {
-      return from(route.load().then(componentOrModule => {
-        if (componentOrModule instanceof NgModuleFactory) {
-          const moduleRef = componentOrModule.create(this.viewContainerRef.injector);
-          const component = moduleRef.instance.routeComponent;
-
-          this.renderComponent(component);
-        } else if (componentOrModule.ɵmod) {
-          return this.compiler.compileModuleAsync(componentOrModule as Type<any>).then(moduleFactory => {
-            const moduleRef = moduleFactory.create(this.viewContainerRef.injector);
+      return from(
+        route.load().then((componentOrModule) => {
+          if (componentOrModule instanceof NgModuleFactory) {
+            const moduleRef = componentOrModule.create(
+              this.viewContainerRef.injector
+            );
             const component = moduleRef.instance.routeComponent;
+
             this.renderComponent(component);
+          } else if (componentOrModule.ɵmod) {
+            return this.compiler
+              .compileModuleAsync(componentOrModule as Type<any>)
+              .then((moduleFactory) => {
+                const moduleRef = moduleFactory.create(
+                  this.viewContainerRef.injector
+                );
+                const component = moduleRef.instance.routeComponent;
+                this.renderComponent(component);
 
-            return true;
-          });
-        } else {
-          this.renderComponent(componentOrModule);
-        }
+                return true;
+              });
+          } else {
+            this.renderComponent(componentOrModule);
+          }
 
-        return true;
-      }));
+          return true;
+        })
+      );
     } else {
       this.showTemplate();
       return of(true);

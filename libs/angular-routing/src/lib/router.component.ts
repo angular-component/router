@@ -59,13 +59,13 @@ export class RouterComponent {
           let routeToRender = null;
           for (const route of routes) {
             routeToRender = this.findRouteMatch(route, url);
-            
+
             if (routeToRender) {
               this.setRoute(url, route);
               break;
             }
           }
-          
+
           if (!routeToRender) {
             this.setActiveRoute({ route: null, params: {} });
           }
@@ -94,8 +94,11 @@ export class RouterComponent {
   }
 
   registerRoute(route: Route) {
-    const normalizedPath = this.normalizePath(route.path);
-    const routeRegex = pathToRegexp(normalizedPath);
+    const normalized = this.normalizePath(route.path);
+    const routeRegex = pathToRegexp(normalized, [], {
+      end: route.options.exact,
+    });
+
     route.matcher = route.matcher || routeRegex;
     this._routes$.next([route]);
 
@@ -107,15 +110,7 @@ export class RouterComponent {
   }
 
   normalizePath(path: string) {
-    let normalizedPath = this.location.normalize(path);
-
-    if (normalizedPath === '**') {
-      return '/(.*)';
-    }
-
-    normalizedPath = normalizedPath.replace('/**', '(.*)');
-
-    return normalizedPath;
+    return this.location.normalize(path);
   }
 
   ngOnDestroy() {
