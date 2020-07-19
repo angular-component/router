@@ -1,33 +1,55 @@
 version: 2.1
-orbs:
-  node: circleci/node@1.1.6
+
+var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}
+var_2: &run_in_node
+  docker:
+    - image: circleci/node:12.9.1
+var_3: &run_in_browser
+  docker:
+    - image: circleci/node:12.9.1-browsers
+
 jobs:
   install:
-    executor:
-      name: node/default
+    <<: *run_in_node
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: yarn
+      - restore_cache:
+          keys:
+            - *cache_key
+      - run: yarn --frozen-lockfile --non-interactive
+      - save_cache:
+          key: *cache_key
+          paths:
+            - ~/.cache/yarn
+            - ~/.cache/Cypress
+            - node_modules
 
   build:
-    executor:
-      name: node/default
+    <<: *run_in_node
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: yarn nx build angular-routing
+      - restore_cache:
+          keys:
+            - *cache_key
+      - run: yarn nx build angular-routing --prod
 
   test:
-    executor:
-      name: node/default
+    <<: *run_in_node
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: yarn nx test angular-routing
+      - restore_cache:
+          keys:
+            - *cache_key
+      - run: yarn nx test angular-routing
+
+  test-e2e:
+    <<: *run_in_browser
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - *cache_key
+      - run: yarn nx e2e example-app-e2e
             
 workflows:
   version: 2
@@ -44,6 +66,12 @@ workflows:
             tags:
               only: /.*/
       - test:
+          requires:
+            - install
+          filters:
+            tags:
+              only: /.*/
+      - test-e2e:
           requires:
             - install
           filters:
