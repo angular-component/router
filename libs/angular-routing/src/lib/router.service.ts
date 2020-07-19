@@ -47,6 +47,10 @@ export class Router {
   }
 
   serializeUrl(url: string, queryParams?: Params, hash?: string) {
+    // if relative path
+    if (!url.startsWith('/')) {
+      url = this.urlParser.joinUrls(this.location.path(), url);
+    }
     return (
       url +
       (queryParams ? `?${queryString.stringify(queryParams)}` : '') +
@@ -70,7 +74,7 @@ export class Router {
   }
 
   parseSearchParams(searchParams: URLSearchParams) {
-    let queryParams: Params = {};
+    const queryParams: Params = {};
 
     searchParams.forEach((value, key) => {
       queryParams[key] = value;
