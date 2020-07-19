@@ -1,11 +1,9 @@
-import { HostTree } from '@angular-devkit/schematics';
 import {
   SchematicTestRunner,
   UnitTestTree,
 } from '@angular-devkit/schematics/testing';
 import * as path from 'path';
 import { RouterOptions } from './schema';
-import { async } from '@angular/core/testing';
 
 export const workspaceOptions = {
   name: 'workspace',
@@ -13,6 +11,17 @@ export const workspaceOptions = {
   version: '6.0.0',
   defaultProject: 'bar',
 };
+
+export const defaultAppOptions = {
+  name: 'bar',
+  inlineStyle: false,
+  inlineTemplate: false,
+  viewEncapsulation: 'Emulated',
+  routing: false,
+  style: 'css',
+  skipTests: false,
+};
+
 
 const collectionPath = path.join(__dirname, '../collection.json');
 
@@ -27,31 +36,28 @@ describe('ng add function', () => {
   };
 
   beforeEach(async () => {
-    schematicRunner = new SchematicTestRunner('schematics', collectionPath);
+
+    schematicRunner = new SchematicTestRunner('angular-routing', collectionPath);
+
     appTree = await schematicRunner.runExternalSchematicAsync(
       '@schematics/angular',
       'workspace',
       workspaceOptions
     ).toPromise();
-  });
 
-  it('should update package.json', () => {
-    const options = { ...defaultOptions };
-
-    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
-
-    const packageJson = JSON.parse(tree.readContent('/package.json'));
-
-    expect(packageJson.dependencies['angular-routing']).toBeDefined();
+    appTree = await schematicRunner.runExternalSchematicAsync(
+      '@schematics/angular',
+      'application',
+      defaultAppOptions,
+      appTree
+    ).toPromise();
   });
 
   it('should import RouterModule a specified module', () => {
     const options = { ...defaultOptions };
 
     const tree = schematicRunner.runSchematic('ng-add', options, appTree);
-    const content = tree.readContent(`src/app/app.module.ts`);
-    expect(content).toMatch(
-      /import { RoutingModule } from '\.\/angular-routing';/
-    );
+    const content = tree.readContent(`/projects/bar/src/app/app.module.ts`);
+    expect(content).toContain('RoutingModule.forRoot()');
   });
 });

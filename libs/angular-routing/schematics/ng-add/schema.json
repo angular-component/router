@@ -1,7 +1,7 @@
   {
     "$schema": "http://json-schema.org/schema",
-    "id": "SchematicsNgRxRootEffect",
-    "title": "NgRx Root Effect Options Schema",
+    "id": "SchematicsAddRouting",
+    "title": "Angular Routing ng-add Options Schema",
     "type": "object",
     "properties": {
       "project": {

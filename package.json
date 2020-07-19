@@ -26,12 +26,7 @@
     "update": "ng update @nrwl/workspace",
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
-    "help": "nx help",
-    "build:schematics": "tsc -p tsconfig.schematics.json",
-    "copy:schemas": "copyfiles  schematics/*/schema.json dist/libs/angular-routing/",
-    "copy:collection": "copyfiles schematics/collection.json dist/libs/angular-routing/",
-    "schematics:postbuild": "npm run copy:schemas && npm run copy:collection",
-    "schematics:build": "npm run build:schematics && npm run schematics:postbuild"
+    "help": "nx help"
   },
   "private": true,
   "dependencies": {

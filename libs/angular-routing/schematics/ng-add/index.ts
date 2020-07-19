@@ -36,7 +36,6 @@ function addImportToNgModule(options: RouterOptions): Rule {
       true
     );
 
-
     const importChanges = addImportToModule(
       source,
       modulePath,
