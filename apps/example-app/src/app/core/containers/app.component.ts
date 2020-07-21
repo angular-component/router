@@ -31,6 +31,15 @@ import { LayoutActions } from '@example-app/core/actions';
         >
           Browse Books
         </bc-nav-item>
+        <bc-nav-item
+          (navigate)="closeSidenav()"
+          *ngIf="loggedIn$ | async"
+          linkTo="/books/find/bad"
+          icon="search"
+          hint="Find your next book!"
+        >
+          Browse Books 404
+        </bc-nav-item>
         <bc-nav-item (navigate)="closeSidenav()" *ngIf="!(loggedIn$ | async)">
           Sign In
         </bc-nav-item>
@@ -43,13 +52,12 @@ import { LayoutActions } from '@example-app/core/actions';
       </bc-toolbar>
 
       <router>
-        <route path="/books/**" [load]="components.books"></route>
+        <route path="/books" [exact]="false" [load]="components.books"></route>
         <route path="/login">
           <bc-login-page *routeComponent></bc-login-page>
         </route>
-        <route path="/" redirectTo="/books">
-        </route>
-        <route path="**">
+        <route path="/" redirectTo="/books"> </route>
+        <route path="/" [exact]="false">
           <bc-not-found-page *routeComponent></bc-not-found-page>
         </route>
       </router>
@@ -58,7 +66,7 @@ import { LayoutActions } from '@example-app/core/actions';
 })
 export class AppComponent {
   components = {
-    books: () => import('../../books/books.module').then(m => m.BooksModule)
+    books: () => import('../../books/books.module').then((m) => m.BooksModule),
   };
   showSidenav$: Observable<boolean>;
   loggedIn$: Observable<boolean>;
