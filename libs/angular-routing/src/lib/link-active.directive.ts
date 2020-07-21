@@ -9,7 +9,7 @@ import {
   OnDestroy,
   Optional,
   QueryList,
-  Renderer2
+  Renderer2,
 } from '@angular/core';
 import { LinkTo } from './link-to.directive';
 import { Router } from './router.service';
@@ -21,7 +21,7 @@ export interface LinkActiveOptions {
 }
 
 export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
-  exact: true
+  exact: true,
 };
 
 /**
@@ -36,7 +36,9 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
  */
 @Directive({ selector: '[linkActive]' })
 export class LinkActive implements AfterContentInit, OnDestroy, OnChanges {
-  @ContentChildren(LinkTo, { descendants: true }) public links: QueryList<LinkTo>;
+  @ContentChildren(LinkTo, { descendants: true }) public links: QueryList<
+    LinkTo
+  >;
   @Input('linkActive') activeClass = 'active';
   @Input() activeOptions: LinkActiveOptions;
   private _activeOptions: LinkActiveOptions = { exact: true };
@@ -51,7 +53,7 @@ export class LinkActive implements AfterContentInit, OnDestroy, OnChanges {
     @Inject(LINK_ACTIVE_OPTIONS)
     private defaultActiveOptions: LinkActiveOptions,
     @Optional() private link: LinkTo
-  ) { }
+  ) {}
 
   ngAfterContentInit() {
     if (this.defaultActiveOptions && !this.activeOptions) {
@@ -73,19 +75,33 @@ export class LinkActive implements AfterContentInit, OnDestroy, OnChanges {
       this._linksSub.unsubscribe();
     }
 
-    const contentLinks$ = this.links ? this.links.toArray().map(link => link.hrefUpdated.pipe(startWith(link.linkHref), mapTo(link.linkHref))) : [];
-    const link$ = this.link ? this.link.hrefUpdated.pipe(startWith(this.link.linkHref), mapTo(this.link.linkHref)) : of('');
-    const router$ = this.router.url$
-      .pipe(
-        map(path => this.router.getExternalUrl(path || '/')));
+    const contentLinks$ = this.links
+      ? this.links
+          .toArray()
+          .map((link) =>
+            link.hrefUpdated.pipe(
+              startWith(link.linkHref),
+              mapTo(link.linkHref)
+            )
+          )
+      : [];
+    const link$ = this.link
+      ? this.link.hrefUpdated.pipe(
+          startWith(this.link.linkHref),
+          mapTo(this.link.linkHref)
+        )
+      : of('');
+    const router$ = this.router.url$.pipe(
+      map((path) => this.router.getExternalUrl(path || '/'))
+    );
 
     const observables$ = [router$, link$, ...contentLinks$];
 
-    this._linksSub = combineLatest(observables$).pipe(
-      takeUntil(this._destroy$)
-    ).subscribe(([path, link, ...links]) => {
-      this.checkActive([...links, link], path);
-    });
+    this._linksSub = combineLatest(observables$)
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(([path, link, ...links]) => {
+        this.checkActive([...links, link], path);
+      });
   }
 
   checkActive(linkHrefs: string[], path: string) {

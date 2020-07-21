@@ -68,13 +68,26 @@
     "cypress": "^4.1.0",
     "dotenv": "6.2.0",
     "eslint": "6.8.0",
+    "husky": ">=4",
     "jest": "25.2.3",
     "jest-preset-angular": "8.1.2",
+    "lint-staged": ">=10",
     "ng-packagr": "^9.0.0",
     "prettier": "2.0.4",
     "ts-jest": "25.2.1",
     "ts-node": "~7.0.0",
     "tslint": "~6.0.0",
     "typescript": "~3.8.3"
+  },
+  "lint-staged": {
+    "*.{ts,json,md}": [
+      "yarn format",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }

@@ -1,7 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
 };
-
 
 /*
 Copyright Google LLC. All Rights Reserved.

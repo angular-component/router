@@ -12,7 +12,7 @@
 }
 
 .search-result li:hover {
-  background-color: #607D8B;
+  background-color: #607d8b;
 }
 
 .search-result li a {
@@ -32,12 +32,10 @@
   height: 20px;
 }
 
-
 ul.search-result {
   margin-top: 0;
   padding-left: 0;
 }
-
 
 /*
 Copyright Google LLC. All Rights Reserved.

@@ -29,6 +29,6 @@ export const COMPONENTS = [
   ],
   declarations: COMPONENTS,
   entryComponents: [LogoutConfirmationDialogComponent],
-  exports: COMPONENTS
+  exports: COMPONENTS,
 })
 export class AuthModule {}

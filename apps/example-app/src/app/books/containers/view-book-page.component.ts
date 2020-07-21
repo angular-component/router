@@ -25,7 +25,10 @@ import { ViewBookPageActions } from '@example-app/books/actions';
 export class ViewBookPageComponent implements OnDestroy {
   actionsSubscription: Subscription;
 
-  constructor(store: Store<fromBooks.State>, routeParams$: RouteParams<{ id: string }>) {
+  constructor(
+    store: Store<fromBooks.State>,
+    routeParams$: RouteParams<{ id: string }>
+  ) {
     this.actionsSubscription = routeParams$
       .pipe(map((params) => ViewBookPageActions.selectBook({ id: params.id })))
       .subscribe((action) => store.dispatch(action));

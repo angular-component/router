@@ -9,7 +9,7 @@ import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-hero-detail',
   templateUrl: './hero-detail.component.html',
-  styleUrls: ['./hero-detail.component.css']
+  styleUrls: ['./hero-detail.component.css'],
 })
 export class HeroDetailComponent implements OnInit {
   @Input() hero: Hero;
@@ -18,18 +18,16 @@ export class HeroDetailComponent implements OnInit {
     private routeParams: RouteParams<{ id: string }>,
     private heroService: HeroService,
     private location: Location
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getHero();
   }
 
   getHero(): void {
-    const id = +this.routeParams.pipe(
-      switchMap(params =>
-        this.heroService.getHero(+params.id))
-    )
-      .subscribe(hero => this.hero = hero);
+    const id = +this.routeParams
+      .pipe(switchMap((params) => this.heroService.getHero(+params.id)))
+      .subscribe((hero) => (this.hero = hero));
   }
 
   goBack(): void {
@@ -37,11 +35,9 @@ export class HeroDetailComponent implements OnInit {
   }
 
   save(): void {
-    this.heroService.updateHero(this.hero)
-      .subscribe(() => this.goBack());
+    this.heroService.updateHero(this.hero).subscribe(() => this.goBack());
   }
 }
-
 
 /*
 Copyright Google LLC. All Rights Reserved.

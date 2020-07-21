@@ -7,7 +7,7 @@ import { RouteParams } from 'angular-routing';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.css']
+  styleUrls: ['./product-details.component.css'],
 })
 export class ProductDetailsComponent implements OnInit {
   product;
@@ -15,10 +15,10 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private routeParams$: RouteParams<{ productId: string }>,
     private cartService: CartService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.routeParams$.subscribe(params => {
+    this.routeParams$.subscribe((params) => {
       this.product = products[+params.productId];
     });
   }
@@ -28,7 +28,6 @@ export class ProductDetailsComponent implements OnInit {
     window.alert('Your product has been added to the cart!');
   }
 }
-
 
 /*
 Copyright Google LLC. All Rights Reserved.
