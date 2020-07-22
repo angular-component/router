@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class UrlParser {
   parse(url: string, base?: string | URL): URL {
-    return new URL(url, base);
+    if (base) {
+      return new URL(url, base);
+    }
+    return new URL(url);
   }
 
   joinUrls(currentUrl: string, url: string): string {
