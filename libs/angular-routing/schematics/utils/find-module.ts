@@ -15,7 +15,7 @@ import { DirEntry, Tree } from '@angular-devkit/schematics';
 
 export interface ModuleOptions {
   module?: string;
-  name: string;
+  name?: string;
   flat?: boolean;
   path?: string;
   skipImport?: boolean;

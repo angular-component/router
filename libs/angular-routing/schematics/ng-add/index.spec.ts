@@ -31,8 +31,7 @@ describe('ng add function', () => {
 
   const defaultOptions: RouterOptions = {
     project: 'bar',
-    module: 'app',
-    name: ''
+    module: 'app'
   };
 
   beforeEach(async () => {

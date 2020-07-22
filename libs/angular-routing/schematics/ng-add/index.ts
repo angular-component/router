@@ -4,7 +4,7 @@ import {
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 import { addImportToModule, insertImport } from '../utils/ast-utils';
-import { InsertChange } from '../utils/change';
+import { commitChanges } from '../utils/change';
 import { RouterOptions } from './schema';
 import { findModuleFromOptions } from '../utils/find-module';
 import { getProjectPath } from '../utils/project';
@@ -49,14 +49,7 @@ function addImportToNgModule(options: RouterOptions): Rule {
       importChanges
     ];
 
-    const recorder = host.beginUpdate(modulePath);
-
-    for (const change of changes) {
-      if (change instanceof InsertChange) {
-        recorder.insertLeft(change.pos, change.toAdd);
-      }
-    }
-    host.commitUpdate(recorder);
+    commitChanges(host, source.fileName, changes);
 
     return host;
   };
