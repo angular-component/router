@@ -86,7 +86,9 @@ export class RouterComponent {
   }
 
   setRoute(url: string, route: Route) {
-    const pathInfo = match(this.normalizePath(route.path))(url);
+    const pathInfo = match(this.normalizePath(route.path), {
+      end: route.options.exact,
+    })(url);
     this.basePath = route.path;
 
     const routeParams: Params = pathInfo ? pathInfo.params : {};
