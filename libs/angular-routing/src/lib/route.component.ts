@@ -33,6 +33,7 @@ export function getRouteParams(routeComponent: RouteComponent) {
 }
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'route',
   template: `
     <ng-container *ngIf="(shouldRender$ | async) && template">
