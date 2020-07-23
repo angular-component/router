@@ -1,6 +1,11 @@
-import { Component, SkipSelf, Optional } from '@angular/core';
+import {
+  Component,
+  SkipSelf,
+  Optional,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { Location } from '@angular/common';
-
 import { combineLatest, Subject, BehaviorSubject } from 'rxjs';
 import {
   tap,
@@ -17,10 +22,11 @@ import { Router } from './router.service';
 import { Params } from './route-params.service';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'router',
   template: '<ng-content></ng-content>',
 })
-export class RouterComponent {
+export class RouterComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   private _activeRoute$ = new BehaviorSubject<ActiveRoute>(null);
@@ -52,7 +58,7 @@ export class RouterComponent {
   ) {}
 
   ngOnInit() {
-    combineLatest(this.routes$.pipe(debounceTime(1)), this.router.url$)
+    combineLatest([this.routes$.pipe(debounceTime(1)), this.router.url$])
       .pipe(
         distinctUntilChanged(),
         tap(([routes, url]: [Route[], string]) => {
@@ -76,7 +82,7 @@ export class RouterComponent {
   }
 
   findRouteMatch(route: Route, url: string) {
-    let matchedRoute = route.matcher ? route.matcher.exec(url) : null;
+    const matchedRoute = route.matcher ? route.matcher.exec(url) : null;
 
     if (matchedRoute) {
       return matchedRoute;
