@@ -22,7 +22,6 @@ export const defaultAppOptions = {
   skipTests: false,
 };
 
-
 const collectionPath = path.join(__dirname, '../collection.json');
 
 describe('ng add function', () => {
@@ -31,25 +30,31 @@ describe('ng add function', () => {
 
   const defaultOptions: RouterOptions = {
     project: 'bar',
-    module: 'app'
+    module: 'app',
   };
 
   beforeEach(async () => {
+    schematicRunner = new SchematicTestRunner(
+      'angular-routing',
+      collectionPath
+    );
 
-    schematicRunner = new SchematicTestRunner('angular-routing', collectionPath);
+    appTree = await schematicRunner
+      .runExternalSchematicAsync(
+        '@schematics/angular',
+        'workspace',
+        workspaceOptions
+      )
+      .toPromise();
 
-    appTree = await schematicRunner.runExternalSchematicAsync(
-      '@schematics/angular',
-      'workspace',
-      workspaceOptions
-    ).toPromise();
-
-    appTree = await schematicRunner.runExternalSchematicAsync(
-      '@schematics/angular',
-      'application',
-      defaultAppOptions,
-      appTree
-    ).toPromise();
+    appTree = await schematicRunner
+      .runExternalSchematicAsync(
+        '@schematics/angular',
+        'application',
+        defaultAppOptions,
+        appTree
+      )
+      .toPromise();
   });
 
   it('should import RouterModule a specified module', () => {

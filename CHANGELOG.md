@@ -1,3 +1,18 @@
+<a name="0.2.1"></a>
+
+## [0.2.1](https://github.com/brandonroberts/angular-routing/compare/0.2.0...0.2.1) (2020-07-23)
+
+### Bug Fixes
+
+- pass `exact` option when parsing route params ([#36](https://github.com/brandonroberts/angular-routing/issues/36)) ([156f01e](https://github.com/brandonroberts/angular-routing/commit/156f01e))
+- pass base to URL only when value is provided ([#32](https://github.com/brandonroberts/angular-routing/issues/32)) ([3810e3b](https://github.com/brandonroberts/angular-routing/commit/3810e3b))
+
+### Features
+
+- allow Angular v10 as peer dependency ([#31](https://github.com/brandonroberts/angular-routing/issues/31)) ([b0e67ba](https://github.com/brandonroberts/angular-routing/commit/b0e67ba))
+- allow paths without leading slash ([#34](https://github.com/brandonroberts/angular-routing/issues/34)) ([03ad384](https://github.com/brandonroberts/angular-routing/commit/03ad384))
+- ng-add schematics implementation ([#16](https://github.com/brandonroberts/angular-routing/issues/16)) ([54e728b](https://github.com/brandonroberts/angular-routing/commit/54e728b)), closes [#9](https://github.com/brandonroberts/angular-routing/issues/9)
+
 <a name="0.2.0"></a>
 
 # [0.2.0](https://github.com/brandonroberts/angular-routing/compare/0.1.1...0.2.0) (2020-07-21)

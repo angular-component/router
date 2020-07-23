@@ -1,6 +1,6 @@
 {
   "name": "angular-routing",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
@@ -84,8 +84,7 @@
   },
   "lint-staged": {
     "*.{ts,json,md}": [
-      "yarn format",
-      "git add"
+      "yarn format"
     ]
   },
   "husky": {

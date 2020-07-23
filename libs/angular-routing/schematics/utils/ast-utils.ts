@@ -6,12 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import * as ts from 'typescript';
-import {
-  Change,
-  InsertChange,
-  NoopChange,
-} from './change';
-
+import { Change, InsertChange, NoopChange } from './change';
 
 /**
  * Find all nodes from the AST in the subtree of node of SyntaxKind kind.
