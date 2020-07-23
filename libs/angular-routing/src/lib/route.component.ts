@@ -50,7 +50,13 @@ export function getRouteParams(routeComponent: RouteComponent) {
 })
 export class RouteComponent implements OnInit, OnDestroy {
   @ContentChild(TemplateRef) template: TemplateRef<any> | null;
-  @Input() path: string;
+  @Input()
+  get path() {
+    return this._path;
+  }
+  set path(value: string) {
+    this._path = this.sanitizePath(value);
+  }
   @Input() component: Type<any>;
   @Input() load: Load;
   @Input() reuse = true;
@@ -58,6 +64,7 @@ export class RouteComponent implements OnInit, OnDestroy {
   @Input() exact: boolean;
   @Input() routeOptions: RouteOptions;
 
+  private _path: string;
   private destroy$ = new Subject();
   private _routeParams$ = new BehaviorSubject<Params>({});
   private _shouldRender$ = new BehaviorSubject<boolean>(false);
@@ -195,5 +202,10 @@ export class RouteComponent implements OnInit, OnDestroy {
     } else {
       this.hideTemplate();
     }
+  }
+
+  private sanitizePath(path: string): string {
+    const trimmed = path.trim();
+    return trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
   }
 }
