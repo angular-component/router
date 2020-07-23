@@ -7,7 +7,7 @@
       "sourceRoot": "libs/angular-routing/src",
       "prefix": "reactiveangular",
       "architect": {
-        "build": {
+        "build-package": {
           "builder": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/angular-routing/tsconfig.lib.json",
@@ -19,6 +19,20 @@
             }
           }
         },
+        "build": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              {
+                "command": "ng run angular-routing:build-package"
+              },
+              {
+                "command": "yarn tsc -p libs/angular-routing/tsconfig.schematics.json"
+              }
+            ]
+          }
+        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
@@ -26,7 +40,10 @@
               "libs/angular-routing/tsconfig.lib.json",
               "libs/angular-routing/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/angular-routing/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/angular-routing/**/*"
+            ]
           }
         },
         "test": {
@@ -61,7 +78,9 @@
               "apps/getting-started/src/favicon.ico",
               "apps/getting-started/src/assets"
             ],
-            "styles": ["apps/getting-started/src/styles.css"],
+            "styles": [
+              "apps/getting-started/src/styles.css"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -119,7 +138,10 @@
               "apps/getting-started/tsconfig.app.json",
               "apps/getting-started/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/getting-started/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/getting-started/**/*"
+            ]
           }
         },
         "test": {
@@ -154,8 +176,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/getting-started-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/getting-started-e2e/**/*"]
+            "tsConfig": [
+              "apps/getting-started-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/getting-started-e2e/**/*"
+            ]
           }
         }
       }
@@ -180,7 +207,9 @@
               "apps/example-app/src/favicon.ico",
               "apps/example-app/src/assets"
             ],
-            "styles": ["apps/example-app/src/styles.css"],
+            "styles": [
+              "apps/example-app/src/styles.css"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -238,7 +267,10 @@
               "apps/example-app/tsconfig.app.json",
               "apps/example-app/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/example-app/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/example-app/**/*"
+            ]
           }
         },
         "test": {
@@ -273,8 +305,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/example-app-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/example-app-e2e/**/*"]
+            "tsConfig": [
+              "apps/example-app-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/example-app-e2e/**/*"
+            ]
           }
         }
       }
@@ -299,7 +336,9 @@
               "apps/tour-of-heroes/src/favicon.ico",
               "apps/tour-of-heroes/src/assets"
             ],
-            "styles": ["apps/tour-of-heroes/src/styles.css"],
+            "styles": [
+              "apps/tour-of-heroes/src/styles.css"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -357,7 +396,10 @@
               "apps/tour-of-heroes/tsconfig.app.json",
               "apps/tour-of-heroes/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/tour-of-heroes/**/*"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/tour-of-heroes/**/*"
+            ]
           }
         },
         "test": {
@@ -392,15 +434,21 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/tour-of-heroes-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/tour-of-heroes-e2e/**/*"]
+            "tsConfig": [
+              "apps/tour-of-heroes-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/tour-of-heroes-e2e/**/*"
+            ]
           }
         }
       }
     }
   },
   "cli": {
-    "defaultCollection": "@nrwl/angular"
+    "defaultCollection": "@nrwl/angular",
+    "analytics": false
   },
   "schematics": {
     "@nrwl/angular:application": {
@@ -411,5 +459,5 @@
       "unitTestRunner": "jest"
     }
   },
-  "defaultProject": "router"
+  "defaultProject": "angular-routing"
 }
