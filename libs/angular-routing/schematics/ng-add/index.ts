@@ -1,10 +1,12 @@
 import {
-  chain, Rule,
-  Tree, SchematicsException
+  chain,
+  Rule,
+  Tree,
+  SchematicsException,
 } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 import { addImportToModule, insertImport } from '../utils/ast-utils';
-import { commitChanges } from '../utils/change';
+import { commitChanges, Change } from '../utils/change';
 import { RouterOptions } from './schema';
 import { findModuleFromOptions } from '../utils/find-module';
 import { getProjectPath } from '../utils/project';
@@ -21,7 +23,6 @@ function addImportToNgModule(options: RouterOptions): Rule {
     if (!host.exists(modulePath)) {
       throw new Error('Specified module does not exist');
     }
-
 
     const text = host.read(modulePath);
     if (text === null) {
@@ -40,16 +41,15 @@ function addImportToNgModule(options: RouterOptions): Rule {
       source,
       modulePath,
       'RoutingModule.forRoot()',
-      'angular-routing',
+      'angular-routing'
     ).shift();
-
 
     let changes = [
       insertImport(source, modulePath, 'RoutingModule', 'angular-routing'),
-      importChanges
+      importChanges,
     ];
 
-    commitChanges(host, source.fileName, changes);
+    commitChanges(host, source.fileName, changes as Change[]);
 
     return host;
   };
@@ -57,11 +57,5 @@ function addImportToNgModule(options: RouterOptions): Rule {
 
 // Just return the tree
 export default function (options: RouterOptions): Rule {
-
-  return chain([
-    addImportToNgModule(options)
-  ]);
+  return chain([addImportToNgModule(options)]);
 }
-
-
-
