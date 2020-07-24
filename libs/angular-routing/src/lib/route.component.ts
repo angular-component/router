@@ -24,12 +24,16 @@ import {
 } from 'rxjs/operators';
 
 import { Load, Route, RouteOptions } from './route';
-import { Params, RouteParams } from './route-params.service';
+import { Params, RouteParams, RoutePath } from './route-params.service';
 import { RouterComponent } from './router.component';
 import { Router } from './router.service';
 
 export function getRouteParams(routeComponent: RouteComponent) {
   return routeComponent.routeParams$;
+}
+
+export function getRoutePath(routeComponent: RouteComponent) {
+  return routeComponent.routePath$;
 }
 
 @Component({
@@ -47,17 +51,25 @@ export function getRouteParams(routeComponent: RouteComponent) {
       useFactory: getRouteParams,
       deps: [[new Self(), RouteComponent]],
     },
+    {
+      provide: RoutePath,
+      useFactory: getRoutePath,
+      deps: [[new Self(), RouteComponent]],
+    },
   ],
 })
 export class RouteComponent implements OnInit, OnDestroy {
   @ContentChild(TemplateRef) template: TemplateRef<any> | null;
+
   @Input()
   get path() {
     return this._path;
   }
+
   set path(value: string) {
     this._path = this.sanitizePath(value);
   }
+
   @Input() component: Type<any>;
   @Input() load: Load;
   @Input() reuse = true;
@@ -68,10 +80,12 @@ export class RouteComponent implements OnInit, OnDestroy {
   private _path: string;
   private destroy$ = new Subject();
   private _routeParams$ = new BehaviorSubject<Params>({});
+  private _routePath$ = new BehaviorSubject<string>('');
   private _shouldRender$ = new BehaviorSubject<boolean>(false);
 
   readonly shouldRender$ = this._shouldRender$.asObservable();
   readonly routeParams$ = this._routeParams$.pipe(takeUntil(this.destroy$));
+  readonly routePath$ = this._routePath$.pipe(takeUntil(this.destroy$));
   route!: Route;
 
   constructor(
@@ -97,6 +111,7 @@ export class RouteComponent implements OnInit, OnDestroy {
       mergeMap(([current, rendered]) => {
         if (current.route === this.route) {
           this._routeParams$.next(current.params);
+          this._routePath$.next(current.path);
 
           if (this.redirectTo) {
             this.router.go(this.redirectTo);
