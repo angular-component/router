@@ -1,4 +1,4 @@
-# Angular routing
+# Angular Routing
 [![npm version](https://img.shields.io/npm/v/angular-routing.svg)](https://www.npmjs.com/package/angular-routing)
 
 A declarative router for Angular applications.
