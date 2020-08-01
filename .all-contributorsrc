@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "meeroslav",
+      "name": "Miroslav Jonaš",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/881612?v=4",
+      "profile": "https://missing-manual.com/",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "angular-routing",
+  "projectOwner": "brandonroberts",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
