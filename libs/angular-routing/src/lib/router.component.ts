@@ -73,7 +73,7 @@ export class RouterComponent implements OnInit, OnDestroy {
           }
 
           if (!routeToRender) {
-            this.setActiveRoute({ route: null, params: {} });
+            this.setActiveRoute({ route: null, params: {}, path: '' });
           }
         }),
         takeUntil(this.destroy$)
@@ -98,7 +98,8 @@ export class RouterComponent implements OnInit, OnDestroy {
     this.basePath = route.path;
 
     const routeParams: Params = pathInfo ? pathInfo.params : {};
-    this.setActiveRoute({ route, params: routeParams || {} });
+    const path: string = pathInfo ? pathInfo.path : '';
+    this.setActiveRoute({ route, params: routeParams || {}, path });
   }
 
   registerRoute(route: Route) {

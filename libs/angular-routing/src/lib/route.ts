@@ -19,6 +19,7 @@ export interface RouteOptions {
 export interface ActiveRoute {
   route: Route;
   params: Params;
+  path: string;
 }
 
 export interface ModuleWithRoute {
