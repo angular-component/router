@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "santoshyadavdev",
+      "name": "Santosh Yadav",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/11923975?v=4",
+      "profile": "https://www.santoshyadav.dev",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "angular-routing",
+  "projectOwner": "brandonroberts",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
