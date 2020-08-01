@@ -16,6 +16,16 @@ OR
 yarn add angular-routing
 ```
 
+## Installation with ng add
+
+You can use ng add to install the package by using below command.
+
+```sh
+ng add angular-routing
+```
+
+The above command will install the package, and add the RoutingModule import in the AppModule.
+
 ## Usage
 
 To register the Router, add the `RoutingModule.forRoot()` to your AppModule imports.
