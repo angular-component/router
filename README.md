@@ -24,7 +24,7 @@ You can use ng add to install the package by using below command.
 ng add angular-routing
 ```
 
-The above command will install the package, and add the RoutingModule import in Root Module.
+The above command will install the package, and add the RoutingModule import in the AppModule.
 
 ## Usage
 
