@@ -248,6 +248,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://missing-manual.com/"><img src="https://avatars2.githubusercontent.com/u/881612?v=4" width="100px;" alt=""/><br /><sub><b>Miroslav Jonaš</b></sub></a><br /><a href="https://github.com/brandonroberts/angular-routing/commits?author=meeroslav" title="Code">💻</a> <a href="https://github.com/brandonroberts/angular-routing/commits?author=meeroslav" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://www.santoshyadav.dev"><img src="https://avatars3.githubusercontent.com/u/11923975?v=4" width="100px;" alt=""/><br /><sub><b>Santosh Yadav</b></sub></a><br /><a href="https://github.com/brandonroberts/angular-routing/commits?author=santoshyadavdev" title="Code">💻</a> <a href="https://github.com/brandonroberts/angular-routing/commits?author=santoshyadavdev" title="Documentation">📖</a></td>
   </tr>
 </table>
 
