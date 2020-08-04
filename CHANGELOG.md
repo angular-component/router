@@ -1,3 +1,11 @@
+<a name="0.2.2"></a>
+
+## [0.2.2](https://github.com/brandonroberts/angular-routing/compare/0.2.1...0.2.2) (2020-08-04)
+
+### Features
+
+- provide matched path in route component ([#38](https://github.com/brandonroberts/angular-routing/issues/38)) ([da7daed](https://github.com/brandonroberts/angular-routing/commit/da7daed))
+
 <a name="0.2.1"></a>
 
 ## [0.2.1](https://github.com/brandonroberts/angular-routing/compare/0.2.0...0.2.1) (2020-07-23)
