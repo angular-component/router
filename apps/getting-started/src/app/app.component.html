@@ -2,7 +2,7 @@
 
 <div class="container">
   <router>
-    <route path="/products/:productId">
+    <route path="/products/:productId" [exact]="false">
       <app-product-details *routeComponent></app-product-details>
     </route>
     <route path="/cart">
@@ -17,7 +17,7 @@
   </router>
 </div>
 
-<!-- 
+<!--
 Copyright Google LLC. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that
 can be found in the LICENSE file at http://angular.io/license

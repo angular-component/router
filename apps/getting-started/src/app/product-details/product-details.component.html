@@ -8,7 +8,18 @@
   <button (click)="addToCart(product)">Buy</button>
 </div>
 
-<!-- 
+<router>
+  <route path="products/:temp" [exact]="false">
+    <app-product-details *routeComponent></app-product-details>
+  </route>
+  <route path="">
+    <a linkTo="products/2" class="button fancy-button" *routerComponent>
+      Got to product 2
+    </a>
+  </route>
+</router>
+
+<!--
 Copyright Google LLC. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that
 can be found in the LICENSE file at http://angular.io/license

@@ -16,6 +16,11 @@ export class Router {
   private _url$ = new BehaviorSubject<string>(this.location.path());
   readonly url$ = this._url$.pipe(distinctUntilChanged());
 
+  private _routeParams$ = new BehaviorSubject<Params>({});
+  readonly routeParams$ = this._routeParams$.pipe(
+    distinctUntilChanged((x, y) => JSON.stringify(x) === JSON.stringify(y))
+  );
+
   private _queryParams$ = new BehaviorSubject<Params>({});
   readonly queryParams$ = this._queryParams$.pipe(distinctUntilChanged());
 
@@ -56,6 +61,10 @@ export class Router {
       (queryParams ? `?${queryString.stringify(queryParams)}` : '') +
       `${hash ? '#' + hash : ''}`
     );
+  }
+
+  updateRouteParams(params: Params) {
+    this._routeParams$.next(params);
   }
 
   getExternalUrl(url: string) {

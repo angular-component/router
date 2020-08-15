@@ -81,16 +81,6 @@ export class RouterComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  findRouteMatch(route: Route, url: string) {
-    const matchedRoute = route.matcher ? route.matcher.exec(url) : null;
-
-    if (matchedRoute) {
-      return matchedRoute;
-    }
-
-    return null;
-  }
-
   setRoute(url: string, route: Route) {
     const pathInfo = match(this.normalizePath(route.path), {
       end: route.options.exact,
@@ -100,6 +90,7 @@ export class RouterComponent implements OnInit, OnDestroy {
     const routeParams: Params = pathInfo ? pathInfo.params : {};
     const path: string = pathInfo ? pathInfo.path : '';
     this.setActiveRoute({ route, params: routeParams || {}, path });
+    this.router.updateRouteParams(routeParams);
   }
 
   registerRoute(route: Route) {
@@ -114,11 +105,21 @@ export class RouterComponent implements OnInit, OnDestroy {
     return route;
   }
 
-  setActiveRoute(active: ActiveRoute) {
+  private findRouteMatch(route: Route, url: string) {
+    const matchedRoute = route.matcher ? route.matcher.exec(url) : null;
+
+    if (matchedRoute) {
+      return matchedRoute;
+    }
+
+    return null;
+  }
+
+  private setActiveRoute(active: ActiveRoute) {
     this._activeRoute$.next(active);
   }
 
-  normalizePath(path: string) {
+  private normalizePath(path: string) {
     return this.location.normalize(path);
   }
 
