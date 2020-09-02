@@ -40,8 +40,10 @@ export function getRoutePath(routeComponent: RouteComponent) {
   // tslint:disable-next-line:component-selector
   selector: 'route',
   template: `
-    <ng-container *ngIf="(shouldRender$ | async) && template">
-      <ng-container [ngTemplateOutlet]="template"></ng-container>
+    <ng-container
+      *ngIf="(shouldRender$ | async) && template"
+      [ngTemplateOutlet]="template"
+    >
     </ng-container>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
