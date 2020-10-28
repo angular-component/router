@@ -15,8 +15,6 @@ export interface Host {
 }
 
 export interface Change {
-  apply(host: Host): Promise<void>;
-
   // The file this change should be applied to. Some changes might not apply to
   // a file (maybe the config).
   readonly path: string | null;
@@ -27,6 +25,8 @@ export interface Change {
 
   // The description of this change. This will be outputted in a dry or verbose run.
   readonly description: string;
+
+  apply(host: Host): Promise<void>;
 }
 
 /**
@@ -176,7 +176,7 @@ export function createChangeRecorder(
 }
 
 export function commitChanges(tree: Tree, path: string, changes: Change[]) {
-  if (changes.length === 0) {
+  if (!changes.length) {
     return false;
   }
 
