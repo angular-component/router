@@ -7,7 +7,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { Router } from './router.service';
-import { Params } from './route-params.service';
+import { Params } from './route-params';
 
 const DEFAULT_TARGET = '_self';
 

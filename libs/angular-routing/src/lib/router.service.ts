@@ -7,7 +7,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 import * as queryString from 'query-string';
 
 import { UrlParser } from './url-parser';
-import { Params } from './route-params.service';
+import { compareParams, Params } from './route-params';
 
 @Injectable({
   providedIn: 'root',
@@ -18,11 +18,13 @@ export class Router {
 
   private _routeParams$ = new BehaviorSubject<Params>({});
   readonly routeParams$ = this._routeParams$.pipe(
-    distinctUntilChanged((x, y) => JSON.stringify(x) === JSON.stringify(y))
+    distinctUntilChanged(compareParams)
   );
 
   private _queryParams$ = new BehaviorSubject<Params>({});
-  readonly queryParams$ = this._queryParams$.pipe(distinctUntilChanged());
+  readonly queryParams$ = this._queryParams$.pipe(
+    distinctUntilChanged(compareParams)
+  );
 
   private _hash$ = new BehaviorSubject<string>('');
   readonly hash$ = this._hash$.pipe(distinctUntilChanged());

@@ -1,6 +1,6 @@
 import { Type, NgModuleFactory } from '@angular/core';
 
-import { Params } from './route-params.service';
+import { Params } from './route-params';
 
 export type Load = () => Promise<NgModuleFactory<any> | Type<any> | any>;
 

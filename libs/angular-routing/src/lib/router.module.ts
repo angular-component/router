@@ -11,7 +11,7 @@ import { RouteComponentTemplate } from './route-component.directive';
 import { LinkActive } from './link-active.directive';
 import { LinkTo } from './link-to.directive';
 import { UrlParser } from './url-parser';
-import { QueryParams } from './route-params.service';
+import { QueryParams } from './route-params';
 import { Router } from './router.service';
 
 export const components = [

@@ -24,7 +24,7 @@ import {
 } from 'rxjs/operators';
 
 import { Load, Route, RouteOptions } from './route';
-import { Params, RouteParams, RoutePath } from './route-params.service';
+import { Params, RouteParams, RoutePath } from './route-params';
 import { RouterComponent } from './router.component';
 import { Router } from './router.service';
 
