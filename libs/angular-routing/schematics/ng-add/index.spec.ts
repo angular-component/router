@@ -57,10 +57,12 @@ describe('ng add function', () => {
       .toPromise();
   });
 
-  it('should import RouterModule a specified module', () => {
+  it('should import RouterModule a specified module', async () => {
     const options = { ...defaultOptions };
 
-    const tree = schematicRunner.runSchematic('ng-add', options, appTree);
+    const tree = await schematicRunner
+      .runSchematicAsync('ng-add', options, appTree)
+      .toPromise();
     const content = tree.readContent(`/projects/bar/src/app/app.module.ts`);
     expect(content).toContain('RoutingModule.forRoot()');
   });
