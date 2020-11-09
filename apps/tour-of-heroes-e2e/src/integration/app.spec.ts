@@ -8,6 +8,6 @@ describe('tour-of-heroes', () => {
     cy.login('my-email@something.com', 'myPassword');
 
     // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome to tour-of-heroes!');
+    getGreeting().contains('Tour of Heroes');
   });
 });
