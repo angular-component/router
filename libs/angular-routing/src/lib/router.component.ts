@@ -19,7 +19,7 @@ import { pathToRegexp, match } from 'path-to-regexp';
 
 import { Route, ActiveRoute } from './route';
 import { Router } from './router.service';
-import { compareParams, Params } from './route-params.service';
+import { Params } from './route-params.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -30,9 +30,7 @@ export class RouterComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   private _activeRoute$ = new BehaviorSubject<ActiveRoute>(null);
-  readonly activeRoute$ = this._activeRoute$.pipe(
-    distinctUntilChanged(this.compareActiveRoutes)
-  );
+  readonly activeRoute$ = this._activeRoute$.pipe(distinctUntilChanged());
 
   private _routes$ = new BehaviorSubject<Route[]>([]);
   readonly routes$ = this._routes$.pipe(
@@ -83,6 +81,16 @@ export class RouterComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
+  findRouteMatch(route: Route, url: string) {
+    const matchedRoute = route.matcher ? route.matcher.exec(url) : null;
+
+    if (matchedRoute) {
+      return matchedRoute;
+    }
+
+    return null;
+  }
+
   setRoute(url: string, route: Route) {
     const pathInfo = match(this.normalizePath(route.path), {
       end: route.options.exact,
@@ -106,40 +114,15 @@ export class RouterComponent implements OnInit, OnDestroy {
     return route;
   }
 
-  ngOnDestroy() {
-    this.destroy$.next();
-  }
-
-  private findRouteMatch(route: Route, url: string) {
-    const matchedRoute = route.matcher ? route.matcher.exec(url) : null;
-
-    if (matchedRoute) {
-      return matchedRoute;
-    }
-
-    return null;
-  }
-
-  private setActiveRoute(active: ActiveRoute) {
+  setActiveRoute(active: ActiveRoute) {
     this._activeRoute$.next(active);
   }
 
-  private normalizePath(path: string) {
+  normalizePath(path: string) {
     return this.location.normalize(path);
   }
 
-  private compareActiveRoutes(
-    previous: ActiveRoute,
-    current: ActiveRoute
-  ): boolean {
-    if (previous === current) {
-      return true;
-    }
-    return (
-      previous.path === current.path &&
-      compareParams(previous.params, current.params) &&
-      previous.route.path === current.route.path &&
-      previous.route.options.exact === current.route.options.exact
-    );
+  ngOnDestroy() {
+    this.destroy$.next();
   }
 }
