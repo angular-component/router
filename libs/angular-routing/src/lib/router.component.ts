@@ -19,7 +19,7 @@ import { pathToRegexp, match } from 'path-to-regexp';
 
 import { Route, ActiveRoute } from './route';
 import { Router } from './router.service';
-import { Params } from './route-params.service';
+import { compareParams, Params } from './route-params.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -30,7 +30,9 @@ export class RouterComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   private _activeRoute$ = new BehaviorSubject<ActiveRoute>(null);
-  readonly activeRoute$ = this._activeRoute$.pipe(distinctUntilChanged());
+  readonly activeRoute$ = this._activeRoute$.pipe(
+    distinctUntilChanged(this.compareActiveRoutes)
+  );
 
   private _routes$ = new BehaviorSubject<Route[]>([]);
   readonly routes$ = this._routes$.pipe(
@@ -124,5 +126,23 @@ export class RouterComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.destroy$.next();
+  }
+
+  private compareActiveRoutes(
+    previous: ActiveRoute,
+    current: ActiveRoute
+  ): boolean {
+    if (previous === current) {
+      return true;
+    }
+    if (!previous) {
+      return false;
+    }
+    return (
+      previous.path === current.path &&
+      compareParams(previous.params, current.params) &&
+      previous.route.path === current.route.path &&
+      previous.route.options.exact === current.route.options.exact
+    );
   }
 }
