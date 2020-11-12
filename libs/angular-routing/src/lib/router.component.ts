@@ -37,8 +37,7 @@ export class RouterComponent implements OnInit, OnDestroy {
 
   private _routes$ = new BehaviorSubject<Route[]>([]);
   readonly routes$ = this._routes$.pipe(
-    scan((routes, route) => routes.concat(route).sort(compareRoutes)),
-    tap((routes) => console.log('___ROUTES', routes))
+    scan((routes, route) => routes.concat(route).sort(compareRoutes))
   );
 
   public basePath = '';
@@ -55,7 +54,7 @@ export class RouterComponent implements OnInit, OnDestroy {
     private router: Router,
     private location: Location,
     @SkipSelf() @Optional() public parentRouterComponent: RouterComponent
-  ) { }
+  ) {}
 
   ngOnInit() {
     combineLatest([this.routes$.pipe(debounceTime(1)), this.router.url$])
