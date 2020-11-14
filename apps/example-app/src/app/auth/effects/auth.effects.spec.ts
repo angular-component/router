@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { Router } from 'angular-routing';
 import { Actions } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { cold, hot } from 'jasmine-marbles';
@@ -33,7 +33,7 @@ describe('AuthEffects', () => {
         provideMockActions(() => actions$),
         {
           provide: Router,
-          useValue: { navigate: jest.fn() },
+          useValue: { go: jest.fn() },
         },
         {
           provide: MatDialog,

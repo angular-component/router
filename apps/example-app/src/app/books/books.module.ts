@@ -44,7 +44,7 @@ import * as fromBooks from '@example-app/books/reducers';
   `,
 })
 export class BooksComponent {
-  loggedIn$ = this.authGuard.canActivate();
+  loggedIn$ = this.authGuard.isLoggedIn();
 
   constructor(private authGuard: AuthGuard) {}
 }

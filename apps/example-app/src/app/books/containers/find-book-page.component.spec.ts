@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RoutingModule } from 'angular-routing';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
@@ -27,7 +27,7 @@ describe('Find Book Page', () => {
     TestBed.configureTestingModule({
       imports: [
         NoopAnimationsModule,
-        RouterTestingModule,
+        RoutingModule,
         MaterialModule,
         ReactiveFormsModule,
       ],
