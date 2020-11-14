@@ -5,14 +5,13 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { Location } from '@angular/common';
 import { combineLatest, Subject, BehaviorSubject } from 'rxjs';
 import {
   tap,
   takeUntil,
   distinctUntilChanged,
-  scan,
   debounceTime,
+  map,
 } from 'rxjs/operators';
 
 import { pathToRegexp, match } from 'path-to-regexp';
@@ -22,6 +21,11 @@ import { Router } from './router.service';
 import { compareParams, Params } from './route-params.service';
 import { compareRoutes } from './utils/compare-routes';
 
+interface State {
+  activeRoute: ActiveRoute | null;
+  routes: Route[];
+}
+
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'router',
@@ -29,15 +33,19 @@ import { compareRoutes } from './utils/compare-routes';
 })
 export class RouterComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
+  private readonly state$ = new BehaviorSubject<State>({
+    activeRoute: null,
+    routes: [],
+  });
 
-  private _activeRoute$ = new BehaviorSubject<ActiveRoute>(null);
-  readonly activeRoute$ = this._activeRoute$.pipe(
-    distinctUntilChanged(this.compareActiveRoutes)
+  readonly activeRoute$ = this.state$.pipe(
+    map((state) => state.activeRoute),
+    distinctUntilChanged(this.compareActiveRoutes),
+    takeUntil(this.destroy$)
   );
-
-  private _routes$ = new BehaviorSubject<Route[]>([]);
-  readonly routes$ = this._routes$.pipe(
-    scan((routes, route) => routes.concat(route).sort(compareRoutes))
+  readonly routes$ = this.state$.pipe(
+    map((state) => state.routes),
+    takeUntil(this.destroy$)
   );
 
   public basePath = '';
@@ -52,7 +60,6 @@ export class RouterComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private location: Location,
     @SkipSelf() @Optional() public parentRouterComponent: RouterComponent
   ) {}
 
@@ -108,17 +115,19 @@ export class RouterComponent implements OnInit, OnDestroy {
     });
 
     route.matcher = route.matcher || routeRegex;
-    this._routes$.next([route]);
+
+    const routes = this.state$.value.routes;
+    this.updateState({ routes: routes.concat(route).sort(compareRoutes) });
 
     return route;
   }
 
-  setActiveRoute(active: ActiveRoute) {
-    this._activeRoute$.next(active);
+  setActiveRoute(activeRoute: ActiveRoute) {
+    this.updateState({ activeRoute });
   }
 
   normalizePath(path: string) {
-    return this.location.normalize(path);
+    return this.router.normalizePath(path);
   }
 
   ngOnDestroy() {
@@ -141,5 +150,9 @@ export class RouterComponent implements OnInit, OnDestroy {
       previous.route.path === current.route.path &&
       previous.route.options.exact === current.route.options.exact
     );
+  }
+
+  private updateState(newState: Partial<State>) {
+    this.state$.next({ ...this.state$.value, ...newState });
   }
 }

@@ -14,13 +14,14 @@ import {
   OnDestroy,
 } from '@angular/core';
 
-import { Subject, BehaviorSubject, merge, of, from } from 'rxjs';
+import { Subject, BehaviorSubject, of, from } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
   takeUntil,
   mergeMap,
   withLatestFrom,
+  map,
 } from 'rxjs/operators';
 
 import { Load, Route, RouteOptions } from './route';
@@ -34,6 +35,12 @@ export function getRouteParams(routeComponent: RouteComponent) {
 
 export function getRoutePath(routeComponent: RouteComponent) {
   return routeComponent.routePath$;
+}
+
+interface State {
+  params: Params;
+  path: string;
+  shouldRender: boolean;
 }
 
 @Component({
@@ -81,13 +88,23 @@ export class RouteComponent implements OnInit, OnDestroy {
 
   private _path: string;
   private destroy$ = new Subject();
-  private _routeParams$ = new BehaviorSubject<Params>({});
-  private _routePath$ = new BehaviorSubject<string>('');
-  private _shouldRender$ = new BehaviorSubject<boolean>(false);
+  private readonly state$ = new BehaviorSubject<State>({
+    params: {},
+    path: '',
+    shouldRender: false,
+  });
 
-  readonly shouldRender$ = this._shouldRender$.asObservable();
-  readonly routeParams$ = this._routeParams$.pipe(takeUntil(this.destroy$));
-  readonly routePath$ = this._routePath$.pipe(takeUntil(this.destroy$));
+  readonly shouldRender$ = this.state$.pipe(map((state) => state.shouldRender));
+  readonly routeParams$ = this.state$.pipe(
+    map((state) => state.params),
+    distinctUntilChanged(),
+    takeUntil(this.destroy$)
+  );
+  readonly routePath$ = this.state$.pipe(
+    map((state) => state.path),
+    distinctUntilChanged(),
+    takeUntil(this.destroy$)
+  );
   route!: Route;
 
   constructor(
@@ -106,38 +123,41 @@ export class RouteComponent implements OnInit, OnDestroy {
 
     this.route = this.registerRoute(path, this.exact, this.load);
 
-    const activeRoute$ = this.routerComponent.activeRoute$.pipe(
-      filter((ar) => ar !== null),
-      distinctUntilChanged(),
-      withLatestFrom(this.shouldRender$),
-      mergeMap(([current, rendered]) => {
-        if (current.route === this.route) {
-          this._routeParams$.next(current.params);
-          this._routePath$.next(current.path);
-
-          if (this.redirectTo) {
-            this.router.go(this.redirectTo);
-            return of(null);
-          }
-
-          if (!rendered) {
-            if (!this.reuse) {
-              this.clearView();
+    this.routerComponent.activeRoute$
+      .pipe(
+        filter((ar) => ar !== null),
+        distinctUntilChanged(),
+        withLatestFrom(this.shouldRender$),
+        mergeMap(([current, rendered]) => {
+          if (current.route === this.route) {
+            if (this.redirectTo) {
+              this.router.go(this.redirectTo);
+              return of(null);
             }
 
-            return this.loadAndRender(current.route);
+            this.updateState({
+              params: current.params,
+              path: current.path,
+            });
+
+            if (!rendered) {
+              if (!this.reuse) {
+                this.clearView();
+              }
+
+              return this.loadAndRender(current.route);
+            }
+
+            return of(null);
+          } else if (rendered) {
+            return of(this.clearView());
           }
 
           return of(null);
-        } else if (rendered) {
-          return of(this.clearView());
-        }
-
-        return of(null);
-      })
-    );
-
-    merge(activeRoute$).pipe(takeUntil(this.destroy$)).subscribe();
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
   }
 
   ngOnDestroy() {
@@ -206,12 +226,12 @@ export class RouteComponent implements OnInit, OnDestroy {
 
   private showTemplate() {
     setTimeout(() => {
-      this._shouldRender$.next(true);
+      this.updateState({ shouldRender: true });
     });
   }
 
   private hideTemplate() {
-    this._shouldRender$.next(false);
+    this.updateState({ shouldRender: false });
   }
 
   private clearView() {
@@ -225,5 +245,9 @@ export class RouteComponent implements OnInit, OnDestroy {
   private sanitizePath(path: string): string {
     const trimmed = path.trim();
     return trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
+  }
+
+  private updateState(newState: Partial<State>) {
+    this.state$.next({ ...this.state$.value, ...newState });
   }
 }
