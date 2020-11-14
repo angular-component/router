@@ -20,6 +20,7 @@ import { pathToRegexp, match } from 'path-to-regexp';
 import { Route, ActiveRoute } from './route';
 import { Router } from './router.service';
 import { compareParams, Params } from './route-params.service';
+import { compareRoutes } from './utils/compare-routes';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -36,11 +37,7 @@ export class RouterComponent implements OnInit, OnDestroy {
 
   private _routes$ = new BehaviorSubject<Route[]>([]);
   readonly routes$ = this._routes$.pipe(
-    scan((routes, route) => {
-      routes = routes.concat(route);
-
-      return routes;
-    })
+    scan((routes, route) => routes.concat(route).sort(compareRoutes))
   );
 
   public basePath = '';
@@ -107,7 +104,7 @@ export class RouterComponent implements OnInit, OnDestroy {
   registerRoute(route: Route) {
     const normalized = this.normalizePath(route.path);
     const routeRegex = pathToRegexp(normalized, [], {
-      end: route.options.exact,
+      end: route.options.exact ?? true,
     });
 
     route.matcher = route.matcher || routeRegex;
