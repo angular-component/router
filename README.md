@@ -26,7 +26,7 @@ yarn add angular-routing
 
 ## Installation with ng add
 
-You can use ng add to install the package by using below command.
+You can use ng add to install the package by using the command below.
 
 ```sh
 ng add angular-routing
@@ -84,6 +84,62 @@ After your components are registered, use the `Router` and `Route` components to
   </route>
 </router>
 ```
+
+## Route sorting
+
+Angular routing is sorting the routes upon registration, based on priority. The order in which the routes are defined in your template is therefore not important.
+
+The following two examples will give the same results
+
+```html
+<router>
+  <route path="/blog" [exact]="false">
+    <app-blog *routeComponent></app-blog>
+  </route>
+  <route path="/" redirectTo="/blog"></route>
+  <route path="/" [exact]="false">
+    <app-page-not-found *routeComponent></app-page-not-found>
+  </route>
+</router>
+```
+
+and
+
+```html
+<router>
+  <route path="/" [exact]="false">
+    <app-page-not-found *routeComponent></app-page-not-found>
+  </route>
+  <route path="/" redirectTo="/blog"></route>
+  <route path="/blog" [exact]="false">
+    <app-blog *routeComponent></app-blog>
+  </route>
+</router>
+```
+
+The sorting algorithm has only a few rules (ordered by importance):
+
+- Named routes (e.g. `/blog`) have priority over root route (`/`)
+- Static routes (e.g. `/blog/view`) have priority over parametrized (e.g. `/blog/:id`)
+- Exact route (with `exact` set to `true` or omitted) has priority over non-exact (with `exact` set to `false`)
+- Longer paths have priority over shorter
+
+## Route guards
+
+Implementing the route guard is as simple as adding a structural directive on a `route` component
+
+```html
+<router>
+  <route path="/admin" *ngIf="user.isAuthenticated()">
+    <app-admin *routeComponent></app-admin>
+  </route>
+  <route path="/admin" *ngIf="!user.isAuthenticated()">
+    <app-login *routeComponent></app-login>
+  </route>
+</router>
+```
+
+The "guard" doesn't stop the navigation. It simply removes the route from the configuration so the next eligible route will pick it up.
 
 ## Navigating with Links
 
