@@ -2,27 +2,41 @@ import { Injectable } from '@angular/core';
 import { PlatformLocation, Location } from '@angular/common';
 
 import { BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import * as queryString from 'query-string';
 
 import { UrlParser } from './url-parser';
 import { Params, compareParams } from './route-params.service';
 
+interface State {
+  url: string;
+  queryParams: Params;
+  hash: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class Router {
-  private _url$ = new BehaviorSubject<string>(this.location.path());
-  readonly url$ = this._url$.pipe(distinctUntilChanged());
+  private readonly state$ = new BehaviorSubject<State>({
+    url: this.location.path(),
+    queryParams: {},
+    hash: '',
+  });
 
-  private _queryParams$ = new BehaviorSubject<Params>({});
-  readonly queryParams$ = this._queryParams$.pipe(
+  readonly url$ = this.state$.pipe(
+    map((state) => state.url),
+    distinctUntilChanged()
+  );
+  readonly hash$ = this.state$.pipe(
+    map((state) => state.hash),
+    distinctUntilChanged()
+  );
+  readonly queryParams$ = this.state$.pipe(
+    map((state) => state.queryParams),
     distinctUntilChanged(compareParams)
   );
-
-  private _hash$ = new BehaviorSubject<string>('');
-  readonly hash$ = this._hash$.pipe(distinctUntilChanged());
 
   constructor(
     private location: Location,
@@ -53,6 +67,7 @@ export class Router {
     if (!url.startsWith('/')) {
       url = this.urlParser.joinUrls(this.location.path(), url);
     }
+
     return (
       url +
       (queryParams ? `?${queryString.stringify(queryParams)}` : '') +
@@ -62,17 +77,6 @@ export class Router {
 
   getExternalUrl(url: string) {
     return this.location.prepareExternalUrl(url);
-  }
-
-  private getLocation() {
-    return this.platformLocation.href;
-  }
-
-  private nextState(url: string) {
-    const parsedUrl = this._parseUrl(url);
-    this._nextUrl(parsedUrl.pathname);
-    this._nextQueryParams(this.parseSearchParams(parsedUrl.searchParams));
-    this._nextHash(parsedUrl.hash ? parsedUrl.hash.split('#')[0] : '');
   }
 
   parseSearchParams(searchParams: URLSearchParams) {
@@ -85,19 +89,25 @@ export class Router {
     return queryParams;
   }
 
+  normalizePath(path: string) {
+    return this.location.normalize(path);
+  }
+
+  private getLocation() {
+    return this.platformLocation.href;
+  }
+
+  private nextState(url: string) {
+    const parsedUrl = this._parseUrl(url);
+
+    this.state$.next({
+      url: parsedUrl.pathname,
+      queryParams: this.parseSearchParams(parsedUrl.searchParams),
+      hash: parsedUrl.hash ? parsedUrl.hash.split('#')[0] : '',
+    });
+  }
+
   private _parseUrl(path: string): URL {
     return this.urlParser.parse(path);
-  }
-
-  private _nextUrl(url: string) {
-    this._url$.next(url);
-  }
-
-  private _nextQueryParams(params: Params) {
-    this._queryParams$.next(params);
-  }
-
-  private _nextHash(hash: string) {
-    this._hash$.next(hash);
   }
 }
