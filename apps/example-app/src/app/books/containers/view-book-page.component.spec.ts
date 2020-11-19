@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { RouteParams } from 'angular-routing';
 
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { BehaviorSubject } from 'rxjs';
@@ -18,15 +18,15 @@ import { MaterialModule } from '@example-app/material';
 describe('View Book Page', () => {
   let fixture: ComponentFixture<ViewBookPageComponent>;
   let store: MockStore;
-  let route: ActivatedRoute;
+  let routeParams: RouteParams;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [MaterialModule],
       providers: [
         {
-          provide: ActivatedRoute,
-          useValue: { params: new BehaviorSubject({}) },
+          provide: RouteParams,
+          useValue: new BehaviorSubject({}),
         },
         provideMockStore(),
       ],
@@ -41,7 +41,7 @@ describe('View Book Page', () => {
 
     fixture = TestBed.createComponent(ViewBookPageComponent);
     store = TestBed.inject(MockStore);
-    route = TestBed.inject(ActivatedRoute);
+    routeParams = TestBed.inject(RouteParams);
 
     jest.spyOn(store, 'dispatch');
   });
@@ -55,7 +55,7 @@ describe('View Book Page', () => {
   it('should dispatch a book.Select action on init', () => {
     const action = ViewBookPageActions.selectBook({ id: '2' });
 
-    (route.params as BehaviorSubject<any>).next({ id: '2' });
+    (routeParams as BehaviorSubject<any>).next({ id: '2' });
 
     expect(store.dispatch).toHaveBeenLastCalledWith(action);
   });
