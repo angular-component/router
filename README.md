@@ -124,22 +124,22 @@ The sorting algorithm has only a few rules (ordered by importance):
 - Exact route (with `exact` set to `true` or omitted) has priority over non-exact (with `exact` set to `false`)
 - Longer paths have priority over shorter
 
-## Route guards
+## Route restrictions
 
-Implementing the route guard is as simple as adding a structural directive on a `route` component
+Implementing the route restriction is as simple as adding a structural directive on a `route` component
 
 ```html
 <router>
-  <route path="/admin" *ngIf="user.isAuthenticated()">
+  <route path="/admin" *ngIf="user.isAuthenticated$ | async">
     <app-admin *routeComponent></app-admin>
   </route>
-  <route path="/admin" *ngIf="!user.isAuthenticated()">
+  <route path="/admin" *ngIf="!(user.isAuthenticated$ | async)">
     <app-login *routeComponent></app-login>
   </route>
 </router>
 ```
 
-The "guard" doesn't stop the navigation. It simply removes the route from the configuration so the next eligible route will pick it up.
+The restriction doesn't stop the navigation. It simply removes the route from the configuration so the next eligible route will pick it up.
 
 ## Navigating with Links
 

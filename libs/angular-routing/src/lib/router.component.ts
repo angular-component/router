@@ -166,7 +166,8 @@ export class RouterComponent implements OnInit, OnDestroy {
       this.updateState({
         routes: routes.filter((r) => r.matcher !== route.matcher),
       });
+    } else {
+      this.updateState({ routes: routes.concat(route).sort(compareRoutes) });
     }
-    this.updateState({ routes: routes.concat(route).sort(compareRoutes) });
   }
 }
