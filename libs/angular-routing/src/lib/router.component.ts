@@ -26,6 +26,8 @@ interface State {
   routes: Route[];
 }
 
+type UnregisterableRoute = Route & { unregister?: boolean };
+
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'router',
@@ -115,15 +117,17 @@ export class RouterComponent implements OnInit, OnDestroy {
     });
 
     route.matcher = route.matcher || routeRegex;
-
-    const routes = this.state$.value.routes;
-    this.updateState({ routes: routes.concat(route).sort(compareRoutes) });
+    this.updateRoutes(route);
 
     return route;
   }
 
   setActiveRoute(activeRoute: ActiveRoute) {
     this.updateState({ activeRoute });
+  }
+
+  unregisterRoute(route: Route) {
+    this.updateRoutes({ ...route, unregister: true });
   }
 
   normalizePath(path: string) {
@@ -154,5 +158,16 @@ export class RouterComponent implements OnInit, OnDestroy {
 
   private updateState(newState: Partial<State>) {
     this.state$.next({ ...this.state$.value, ...newState });
+  }
+
+  private updateRoutes(route: UnregisterableRoute) {
+    const routes = this.state$.value.routes;
+    if (route.unregister) {
+      this.updateState({
+        routes: routes.filter((r) => r.matcher !== route.matcher),
+      });
+    } else {
+      this.updateState({ routes: routes.concat(route).sort(compareRoutes) });
+    }
   }
 }
