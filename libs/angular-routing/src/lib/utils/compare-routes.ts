@@ -1,4 +1,5 @@
 import { Route } from '../route';
+import { getPathSegments } from './path-parser';
 
 /**
  * Compares two routes and returns sorting number
@@ -26,10 +27,6 @@ export const compareRoutes = (a: Route, b: Route): number => {
   // when paths are same, exact has priority
   return a.options.exact ?? true ? -1 : 1;
 };
-
-function getPathSegments(route: Route): string[] {
-  return route.path.replace(/^\//, '').split('/');
-}
 
 function compareSegments(
   aSegments: string[],
