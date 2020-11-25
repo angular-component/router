@@ -8,7 +8,7 @@ export interface RouteMatch {
   params: Params;
 }
 
-const DIV = '/'; // /
+const DIV = '\\/'; // /
 const DIV_PARAM = `(?:${DIV}([^\\/#\\?]+?))`; // capturing group for one or more of not (/, # or ?), optional (TODO: check if optional is needed)
 const PATH_END = '[\\/#\\?]'; // path end: /, # or ?
 const END = '[]|$'; // null or end
@@ -17,7 +17,7 @@ const WILDCARD = `(?:${PATH_END}(?=${END}))?`; // match optionally PATH_END foll
 const NON_EXACT_END = `${WILDCARD}(?=${PATH_END}|${END})`; // match WILDCARD followed by PATH_END or END
 
 export function getPathSegments(route: Route): string[] {
-  const sanitizedPath = route.path.replace(/^\//, '');
+  const sanitizedPath = route.path.replace(/^\//, '').replace(/(?:\/$)/, '');
   return sanitizedPath ? sanitizedPath.split('/') : [];
 }
 

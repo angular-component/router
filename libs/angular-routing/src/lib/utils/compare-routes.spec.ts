@@ -1,6 +1,6 @@
-import { pathToRegexp } from 'path-to-regexp';
 import { Route } from '../route';
 import { compareRoutes } from './compare-routes';
+import { parsePath } from './path-parser';
 
 describe('compareRoutes', () => {
   it('should return 0 if matchers are same', () => {
@@ -60,12 +60,6 @@ describe('compareRoutes', () => {
 });
 
 function makeRoute(route: Route): Route {
-  route.matcher = pathToRegexp(normalizePath(route), [], {
-    end: route.options.exact ?? true,
-  });
+  route.matcher = parsePath(route);
   return route;
-}
-
-function normalizePath(route: Route): string {
-  return route.path.startsWith('/') ? route.path : `/${route.path}`;
 }

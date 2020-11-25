@@ -22,6 +22,14 @@ describe('parsePath', () => {
       /^\/first\/second[\/#\?]?$/i
     );
   });
+  it('should remove ending slash', () => {
+    expect(parsePath({ path: 'first/', options: {} })).toEqual(
+      /^\/first[\/#\?]?$/i
+    );
+    expect(parsePath({ path: '/first/', options: {} })).toEqual(
+      /^\/first[\/#\?]?$/i
+    );
+  });
   it('should parse static wildcard route', () => {
     expect(
       parsePath({ path: 'first/second', options: { exact: false } })

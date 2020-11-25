@@ -47,7 +47,6 @@
     "@nrwl/angular": "^9.4.5",
     "angular-in-memory-web-api": "^0.11.0",
     "hammerjs": "^2.0.8",
-    "path-to-regexp": "^6.1.0",
     "query-string": "^6.13.1",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
