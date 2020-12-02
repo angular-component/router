@@ -1,3 +1,14 @@
+<a name="0.3.0"></a>
+
+# [0.3.0](https://github.com/brandonroberts/angular-routing/compare/0.2.2...0.3.0) (2020-12-02)
+
+### Features
+
+- **router:** add ability to unregister a route ([#60](https://github.com/brandonroberts/angular-routing/issues/60)) ([e8cff9b](https://github.com/brandonroberts/angular-routing/commit/e8cff9b)), closes [#49](https://github.com/brandonroberts/angular-routing/issues/49)
+- add deep comparison of params ([#52](https://github.com/brandonroberts/angular-routing/issues/52)) ([1075b43](https://github.com/brandonroberts/angular-routing/commit/1075b43))
+- sort routes based on path and matching priority ([00564b4](https://github.com/brandonroberts/angular-routing/commit/00564b4)), closes [#48](https://github.com/brandonroberts/angular-routing/issues/48)
+- use deep compare for checking params ([#57](https://github.com/brandonroberts/angular-routing/issues/57)) ([65ea7b6](https://github.com/brandonroberts/angular-routing/commit/65ea7b6))
+
 <a name="0.2.2"></a>
 
 ## [0.2.2](https://github.com/brandonroberts/angular-routing/compare/0.2.1...0.2.2) (2020-08-04)
