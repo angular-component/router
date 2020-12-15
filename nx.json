@@ -49,6 +49,13 @@
     "recursive-routes-e2e": {
       "tags": [],
       "implicitDependencies": ["recursive-routes"]
+    },
+    "responsive-app": {
+      "tags": []
+    },
+    "responsive-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["responsive-app"]
     }
   }
 }

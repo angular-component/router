@@ -1,0 +1,69 @@
+<mat-toolbar color="primary">
+  Responsive demo
+  <span class="example-spacer"></span>
+  <mat-chip-list>
+    <mat-chip color="warn" selected>
+      <ng-container *media="'(max-width: 767px)'">MOBILE VIEW</ng-container>
+      <ng-container *media="'(min-width: 768px)'">DESKTOP VIEW</ng-container>
+    </mat-chip>
+  </mat-chip-list>
+</mat-toolbar>
+
+<main>
+  <mat-grid-list cols="2" *media="'(min-width: 768px)'">
+    <mat-grid-tile>
+      <mat-nav-list>
+        <a
+          mat-list-item
+          linkTo="../1"
+          linkActive="mat-list-single-selected-option"
+          >Profile 1</a
+        >
+        <a
+          mat-list-item
+          linkTo="../2"
+          linkActive="mat-list-single-selected-option"
+          >Profile 2</a
+        >
+        <a
+          mat-list-item
+          linkTo="../3"
+          linkActive="mat-list-single-selected-option"
+          >Profile 3</a
+        >
+        <a
+          mat-list-item
+          linkTo="../4"
+          linkActive="mat-list-single-selected-option"
+          >Profile 4</a
+        >
+        <a
+          mat-list-item
+          linkTo="../5"
+          linkActive="mat-list-single-selected-option"
+          >Profile 5</a
+        >
+      </mat-nav-list>
+    </mat-grid-tile>
+    <mat-grid-tile style="background-color: lightcoral;">
+      <router class="user-area">
+        <route path="/dashboard">
+          <ra-select-user *routeComponent></ra-select-user>
+        </route>
+        <route path="/:id">
+          <ra-user-profile *routeComponent></ra-user-profile>
+        </route>
+        <route path="" redirectTo="/dashboard"></route>
+      </router>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <router *media="'(max-width: 767px)'">
+    <route path="/dashboard" redirectTo="/"></route>
+    <route path="/:id">
+      <ra-user-profile *routeComponent></ra-user-profile>
+    </route>
+    <route path="">
+      <ra-user-list *routeComponent></ra-user-list>
+    </route>
+  </router>
+</main>
