@@ -1,0 +1,10 @@
+<p>
+  Select a Simpson character to initiate the recursive route. Follow down the
+  relatives path. Clicking on the previously selected character takes you to the
+  previous route.
+</p>
+<section *ngFor="let member of members; trackBy: trackBy">
+  <a mat-raised-button color="primary" [linkTo]="member.id">
+    {{ member.name }}
+  </a>
+</section>

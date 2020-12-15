@@ -42,6 +42,13 @@
     "tour-of-heroes-e2e": {
       "tags": [],
       "implicitDependencies": ["tour-of-heroes"]
+    },
+    "recursive-routes": {
+      "tags": []
+    },
+    "recursive-routes-e2e": {
+      "tags": [],
+      "implicitDependencies": ["recursive-routes"]
     }
   }
 }
