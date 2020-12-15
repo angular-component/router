@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+  Route restrictions
+  <span class="example-spacer"></span>
+  <a mat-button linkTo="/" linkActive="mat-flat-button mat-warn">Home</a>
+  <a mat-button linkTo="/restricted" linkActive="mat-flat-button mat-warn"
+    >Restricted</a
+  >
+</mat-toolbar>
+
+<main>
+  <button mat-raised-button type="button" (click)="toggle()">
+    Toggle restriction
+  </button>
+  {{ restricted ? 'ON' : 'OFF' }}
+
+  <router>
+    <route path="/restricted" *ngIf="!restricted">
+      <rr-restricted *routeComponent></rr-restricted>
+    </route>
+    <route path="" [exact]="false">
+      <rr-unknown *routeComponent></rr-unknown>
+    </route>
+    <route path="">
+      <rr-home *routeComponent></rr-home>
+    </route>
+  </router>
+</main>

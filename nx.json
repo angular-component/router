@@ -56,6 +56,13 @@
     "responsive-app-e2e": {
       "tags": [],
       "implicitDependencies": ["responsive-app"]
+    },
+    "route-restrictions": {
+      "tags": []
+    },
+    "route-restrictions-e2e": {
+      "tags": [],
+      "implicitDependencies": ["route-restrictions"]
     }
   }
 }
