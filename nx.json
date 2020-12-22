@@ -42,6 +42,27 @@
     "tour-of-heroes-e2e": {
       "tags": [],
       "implicitDependencies": ["tour-of-heroes"]
+    },
+    "recursive-routes": {
+      "tags": []
+    },
+    "recursive-routes-e2e": {
+      "tags": [],
+      "implicitDependencies": ["recursive-routes"]
+    },
+    "responsive-app": {
+      "tags": []
+    },
+    "responsive-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["responsive-app"]
+    },
+    "route-restrictions": {
+      "tags": []
+    },
+    "route-restrictions-e2e": {
+      "tags": [],
+      "implicitDependencies": ["route-restrictions"]
     }
   }
 }

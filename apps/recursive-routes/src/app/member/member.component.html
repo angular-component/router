@@ -1,0 +1,14 @@
+<ng-container *ngIf="member$ | async as member">
+  <section>
+    <a [linkTo]="path$ | async" mat-raised-button>{{ member.name }}</a>
+    <h3>is related to:</h3>
+  </section>
+  <router>
+    <route path="/:id" [exact]="false">
+      <rr-member *routeComponent></rr-member>
+    </route>
+    <route path="/">
+      <rr-relatives *routeComponent></rr-relatives>
+    </route>
+  </router>
+</ng-container>

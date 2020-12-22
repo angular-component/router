@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+  Recursive routes
+</mat-toolbar>
+
+<main>
+  <router>
+    <route path="/:id" [exact]="false">
+      <rr-member *routeComponent></rr-member>
+    </route>
+    <route path="/">
+      <rr-list *routeComponent></rr-list>
+    </route>
+  </router>
+</main>

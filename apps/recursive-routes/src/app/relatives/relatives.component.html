@@ -1,0 +1,5 @@
+<section *ngFor="let member of relatives$ | async; trackBy: trackBy">
+  <a mat-raised-button color="primary" [linkTo]="member.id">
+    {{ member.name }}
+  </a>
+</section>
