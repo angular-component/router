@@ -22,26 +22,12 @@
     "angular-routing": {
       "tags": []
     },
-    "getting-started": {
-      "tags": []
-    },
-    "getting-started-e2e": {
-      "tags": [],
-      "implicitDependencies": ["getting-started"]
-    },
     "example-app": {
       "tags": []
     },
     "example-app-e2e": {
       "tags": [],
       "implicitDependencies": ["example-app"]
-    },
-    "tour-of-heroes": {
-      "tags": []
-    },
-    "tour-of-heroes-e2e": {
-      "tags": [],
-      "implicitDependencies": ["tour-of-heroes"]
     },
     "recursive-routes": {
       "tags": []
