@@ -13,13 +13,11 @@ import {
   debounceTime,
   map,
 } from 'rxjs/operators';
-
-import { pathToRegexp, match } from 'path-to-regexp';
-
 import { Route, ActiveRoute } from './route';
 import { Router } from './router.service';
-import { compareParams, Params } from './route-params.service';
+import { compareParams } from './route-params.service';
 import { compareRoutes } from './utils/compare-routes';
+import { matchRoute, parsePath } from './utils/path-parser';
 
 interface State {
   activeRoute: ActiveRoute | null;
@@ -47,6 +45,7 @@ export class RouterComponent implements OnInit, OnDestroy {
   );
   readonly routes$ = this.state$.pipe(
     map((state) => state.routes),
+    distinctUntilChanged(this.compareRoutes),
     takeUntil(this.destroy$)
   );
 
@@ -72,7 +71,7 @@ export class RouterComponent implements OnInit, OnDestroy {
         tap(([routes, url]: [Route[], string]) => {
           let routeToRender = null;
           for (const route of routes) {
-            routeToRender = this.findRouteMatch(route, url);
+            routeToRender = this.isRouteMatch(url, route);
 
             if (routeToRender) {
               this.setRoute(url, route);
@@ -89,34 +88,18 @@ export class RouterComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  findRouteMatch(route: Route, url: string) {
-    const matchedRoute = route.matcher ? route.matcher.exec(url) : null;
-
-    if (matchedRoute) {
-      return matchedRoute;
-    }
-
-    return null;
-  }
-
   setRoute(url: string, route: Route) {
-    const pathInfo = match(this.normalizePath(route.path), {
-      end: route.options.exact,
-    })(url);
     this.basePath = route.path;
-
-    const routeParams: Params = pathInfo ? pathInfo.params : {};
-    const path: string = pathInfo ? pathInfo.path : '';
-    this.setActiveRoute({ route, params: routeParams || {}, path });
+    const match = matchRoute(url, route);
+    this.setActiveRoute({
+      route,
+      params: match?.params || {},
+      path: match?.path || '',
+    });
   }
 
   registerRoute(route: Route) {
-    const normalized = this.normalizePath(route.path);
-    const routeRegex = pathToRegexp(normalized, [], {
-      end: route.options.exact ?? true,
-    });
-
-    route.matcher = route.matcher || routeRegex;
+    route.matcher = route.matcher || parsePath(route);
     this.updateRoutes(route);
 
     return route;
@@ -138,6 +121,10 @@ export class RouterComponent implements OnInit, OnDestroy {
     this.destroy$.next();
   }
 
+  private isRouteMatch(url: string, route: Route) {
+    return route.matcher?.exec(url);
+  }
+
   private compareActiveRoutes(
     previous: ActiveRoute,
     current: ActiveRoute
@@ -153,6 +140,19 @@ export class RouterComponent implements OnInit, OnDestroy {
       compareParams(previous.params, current.params) &&
       previous.route.path === current.route.path &&
       previous.route.options.exact === current.route.options.exact
+    );
+  }
+
+  private compareRoutes(previous: Route[], current: Route[]): boolean {
+    if (previous === current) {
+      return true;
+    }
+    if (!previous) {
+      return false;
+    }
+    return (
+      previous.length === current.length &&
+      previous.every((route, i) => route[i] === current[i])
     );
   }
 
