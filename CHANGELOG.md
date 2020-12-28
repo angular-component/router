@@ -1,3 +1,12 @@
+<a name="0.3.1"></a>
+
+## [0.3.1](https://github.com/brandonroberts/angular-routing/compare/0.3.0...0.3.1) (2020-12-28)
+
+### Features
+
+- **router:** replace path-to-regexp with internal matcher ([#64](https://github.com/brandonroberts/angular-routing/issues/64)) ([d34dfc0](https://github.com/brandonroberts/angular-routing/commit/d34dfc0)), closes [#58](https://github.com/brandonroberts/angular-routing/issues/58)
+- add more demo applications ([#68](https://github.com/brandonroberts/angular-routing/issues/68)) ([9ed17ec](https://github.com/brandonroberts/angular-routing/commit/9ed17ec))
+
 <a name="0.3.0"></a>
 
 # [0.3.0](https://github.com/brandonroberts/angular-routing/compare/0.2.2...0.3.0) (2020-12-02)
