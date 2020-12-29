@@ -11,7 +11,8 @@
           "builder": "@nrwl/angular:package",
           "options": {
             "tsConfig": "libs/router/tsconfig.lib.json",
-            "project": "libs/router/ng-package.json"
+            "project": "libs/router/ng-package.json",
+            "buildableProjectDepsInPackageJsonType": "dependencies"
           },
           "configurations": {
             "production": {
@@ -47,9 +48,8 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/router/jest.config.js",
-            "tsConfig": "libs/router/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/router/src/test-setup.ts"
+            "setupFile": "libs/router/src/test-setup.ts",
+            "passWithNoTests": true
           }
         }
       },
@@ -140,9 +140,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/example-app/jest.config.js",
-            "tsConfig": "apps/example-app/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "apps/example-app/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       }
@@ -259,9 +257,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/recursive-routes/jest.config.js",
-            "tsConfig": "apps/recursive-routes/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "apps/recursive-routes/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       }
@@ -378,9 +374,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/responsive-app/jest.config.js",
-            "tsConfig": "apps/responsive-app/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "apps/responsive-app/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       }
@@ -497,9 +491,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/route-restrictions/jest.config.js",
-            "tsConfig": "apps/route-restrictions/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "apps/route-restrictions/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       }
