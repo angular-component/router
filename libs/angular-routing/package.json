@@ -22,9 +22,9 @@
   },
   "homepage": "https://github.com/brandonroberts/angular-routing#readme",
   "peerDependencies": {
-    "@angular/common": ">=9.0.0",
-    "@angular/core": ">=9.0.0",
-    "rxjs": ">=6.5.3"
+    "@angular/common": ">=10.0.0",
+    "@angular/core": ">=10.0.0",
+    "rxjs": ">=6.5.4"
   },
   "dependencies": {
     "query-string": "^6.13.1"
