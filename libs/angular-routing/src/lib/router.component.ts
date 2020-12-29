@@ -152,7 +152,7 @@ export class RouterComponent implements OnInit, OnDestroy {
     }
     return (
       previous.length === current.length &&
-      previous.every((route, i) => route[i] === current[i])
+      previous.every((route, i) => route === current[i])
     );
   }
 
