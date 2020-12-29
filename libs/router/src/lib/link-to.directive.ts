@@ -23,19 +23,22 @@ const DEFAULT_TARGET = '_self';
 @Directive({ selector: 'a[linkTo]' })
 export class LinkTo {
   @Input() target = DEFAULT_TARGET;
-  @HostBinding('href') linkHref: string;
+  @HostBinding('href') linkHref?: string | null;
 
-  @Input() set linkTo(href: string) {
+  @Input() set linkTo(href: string | null | undefined) {
+    if (href === null || href === undefined) {
+      return;
+    }
     this._href = href;
     this._updateHref();
   }
 
-  @Input() set queryParams(params: Params) {
+  @Input() set queryParams(params: Params | null | undefined) {
     this._query = params;
     this._updateHref();
   }
 
-  @Input() set fragment(hash: string) {
+  @Input() set fragment(hash: string | null | undefined) {
     this._hash = hash;
     this._updateHref();
   }
@@ -55,8 +58,9 @@ export class LinkTo {
   @HostListener('click', ['$event'])
   onClick(event: any) {
     if (!this._comboClick(event) && this.target === DEFAULT_TARGET) {
-      this.router.go(this._href, this._query, this._hash);
-
+      if (this._href) {
+        this.router.go(this._href, this._query, this._hash);
+      }
       event.preventDefault();
     }
   }

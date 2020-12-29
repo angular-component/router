@@ -14,6 +14,7 @@ import { MediaDirective } from './use-media/use-media.directive';
 import { SelectUserComponent } from './select-user/select-user.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { ValueToAsyncValuePipe } from './value-to-async-value.pipe';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { UserListComponent } from './user-list/user-list.component';
     SelectUserComponent,
     UserProfileComponent,
     UserListComponent,
+    ValueToAsyncValuePipe,
   ],
   imports: [
     BrowserModule,

@@ -15,6 +15,7 @@ import { LinkTo } from './link-to.directive';
 import { Router } from './router.service';
 import { combineLatest, of, Subject, Subscription } from 'rxjs';
 import { map, mapTo, startWith, takeUntil } from 'rxjs/operators';
+import { filterNullable } from './operators';
 
 export interface LinkActiveOptions {
   exact: boolean;
@@ -39,8 +40,8 @@ export class LinkActive implements AfterContentInit, OnDestroy, OnChanges {
   @ContentChildren(LinkTo, { descendants: true }) public links: QueryList<
     LinkTo
   >;
-  @Input('linkActive') activeClass = 'active';
-  @Input() activeOptions: LinkActiveOptions;
+  @Input('linkActive') activeClass: string | null = 'active';
+  @Input() activeOptions?: LinkActiveOptions | null;
   private _activeOptions: LinkActiveOptions = { exact: true };
   private _destroy$ = new Subject();
   private _linksSub!: Subscription;
@@ -77,22 +78,24 @@ export class LinkActive implements AfterContentInit, OnDestroy, OnChanges {
       this._linksSub.unsubscribe();
     }
 
-    const contentLinks$ = this.links
-      ? this.links
-          .toArray()
-          .map((link) =>
-            link.hrefUpdated.pipe(
-              startWith(link.linkHref),
-              mapTo(link.linkHref)
-            )
+    const contentLinks$ =
+      this.links
+        ?.toArray()
+        .map((link) =>
+          link.hrefUpdated.pipe(
+            startWith(link.linkHref),
+            mapTo(link.linkHref),
+            filterNullable()
           )
-      : [];
-    const link$ = this.link
-      ? this.link.hrefUpdated.pipe(
-          startWith(this.link.linkHref),
-          mapTo(this.link.linkHref)
-        )
-      : of('');
+        ) ?? [];
+
+    const link$ =
+      this.link?.hrefUpdated.pipe(
+        startWith(this.link.linkHref),
+        mapTo(this.link.linkHref),
+        filterNullable()
+      ) ?? of('');
+
     const router$ = this.router.url$.pipe(
       map((path) => this.router.getExternalUrl(path || '/'))
     );
@@ -109,14 +112,10 @@ export class LinkActive implements AfterContentInit, OnDestroy, OnChanges {
   checkActive(linkHrefs: string[], path: string) {
     const active = linkHrefs.reduce((isActive, current) => {
       const [href] = current.split('?');
-
       if (this._activeOptions.exact) {
-        isActive = isActive ? isActive : href === path;
-      } else {
-        isActive = isActive ? isActive : path.startsWith(href);
+        return isActive ? isActive : href === path;
       }
-
-      return isActive;
+      return isActive ? isActive : path.startsWith(href);
     }, false);
 
     this.updateClasses(active);
