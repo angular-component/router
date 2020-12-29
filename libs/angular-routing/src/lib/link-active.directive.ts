@@ -62,7 +62,9 @@ export class LinkActive implements AfterContentInit, OnDestroy, OnChanges {
       this._activeOptions = this.activeOptions;
     }
 
-    this.links.changes.subscribe(() => this.collectLinks());
+    this.links.changes
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(() => this.collectLinks());
     this.collectLinks();
   }
 
