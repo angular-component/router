@@ -50,7 +50,7 @@ jobs:
           keys:
             - *cache_key
       - run: yarn affected:e2e --base=origin/master
-            
+
 workflows:
   version: 2
   build-test:
