@@ -9,6 +9,12 @@
   margin: 0 auto;
 }
 
+.navigation-container {
+  display: grid;
+  grid-template-columns: min-content 1fr min-content;
+  margin-bottom: 20px;
+}
+
 main {
   padding: 20px;
 }
