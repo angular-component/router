@@ -50,6 +50,16 @@ export class Router {
     this.nextState(this.getLocation());
   }
 
+  forward() {
+    this.location.forward();
+    this.nextState(this.getLocation());
+  }
+
+  back() {
+    this.location.back();
+    this.nextState(this.getLocation());
+  }
+
   go(url: string, queryParams?: Params, hash?: string) {
     this.location.go(this.serializeUrl(url, queryParams, hash));
 

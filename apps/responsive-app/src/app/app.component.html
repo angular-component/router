@@ -10,6 +10,11 @@
 </mat-toolbar>
 
 <main>
+  <div class="navigation-container">
+    <button mat-flat-button (click)="router.back()">Go Back</button>
+    <div></div>
+    <button mat-flat-button (click)="router.forward()">Go Forward</button>
+  </div>
   <mat-grid-list cols="2" *media="'(min-width: 768px)'">
     <mat-grid-tile>
       <mat-nav-list>

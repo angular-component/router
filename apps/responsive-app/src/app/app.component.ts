@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from 'angular-routing';
 
 @Component({
   selector: 'ra-root',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'responsive-app';
+  constructor(public readonly router: Router) {}
 }
