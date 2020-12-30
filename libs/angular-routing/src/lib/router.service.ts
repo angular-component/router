@@ -113,7 +113,7 @@ export class Router {
     this.state$.next({
       url: parsedUrl.pathname,
       queryParams: this.parseSearchParams(parsedUrl.searchParams),
-      hash: parsedUrl.hash ? parsedUrl.hash.split('#')[0] : '',
+      hash: parsedUrl.hash ? parsedUrl.hash.split('#')[1] : '',
     });
   }
 
