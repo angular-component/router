@@ -50,7 +50,8 @@
             "jestConfig": "libs/router/jest.config.js",
             "setupFile": "libs/router/src/test-setup.ts",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/angular-routing"]
         }
       },
       "schematics": {}
@@ -89,7 +90,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -107,7 +107,8 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -141,7 +142,8 @@
           "options": {
             "jestConfig": "apps/example-app/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/apps/example-app"]
         }
       }
     },
@@ -206,7 +208,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -224,7 +225,8 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -258,7 +260,8 @@
           "options": {
             "jestConfig": "apps/recursive-routes/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/apps/recursive-routes"]
         }
       }
     },
@@ -323,7 +326,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -341,7 +343,8 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -375,7 +378,8 @@
           "options": {
             "jestConfig": "apps/responsive-app/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/apps/responsive-app"]
         }
       }
     },
@@ -440,7 +444,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -458,7 +461,8 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": ["{options.outputPath}"]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -492,7 +496,8 @@
           "options": {
             "jestConfig": "apps/route-restrictions/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/apps/route-restrictions"]
         }
       }
     },
