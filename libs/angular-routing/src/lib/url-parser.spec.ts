@@ -1,4 +1,4 @@
-import { UrlParser } from 'angular-routing';
+import { UrlParser } from './url-parser';
 
 describe('UrlParser', () => {
   let parser: UrlParser;
