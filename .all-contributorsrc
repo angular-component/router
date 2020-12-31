@@ -1,31 +1,56 @@
 {
+  "projectName": "angular-routing",
+  "projectOwner": "brandonroberts",
+  "repoType": "github",
+  "repoHost": "https://github.com",
   "files": [
     "README.md"
   ],
   "imageSize": 100,
   "commit": false,
+  "commitConvention": "angular",
   "contributors": [
+    {
+      "login": "brandonroberts",
+      "name": "Brandon",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/42211?v=4",
+      "profile": "https://brandonroberts.dev/",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
+    },
     {
       "login": "meeroslav",
       "name": "Miroslav Jonaš",
       "avatar_url": "https://avatars2.githubusercontent.com/u/881612?v=4",
       "profile": "https://missing-manual.com/",
+      "contributions": [
+        "code",
+        "doc",
+        "test"
+      ]
     },
     {
       "login": "santoshyadavdev",
       "name": "Santosh Yadav",
       "avatar_url": "https://avatars3.githubusercontent.com/u/11923975?v=4",
-      "profile": "https://www.santoshyadav.dev",
+      "profile": "https://www.santoshyadav.dev/",
       "contributions": [
         "code",
         "doc"
       ]
+    },
+    {
+      "login": "kylecannon",
+      "name": "Kyle Cannon",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/867978?v=4",
+      "profile": "https://github.com/kylecannon",
+      "contributions": [
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 7,
-  "projectName": "angular-routing",
-  "projectOwner": "brandonroberts",
-  "repoType": "github",
-  "repoHost": "https://github.com",
-  "skipCi": true
+  "contributorsPerLine": 7
 }

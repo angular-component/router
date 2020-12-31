@@ -1,14 +1,14 @@
 # Angular Routing
 
+[![npm version](https://img.shields.io/npm/v/angular-routing.svg)](https://www.npmjs.com/package/angular-routing)
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-[![npm version](https://img.shields.io/npm/v/angular-routing.svg)](https://www.npmjs.com/package/angular-routing)
-
-A declarative router for Angular applications.
+## A declarative router for Angular applications.
 
 ## Install
 
@@ -143,12 +143,13 @@ The restriction doesn't stop the navigation. It simply removes the route from th
 
 ## Navigating with Links
 
-Use the `linkTo` directive with a _full path_ to register links handled by the router.
+Use the `linkTo` directive with a _full or relative path_ to register links handled by the router.
 
 ```html
 <a linkTo="/">Home</a>
 <a linkTo="/about">About</a>
 <a linkTo="/blog">Blog</a>
+<a linkTo="../other"></a>
 ```
 
 ## Adding classes to active links
@@ -182,6 +183,14 @@ export class MyComponent {
 
   goHome() {
     this.router.go('/');
+  }
+
+  goForward() {
+    this.router.forward();
+  }
+
+  goBack() {
+    this.router.back();
   }
 }
 ```
@@ -307,12 +316,14 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://missing-manual.com/"><img src="https://avatars2.githubusercontent.com/u/881612?v=4" width="100px;" alt=""/><br /><sub><b>Miroslav Jonaš</b></sub></a><br /><a href="https://github.com/brandonroberts/angular-routing/commits?author=meeroslav" title="Code">💻</a> <a href="https://github.com/brandonroberts/angular-routing/commits?author=meeroslav" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://www.santoshyadav.dev"><img src="https://avatars3.githubusercontent.com/u/11923975?v=4" width="100px;" alt=""/><br /><sub><b>Santosh Yadav</b></sub></a><br /><a href="https://github.com/brandonroberts/angular-routing/commits?author=santoshyadavdev" title="Code">💻</a> <a href="https://github.com/brandonroberts/angular-routing/commits?author=santoshyadavdev" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://brandonroberts.dev/"><img src="https://avatars3.githubusercontent.com/u/42211?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Brandon</b></sub></a><br /><a href="https://github.com/brandonroberts/angular-routing/commits?author=brandonroberts" title="Code">💻</a> <a href="https://github.com/brandonroberts/angular-routing/commits?author=brandonroberts" title="Documentation">📖</a> <a href="https://github.com/brandonroberts/angular-routing/commits?author=brandonroberts" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://missing-manual.com/"><img src="https://avatars2.githubusercontent.com/u/881612?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Miroslav Jonaš</b></sub></a><br /><a href="https://github.com/brandonroberts/angular-routing/commits?author=meeroslav" title="Code">💻</a> <a href="https://github.com/brandonroberts/angular-routing/commits?author=meeroslav" title="Documentation">📖</a> <a href="https://github.com/brandonroberts/angular-routing/commits?author=meeroslav" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://www.santoshyadav.dev/"><img src="https://avatars3.githubusercontent.com/u/11923975?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Santosh Yadav</b></sub></a><br /><a href="https://github.com/brandonroberts/angular-routing/commits?author=santoshyadavdev" title="Code">💻</a> <a href="https://github.com/brandonroberts/angular-routing/commits?author=santoshyadavdev" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/kylecannon"><img src="https://avatars2.githubusercontent.com/u/867978?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kyle Cannon</b></sub></a><br /><a href="https://github.com/brandonroberts/angular-routing/commits?author=kylecannon" title="Code">💻</a></td>
   </tr>
 </table>
 
-<!-- markdownlint-enable -->
+<!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
