@@ -15,7 +15,7 @@ import { LinkTo } from './link-to.directive';
 import { Router } from './router.service';
 import { combineLatest, of, Subject, Subscription } from 'rxjs';
 import { map, mapTo, startWith, takeUntil } from 'rxjs/operators';
-import { filterNullable } from './operators';
+import { filterNullable } from './operators/filter-nullable.operator';
 
 export interface LinkActiveOptions {
   exact: boolean;
