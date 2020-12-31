@@ -57,10 +57,12 @@ export class LinkTo {
    */
   @HostListener('click', ['$event'])
   onClick(event: any) {
+    if (!this._href) {
+      return;
+    }
     if (!this._comboClick(event) && this.target === DEFAULT_TARGET) {
-      if (this._href) {
-        this.router.go(this._href, this._query, this._hash);
-      }
+      this.router.go(this._href, this._query, this._hash);
+
       event.preventDefault();
     }
   }
