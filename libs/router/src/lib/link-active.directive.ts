@@ -78,23 +78,25 @@ export class LinkActive implements AfterContentInit, OnDestroy, OnChanges {
       this._linksSub.unsubscribe();
     }
 
-    const contentLinks$ =
-      this.links
-        ?.toArray()
-        .map((link) =>
-          link.hrefUpdated.pipe(
-            startWith(link.linkHref),
-            mapTo(link.linkHref),
-            filterNullable()
+    const contentLinks$ = this.links
+      ? this.links
+          .toArray()
+          .map((link) =>
+            link.hrefUpdated.pipe(
+              startWith(link.linkHref),
+              mapTo(link.linkHref),
+              filterNullable()
+            )
           )
-        ) ?? [];
+      : [];
 
-    const link$ =
-      this.link?.hrefUpdated.pipe(
-        startWith(this.link.linkHref),
-        mapTo(this.link.linkHref),
-        filterNullable()
-      ) ?? of('');
+    const link$ = this.link
+      ? this.link.hrefUpdated.pipe(
+          startWith(this.link.linkHref),
+          mapTo(this.link.linkHref),
+          filterNullable()
+        )
+      : of('');
 
     const router$ = this.router.url$.pipe(
       map((path) => this.router.getExternalUrl(path || '/'))
