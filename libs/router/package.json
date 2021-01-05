@@ -1,5 +1,5 @@
 {
-  "name": "angular-routing",
+  "name": "@angular-component/router",
   "version": "0.3.1",
   "description": "A declarative router for Angular applications",
   "schematics": "./schematics/collection.json",

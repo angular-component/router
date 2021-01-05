@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { RoutingModule } from 'angular-routing';
+import { ComponentRouterModule } from '@angular-component/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -34,7 +34,7 @@ import { UserListComponent } from './user-list/user-list.component';
     MatChipsModule,
     MatGridListModule,
     // router
-    RoutingModule.forRoot(),
+    ComponentRouterModule.forRoot(),
   ],
   bootstrap: [AppComponent],
 })

@@ -16,7 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "angular-routing": ["libs/angular-routing/src/index.ts"],
+      "@angular-component/router": ["libs/router/src/index.ts"],
       "@example-app/*": ["./apps/example-app/src/app/*"]
     }
   },

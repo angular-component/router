@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouteParams, RoutePath } from 'angular-routing';
+import { RouteParams, RoutePath } from '@angular-component/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { FamilyMember, SimpsonsService } from '../service/simpsons.service';
