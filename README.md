@@ -1,4 +1,4 @@
-# Angular Routing
+# Angular Component Router
 
 [![npm version](https://img.shields.io/npm/v/angular-routing.svg)](https://www.npmjs.com/package/angular-routing)
 
@@ -15,13 +15,13 @@
 Use your package manager of choice to install the package.
 
 ```sh
-npm install angular-routing
+npm install @angular-component/router
 ```
 
 OR
 
 ```sh
-yarn add angular-routing
+yarn add @angular-component/router
 ```
 
 ## Installation with ng add
@@ -29,22 +29,22 @@ yarn add angular-routing
 You can use ng add to install the package by using the command below.
 
 ```sh
-ng add angular-routing
+ng add @angular-component/router
 ```
 
-The above command will install the package, and add the RoutingModule import in the AppModule.
+The above command will install the package, and add the ComponentRouterModule import in the AppModule.
 
 ## Usage
 
-To register the Router, add the `RoutingModule.forRoot()` to your AppModule imports.
+To register the Router, add the `ComponentRouterModule.forRoot()` to your AppModule imports.
 
 ```ts
-import { RoutingModule } from 'angular-routing';
+import { ComponentRouterModule } from '@angular-component/router';
 
 @NgModule({
   imports: [
     // ... other imports
-    RoutingModule.forRoot(),
+    ComponentRouterModule.forRoot(),
   ],
 })
 export class AppModule {}
@@ -53,12 +53,12 @@ export class AppModule {}
 Or in a feature module
 
 ```ts
-import { RoutingModule } from 'angular-routing';
+import { ComponentRouterModule } from '@angular-component/router';
 
 @NgModule({
   imports: [
     // ... other imports
-    RoutingModule,
+    ComponentRouterModule,
   ],
 })
 export class FeatureModule {}
@@ -170,7 +170,7 @@ To navigate from a component class, or get global route information, such as the
 
 ```ts
 import { Component } from '@angular/core';
-import { Router } from 'angular-routing';
+import { Router } from '@angular-component/router';
 
 @Component({...})
 export class MyComponent {
@@ -201,7 +201,7 @@ To get the route params, inject the `RouteParams` observable. Provide a type for
 
 ```ts
 import { Component } from '@angular/core';
-import { RouteParams } from 'angular-routing';
+import { RouteParams } from '@angular-component/router';
 
 @Component({...})
 export class MyComponent {
@@ -221,7 +221,7 @@ To get the route params, inject the `QueryParams` observable. Provide a type for
 
 ```ts
 import { Component } from '@angular/core';
-import { QueryParams } from 'angular-routing';
+import { QueryParams } from '@angular-component/router';
 
 @Component({...})
 export class MyComponent {
@@ -260,7 +260,7 @@ Register a component to register the child routes.
 
 ```ts
 import { NgModule, Component } from '@angular/core';
-import { ModuleWithRoute } from 'angular-routing';
+import { ModuleWithRoute } from '@angular-component/router';
 
 @Component({
   template: `
