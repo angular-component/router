@@ -20,7 +20,10 @@ import {
 
 import { MaterialModule } from '@example-app/material';
 import { PipesModule } from '@example-app/shared/pipes';
-import { RoutingModule, ModuleWithRoute } from 'angular-routing';
+import {
+  ComponentRouterModule,
+  ModuleWithRoute,
+} from '@angular-component/router';
 import { AuthGuard } from '@example-app/auth/services';
 import { BookEffects, CollectionEffects } from '@example-app/books/effects';
 
@@ -70,7 +73,7 @@ export const CONTAINERS = [
   imports: [
     CommonModule,
     MaterialModule,
-    RoutingModule,
+    ComponentRouterModule,
     PipesModule,
     /**
      * StoreModule.forFeature is used for composing state

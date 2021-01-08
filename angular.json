@@ -1,21 +1,21 @@
 {
   "version": 1,
   "projects": {
-    "angular-routing": {
+    "router": {
       "projectType": "library",
-      "root": "libs/angular-routing",
-      "sourceRoot": "libs/angular-routing/src",
+      "root": "libs/router",
+      "sourceRoot": "libs/router/src",
       "prefix": "reactiveangular",
       "architect": {
         "build-package": {
           "builder": "@nrwl/angular:package",
           "options": {
-            "tsConfig": "libs/angular-routing/tsconfig.lib.json",
-            "project": "libs/angular-routing/ng-package.json"
+            "tsConfig": "libs/router/tsconfig.lib.json",
+            "project": "libs/router/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "libs/angular-routing/tsconfig.lib.prod.json"
+              "tsConfig": "libs/router/tsconfig.lib.prod.json"
             }
           }
         },
@@ -25,10 +25,10 @@
             "parallel": false,
             "commands": [
               {
-                "command": "ng run angular-routing:build-package"
+                "command": "ng run router:build-package"
               },
               {
-                "command": "yarn tsc -p libs/angular-routing/tsconfig.schematics.json"
+                "command": "yarn tsc -p libs/router/tsconfig.schematics.json"
               }
             ]
           }
@@ -37,19 +37,19 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "libs/angular-routing/tsconfig.lib.json",
-              "libs/angular-routing/tsconfig.spec.json"
+              "libs/router/tsconfig.lib.json",
+              "libs/router/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/angular-routing/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/router/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/angular-routing/jest.config.js",
-            "tsConfig": "libs/angular-routing/tsconfig.spec.json",
+            "jestConfig": "libs/router/jest.config.js",
+            "tsConfig": "libs/router/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "libs/angular-routing/src/test-setup.ts"
+            "setupFile": "libs/router/src/test-setup.ts"
           }
         }
       },
@@ -548,5 +548,5 @@
       "unitTestRunner": "jest"
     }
   },
-  "defaultProject": "angular-routing"
+  "defaultProject": "router"
 }

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RoutingModule } from 'angular-routing';
+import { ComponentRouterModule } from '@angular-component/router';
 
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
@@ -23,7 +23,7 @@ describe('Collection Page', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, MaterialModule, RoutingModule],
+      imports: [NoopAnimationsModule, MaterialModule, ComponentRouterModule],
       declarations: [
         CollectionPageComponent,
         BookPreviewListComponent,

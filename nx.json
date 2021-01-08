@@ -19,7 +19,7 @@
     }
   },
   "projects": {
-    "angular-routing": {
+    "router": {
       "tags": []
     },
     "example-app": {

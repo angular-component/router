@@ -40,12 +40,17 @@ function addImportToNgModule(options: RouterOptions): Rule {
     const importChanges = addImportToModule(
       source,
       modulePath,
-      'RoutingModule.forRoot()',
-      'angular-routing'
+      'ComponentRouterModule.forRoot()',
+      '@angular-component/router'
     ).shift();
 
     const changes = [
-      insertImport(source, modulePath, 'RoutingModule', 'angular-routing'),
+      insertImport(
+        source,
+        modulePath,
+        'ComponentRouterModule',
+        '@angular-component/router'
+      ),
       importChanges,
     ];
 

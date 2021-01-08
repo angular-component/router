@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from 'angular-routing';
+import { Router } from '@angular-component/router';
 
 @Component({
   selector: 'ra-root',

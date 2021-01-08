@@ -31,10 +31,10 @@ export function getQueryParams(router: Router) {
   declarations: [components],
   exports: [components],
 })
-export class RoutingModule {
-  static forRoot(): ModuleWithProviders<RoutingModule> {
+export class ComponentRouterModule {
+  static forRoot(): ModuleWithProviders<ComponentRouterModule> {
     return {
-      ngModule: RoutingModule,
+      ngModule: ComponentRouterModule,
       providers: [
         UrlParser,
         { provide: LocationStrategy, useClass: PathLocationStrategy },

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsAddRouting",
-  "title": "Angular Routing ng-add Options Schema",
+  "id": "SchematicsAddComponentRouter",
+  "title": "Angular Component Router ng-add Options Schema",
   "type": "object",
   "properties": {
     "project": {

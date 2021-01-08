@@ -64,6 +64,6 @@ describe('ng add function', () => {
       .runSchematicAsync('ng-add', options, appTree)
       .toPromise();
     const content = tree.readContent(`/projects/bar/src/app/app.module.ts`);
-    expect(content).toContain('RoutingModule.forRoot()');
+    expect(content).toContain('ComponentRouterModule.forRoot()');
   });
 });

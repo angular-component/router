@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { SimpsonsService } from './service/simpsons.service';
 import { NgModule } from '@angular/core';
-import { RoutingModule } from 'angular-routing';
+import { ComponentRouterModule } from '@angular-component/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
@@ -29,7 +29,7 @@ import { RelativesComponent } from './relatives/relatives.component';
     MatIconModule,
     MatButtonModule,
     // router
-    RoutingModule.forRoot(),
+    ComponentRouterModule.forRoot(),
   ],
   providers: [SimpsonsService],
   bootstrap: [AppComponent],

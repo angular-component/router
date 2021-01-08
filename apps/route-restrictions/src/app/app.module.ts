@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { RoutingModule } from 'angular-routing';
+import { ComponentRouterModule } from '@angular-component/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -26,7 +26,7 @@ import { UnknownComponent } from './unknown/unknown.component';
     MatButtonModule,
     MatChipsModule,
     // router
-    RoutingModule.forRoot(),
+    ComponentRouterModule.forRoot(),
   ],
   bootstrap: [AppComponent],
 })
