@@ -4,8 +4,6 @@ import { PlatformLocation, Location } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 
-import * as queryString from 'query-string';
-
 import { UrlParser } from './url-parser';
 import { Params, compareParams } from './route-params.service';
 
@@ -80,7 +78,7 @@ export class Router {
 
     return (
       url +
-      (queryParams ? `?${queryString.stringify(queryParams)}` : '') +
+      (queryParams ? `?${this.stringifyQueryParams(queryParams)}` : '') +
       `${hash ? '#' + hash : ''}`
     );
   }
@@ -89,7 +87,8 @@ export class Router {
     return this.location.prepareExternalUrl(url);
   }
 
-  parseSearchParams(searchParams: URLSearchParams) {
+  parseSearchParams(params: string | URLSearchParams) {
+    const searchParams = new URLSearchParams(params);
     const queryParams: Params = {};
 
     searchParams.forEach((value, key) => {
@@ -119,5 +118,9 @@ export class Router {
 
   private _parseUrl(path: string): URL {
     return this.urlParser.parse(path);
+  }
+
+  private stringifyQueryParams(params: Params) {
+    return new URLSearchParams(params).toString();
   }
 }
