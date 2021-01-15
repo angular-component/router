@@ -80,6 +80,6 @@ export class LinkTo {
 
   private _cleanUpHref(href: string = ''): string {
     // Trim whitespaces and remove trailing slashes
-    return href.trim().replace(/[\/]+$/, '');
+    return href.trim().replace(/(?!^)\/+$/, '');
   }
 }
