@@ -2,7 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/libs/router",
   "assets": ["**/*.md", "./schematics/**/*.json"],
-  "whitelistedNonPeerDependencies": ["query-string"],
   "lib": {
     "entryFile": "src/index.ts"
   }
