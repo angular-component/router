@@ -39,7 +39,7 @@ describe('responsive-app', () => {
     });
 
     it('should show links and info on desktop', () => {
-      getNavigationLinks().should('have.length', 5);
+      getNavigationLinks().should('have.length', 6);
       cy.get('h2').contains('Select user profile!');
     });
 
@@ -51,7 +51,7 @@ describe('responsive-app', () => {
 
     it('should show links on desktop profile', () => {
       cy.visit('/3');
-      getNavigationLinks().should('have.length', 5);
+      getNavigationLinks().should('have.length', 6);
     });
 
     it('should not show back button on desktop profile', () => {
