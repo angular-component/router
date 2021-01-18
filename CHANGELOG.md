@@ -1,3 +1,19 @@
+<a name="0.4.0"></a>
+
+# [0.4.0](https://github.com/brandonroberts/angular-routing/compare/0.3.1...0.4.0) (2021-01-18)
+
+### Bug Fixes
+
+- add missing takeUntil operator ([#73](https://github.com/brandonroberts/angular-routing/issues/73)) ([102f1b3](https://github.com/brandonroberts/angular-routing/commit/102f1b3))
+- apply nullable checks for async inputs ([#74](https://github.com/brandonroberts/angular-routing/issues/74)) ([4b9dc22](https://github.com/brandonroberts/angular-routing/commit/4b9dc22))
+- do not strip single slash in linkTo directive ([#83](https://github.com/brandonroberts/angular-routing/issues/83)) ([33bb938](https://github.com/brandonroberts/angular-routing/commit/33bb938)), closes [#71](https://github.com/brandonroberts/angular-routing/issues/71)
+- do not use index for current route comparison ([a9bc5be](https://github.com/brandonroberts/angular-routing/commit/a9bc5be))
+- set hash from parsed URL correctly ([405cb51](https://github.com/brandonroberts/angular-routing/commit/405cb51))
+
+### Features
+
+- add back/forward api for router service([#78](https://github.com/brandonroberts/angular-routing/issues/78)) ([fdcb917](https://github.com/brandonroberts/angular-routing/commit/fdcb917)), closes [#19](https://github.com/brandonroberts/angular-routing/issues/19)
+
 <a name="0.3.1"></a>
 
 ## [0.3.1](https://github.com/brandonroberts/angular-routing/compare/0.3.0...0.3.1) (2020-12-28)

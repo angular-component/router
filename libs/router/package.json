@@ -1,6 +1,6 @@
 {
   "name": "@angular-component/router",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "A declarative router for Angular applications",
   "schematics": "./schematics/collection.json",
   "ng-add": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/brandonroberts/angular-routing.git"
+    "url": "https://github.com/angular-component/router.git"
   },
   "keywords": [
     "Angular",
@@ -18,9 +18,9 @@
   "author": "Brandon Roberts",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/brandonroberts/angular-routing/issues"
+    "url": "https://github.com/angular-component/router/issues"
   },
-  "homepage": "https://github.com/brandonroberts/angular-routing#readme",
+  "homepage": "https://github.com/angular-component/router#readme",
   "peerDependencies": {
     "@angular/common": ">=9.0.0",
     "@angular/core": ">=9.0.0",
