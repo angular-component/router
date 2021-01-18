@@ -1,6 +1,6 @@
 {
-  "projectName": "angular-routing",
-  "projectOwner": "brandonroberts",
+  "projectName": "router",
+  "projectOwner": "angular-component",
   "repoType": "github",
   "repoHost": "https://github.com",
   "files": [
