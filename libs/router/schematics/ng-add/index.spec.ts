@@ -34,10 +34,7 @@ describe('ng add function', () => {
   };
 
   beforeEach(async () => {
-    schematicRunner = new SchematicTestRunner(
-      'angular-routing',
-      collectionPath
-    );
+    schematicRunner = new SchematicTestRunner('router', collectionPath);
 
     appTree = await schematicRunner
       .runExternalSchematicAsync(
