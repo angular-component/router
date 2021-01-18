@@ -48,6 +48,14 @@
           linkActive="mat-list-single-selected-option"
           >Profile 5</a
         >
+        <a
+          mat-list-item
+          [linkTo]="'../6' | valueToAsyncValue | async"
+          [linkActive]="
+            'mat-list-single-selected-option' | valueToAsyncValue | async
+          "
+          >Profile 6 (Async)</a
+        >
       </mat-nav-list>
     </mat-grid-tile>
     <mat-grid-tile style="background-color: lightcoral;">
