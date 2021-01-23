@@ -1,5 +1,5 @@
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
-import { experimental } from '@angular-devkit/core';
+import { WorkspaceSchema } from '@schematics/angular/utility/workspace-models';
 
 // The interfaces below are generated from the Angular CLI configuration schema
 // https://github.com/angular/angular-cli/blob/master/packages/@angular/cli/lib/config/schema.json
@@ -128,8 +128,6 @@ export interface AppConfig {
     route: string;
   };
 }
-
-export type WorkspaceSchema = experimental.workspace.WorkspaceSchema;
 
 export function getWorkspacePath(host: Tree): string {
   const possibleFiles = ['/angular.json', '/.angular.json'];
