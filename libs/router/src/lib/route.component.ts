@@ -12,6 +12,9 @@ import {
   NgModuleFactory,
   Compiler,
   OnDestroy,
+  Output,
+  EventEmitter,
+  ComponentRef,
 } from '@angular/core';
 
 import { Subject, BehaviorSubject, of, from } from 'rxjs';
@@ -85,6 +88,11 @@ export class RouteComponent implements OnInit, OnDestroy {
   @Input() redirectTo!: string;
   @Input() exact: boolean;
   @Input() routeOptions: RouteOptions;
+  @Output() routeRendered = new EventEmitter<{
+    route: Route;
+    componentRef: ComponentRef<any>;
+  }>();
+  @Output() routeDestroyed = new EventEmitter<Route>();
 
   private _path: string;
   private destroy$ = new Subject();
@@ -162,6 +170,7 @@ export class RouteComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.routerComponent.unregisterRoute(this.route);
+    this.routeDestroyed.emit(this.route);
     this.destroy$.next();
   }
 
@@ -213,11 +222,12 @@ export class RouteComponent implements OnInit, OnDestroy {
     const componentFactory = this.resolver.resolveComponentFactory(component);
 
     this.showTemplate();
-    this.viewContainerRef.createComponent(
+    const componentRef = this.viewContainerRef.createComponent(
       componentFactory,
       this.viewContainerRef.length,
       this.viewContainerRef.injector
     );
+    this.routeRendered.emit({ route: this.route, componentRef });
   }
 
   private clearComponent() {
