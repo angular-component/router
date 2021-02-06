@@ -24,8 +24,6 @@ interface State {
   routes: Route[];
 }
 
-type UnregisterableRoute = Route & { unregister?: boolean };
-
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'router',
@@ -110,7 +108,7 @@ export class RouterComponent implements OnInit, OnDestroy {
   }
 
   unregisterRoute(route: Route) {
-    this.updateRoutes({ ...route, unregister: true });
+    this.updateRoutes(route);
   }
 
   normalizePath(path: string) {
@@ -138,8 +136,7 @@ export class RouterComponent implements OnInit, OnDestroy {
     return (
       previous.path === current.path &&
       compareParams(previous.params, current.params) &&
-      previous.route.path === current.route.path &&
-      previous.route.options.exact === current.route.options.exact
+      previous.route === current.route
     );
   }
 
@@ -160,11 +157,12 @@ export class RouterComponent implements OnInit, OnDestroy {
     this.state$.next({ ...this.state$.value, ...newState });
   }
 
-  private updateRoutes(route: UnregisterableRoute) {
+  private updateRoutes(route: Route) {
     const routes = this.state$.value.routes;
-    if (route.unregister) {
+    const index = routes.indexOf(route);
+    if (index > -1) {
       this.updateState({
-        routes: routes.filter((r) => r.matcher !== route.matcher),
+        routes: [...routes.slice(0, index), ...routes.slice(index + 1)],
       });
     } else {
       this.updateState({ routes: routes.concat(route).sort(compareRoutes) });
