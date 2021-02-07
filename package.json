@@ -46,7 +46,6 @@
     "@ngrx/store": "10.0.0",
     "@nrwl/angular": "11.1.5",
     "angular-in-memory-web-api": "^0.11.0",
-    "query-string": "^6.13.1",
     "rxjs": "6.5.5",
     "tslib": "^2.0.3",
     "zone.js": "^0.10.2"
