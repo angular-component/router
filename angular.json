@@ -51,7 +51,7 @@
             "setupFile": "libs/router/src/test-setup.ts",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/angular-routing"]
+          "outputs": ["coverage/libs/router"]
         }
       },
       "schematics": {}
