@@ -3,9 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'rr-restricted',
   template: `
-    <p>
-      This route is restricted. Toggle restriction to disable route access.
-    </p>
+    <p>This route is restricted. Toggle restriction to disable route access.</p>
   `,
   styles: ['host: { display: block }'],
 })

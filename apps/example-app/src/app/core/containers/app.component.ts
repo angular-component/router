@@ -47,9 +47,7 @@ import { LayoutActions } from '@example-app/core/actions';
           Sign Out
         </bc-nav-item>
       </bc-sidenav>
-      <bc-toolbar (openMenu)="openSidenav()">
-        Book Collection
-      </bc-toolbar>
+      <bc-toolbar (openMenu)="openSidenav()"> Book Collection </bc-toolbar>
 
       <router>
         <route path="/books" [exact]="false" [load]="components.books"></route>

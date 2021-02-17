@@ -37,9 +37,8 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
  */
 @Directive({ selector: '[linkActive]' })
 export class LinkActive implements AfterContentInit, OnDestroy, OnChanges {
-  @ContentChildren(LinkTo, { descendants: true }) public links: QueryList<
-    LinkTo
-  >;
+  @ContentChildren(LinkTo, { descendants: true })
+  public links: QueryList<LinkTo>;
   @Input('linkActive') activeClass: string | null = 'active';
   @Input() activeOptions?: LinkActiveOptions | null;
   private _activeOptions: LinkActiveOptions = { exact: true };

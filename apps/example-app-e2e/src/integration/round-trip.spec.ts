@@ -24,8 +24,8 @@ context('Full round trip', () => {
   });
 
   it('shows a message when the credentials are wrong', () => {
-    cy.get('[placeholder=Username]').type('wronguser');
-    cy.get('[placeholder=Password]').type('supersafepassword');
+    cy.get('[data-placeholder=Username]').type('wronguser');
+    cy.get('[data-placeholder=Password]').type('supersafepassword');
     cy.get('[type="submit"]').click();
 
     // TODO: uncomment once Applitools work properly
@@ -36,7 +36,7 @@ context('Full round trip', () => {
   });
 
   it('is possible to login', () => {
-    cy.get('[placeholder=Username]').clear().type('test');
+    cy.get('[data-placeholder=Username]').clear().type('test');
     cy.get('[type="submit"]').click();
   });
 
@@ -47,7 +47,7 @@ context('Full round trip', () => {
 
     // TODO: uncomment once Applitools work properly
     // (cy as any).eyesCheckWindow('is possible to search for books');
-    cy.get('[placeholder="Search for a book"]').type('The Alchemist');
+    cy.get('[data-placeholder="Search for a book"]').type('The Alchemist');
     cy.get('bc-book-preview').its('length').should('be.gte', 1);
   });
 
@@ -89,7 +89,7 @@ context('Full round trip', () => {
 
     // TODO: uncomment once Applitools work properly
     // (cy as any).eyesCheckWindow('is possible to sign out');
-    cy.get('[placeholder=Username]').should('exist');
-    cy.get('[placeholder=Password]').should('exist');
+    cy.get('[data-placeholder=Username]').should('exist');
+    cy.get('[data-placeholder=Password]').should('exist');
   });
 });
