@@ -32,6 +32,9 @@
                 "command": "yarn tsc -p libs/router/tsconfig.schematics.json"
               }
             ]
+          },
+          "configurations": {
+            "production": {}
           }
         },
         "lint": {

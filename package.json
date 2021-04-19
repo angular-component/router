@@ -1,13 +1,13 @@
 {
   "name": "@angular-component/router",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "license": "MIT",
   "scripts": {
     "ng": "nx",
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "nx": "nx",
     "start": "ng serve",
-    "build": "ng build router",
+    "build": "ng build router --prod",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "test": "ng test router",
     "lint": "nx workspace-lint && ng lint",

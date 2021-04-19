@@ -1,3 +1,11 @@
+<a name="0.4.1"></a>
+
+## [0.4.1](https://github.com/angular-component/router/compare/0.4.0...0.4.1) (2021-04-19)
+
+### Bug Fixes
+
+- enhance active route comparison to allow if/else restrictions ([#87](https://github.com/angular-component/router/issues/87)) ([af8b7b7](https://github.com/angular-component/router/commit/af8b7b7))
+
 <a name="0.4.0"></a>
 
 # [0.4.0](https://github.com/angular-component/router/compare/0.3.1...0.4.0) (2021-01-18)
