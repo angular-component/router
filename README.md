@@ -259,8 +259,7 @@ export class MyComponent {
 Register a component to register the child routes.
 
 ```ts
-import { NgModule, Component } from '@angular/core';
-import { ModuleWithRoute } from '@angular-component/router';
+import { Component } from '@angular/core';
 
 @Component({
   template: `
@@ -278,6 +277,9 @@ export class LazyRouteComponent {}
 Implement the `ModuleWithRoute` interface for the route component to render after the module is loaded.
 
 ```ts
+import { NgModule } from '@angular/core';
+import { ModuleWithRoute } from '@angular-component/router';
+
 @NgModule({
   declarations: [LazyRouteComponent, LazyComponent],
 })
