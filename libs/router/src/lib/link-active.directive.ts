@@ -134,6 +134,6 @@ export class LinkActive implements AfterContentInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy() {
-    this._destroy$.next();
+    this._destroy$.next(true);
   }
 }

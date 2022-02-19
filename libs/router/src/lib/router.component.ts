@@ -116,7 +116,7 @@ export class RouterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.destroy$.next();
+    this.destroy$.next(true);
   }
 
   private isRouteMatch(url: string, route: Route) {
