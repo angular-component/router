@@ -68,7 +68,7 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
 /**
  * Layout Reducers
  */
-export const selectLayoutState = createFeatureSelector<State, fromLayout.State>(
+export const selectLayoutState = createFeatureSelector<fromLayout.State>(
   fromLayout.layoutFeatureKey
 );
 
