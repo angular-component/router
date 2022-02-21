@@ -14,44 +14,34 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "parallel": 1
       }
-    }
-  },
-  "projects": {
-    "router": {
-      "tags": []
-    },
-    "example-app": {
-      "tags": []
-    },
-    "example-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["example-app"]
-    },
-    "recursive-routes": {
-      "tags": []
-    },
-    "recursive-routes-e2e": {
-      "tags": [],
-      "implicitDependencies": ["recursive-routes"]
-    },
-    "responsive-app": {
-      "tags": []
-    },
-    "responsive-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["responsive-app"]
-    },
-    "route-restrictions": {
-      "tags": []
-    },
-    "route-restrictions-e2e": {
-      "tags": [],
-      "implicitDependencies": ["route-restrictions"]
     }
   },
   "affected": {
     "defaultBase": "master"
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular",
+    "analytics": false
+  },
+  "defaultProject": "router",
+  "generators": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
   }
 }

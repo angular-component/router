@@ -11,7 +11,7 @@ describe('Router', () => {
   const path = '/next';
 
   beforeEach(() => {
-    location = ({
+    location = {
       path: jest.fn().mockReturnValue('/path'),
       go: jest.fn(),
       subscribe: (cb: Function) => {
@@ -20,11 +20,11 @@ describe('Router', () => {
       prepareExternalUrl: jest.fn().mockImplementation((url: string) => url),
       replaceState: jest.fn(),
       normalize: jest.fn().mockImplementation((path: string) => path),
-    } as unknown) as Location;
+    } as unknown as Location;
 
-    platformLocation = ({
+    platformLocation = {
       href: 'http://localhost/path',
-    } as unknown) as PlatformLocation;
+    } as unknown as PlatformLocation;
 
     urlParser = new UrlParser();
 

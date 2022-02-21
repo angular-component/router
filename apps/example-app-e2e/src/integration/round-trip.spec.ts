@@ -16,6 +16,7 @@ context('Full round trip', () => {
 
   afterEach(() => {
     (cy as any).saveLocalStorage();
+    // cy.clearLocalStorage('books_app');
   });
 
   after(() => {
@@ -79,7 +80,7 @@ context('Full round trip', () => {
 
     // TODO: uncomment once Applitools work properly
     // (cy as any).eyesCheckWindow('is possible to show the collection');
-    cy.get('bc-book-preview').its('length').should('be', 1);
+    cy.get('bc-book-preview').its('length').should('be.eq', 1);
   });
 
   it('is possible to sign out', () => {

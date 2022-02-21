@@ -35,13 +35,13 @@ Cypress.Commands.add('login', (email, password) => {
 
 let LOCAL_STORAGE_MEMORY: any = {};
 
-Cypress.Commands.add('saveLocalStorage', () => {
+Cypress.Commands.add('saveLocalStorage' as any, () => {
   Object.keys(localStorage).forEach((key) => {
     LOCAL_STORAGE_MEMORY[key] = localStorage[key];
   });
 });
 
-Cypress.Commands.add('restoreLocalStorage', () => {
+Cypress.Commands.add('restoreLocalStorage' as any, () => {
   Object.keys(LOCAL_STORAGE_MEMORY).forEach((key) => {
     localStorage.setItem(key, LOCAL_STORAGE_MEMORY[key]);
   });

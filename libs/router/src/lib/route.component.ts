@@ -162,7 +162,7 @@ export class RouteComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.routerComponent.unregisterRoute(this.route);
-    this.destroy$.next();
+    this.destroy$.next(true);
   }
 
   registerRoute(path: string, exact: boolean, load: Load) {
