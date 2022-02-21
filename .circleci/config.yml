@@ -3,10 +3,10 @@ version: 2.1
 var_1: &cache_key yarn-cache-{{ checksum "yarn.lock" }}
 var_2: &run_in_node
   docker:
-    - image: circleci/node:12.9.1
+    - image: circleci/node:16.13
 var_3: &run_in_browser
   docker:
-    - image: circleci/node:12.9.1-browsers
+    - image: circleci/node:16.13-browsers
 
 jobs:
   install:
@@ -16,7 +16,7 @@ jobs:
       - restore_cache:
           keys:
             - *cache_key
-      - run: yarn --frozen-lockfile --non-interactive
+      - run: yarn --prefer-offline --frozen-lockfile --non-interactive
       - save_cache:
           key: *cache_key
           paths:
