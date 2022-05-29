@@ -75,7 +75,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/example-app/jest.config.js",
+            "jestConfig": "apps/example-app/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/apps/example-app"]
@@ -179,7 +179,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/recursive-routes/jest.config.js",
+            "jestConfig": "apps/recursive-routes/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/apps/recursive-routes"]
@@ -283,7 +283,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/responsive-app/jest.config.js",
+            "jestConfig": "apps/responsive-app/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/apps/responsive-app"]
@@ -387,7 +387,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/route-restrictions/jest.config.js",
+            "jestConfig": "apps/route-restrictions/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/apps/route-restrictions"]
@@ -456,7 +456,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/router/jest.config.js",
+            "jestConfig": "libs/router/jest.config.ts",
             "setupFile": "libs/router/src/test-setup.ts",
             "passWithNoTests": true
           },
