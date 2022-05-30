@@ -14,7 +14,7 @@ import {
 import { LinkTo } from './link-to.directive';
 import { Router } from './router.service';
 import { combineLatest, of, Subject, Subscription } from 'rxjs';
-import { map, mapTo, startWith, takeUntil } from 'rxjs/operators';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 import { filterNullable } from './operators/filter-nullable.operator';
 
 export interface LinkActiveOptions {
@@ -78,21 +78,19 @@ export class LinkActive implements AfterContentInit, OnDestroy, OnChanges {
     }
 
     const contentLinks$ = this.links
-      ? this.links
-          .toArray()
-          .map((link) =>
-            link.hrefUpdated.pipe(
-              startWith(link.linkHref),
-              mapTo(link.linkHref),
-              filterNullable()
-            )
+      ? this.links.toArray().map((link) =>
+          link.hrefUpdated.pipe(
+            startWith(link.linkHref),
+            map(() => link.linkHref),
+            filterNullable()
           )
+        )
       : [];
 
     const link$ = this.link
       ? this.link.hrefUpdated.pipe(
           startWith(this.link.linkHref),
-          mapTo(this.link.linkHref),
+          map(() => this.link.linkHref),
           filterNullable()
         )
       : of('');

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular-component/router';
+import { getRouter } from '@angular-component/router';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
@@ -16,6 +16,8 @@ import { UserActions } from '@example-app/core/actions';
 
 @Injectable()
 export class AuthEffects {
+  private router = getRouter();
+
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(LoginPageActions.login),
@@ -77,7 +79,6 @@ export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private router: Router,
     private dialog: MatDialog
   ) {}
 }

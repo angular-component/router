@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular-component/router';
+import { getRouter } from '@angular-component/router';
 
 @Component({
   selector: 'bc-not-found-page',
@@ -26,7 +26,7 @@ import { Router } from '@angular-component/router';
   ],
 })
 export class NotFoundPageComponent {
-  constructor(private router: Router) {}
+  private router = getRouter();
 
   goHome() {
     this.router.go('/');
