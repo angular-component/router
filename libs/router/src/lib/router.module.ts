@@ -26,20 +26,23 @@ export function getQueryParams(router: Router) {
   return router.queryParams$;
 }
 
+export function provideComponentRouter() {
+  return [
+    UrlParser,
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
+    { provide: QueryParams, deps: [Router], useFactory: getQueryParams },
+  ];
+}
+
 @NgModule({
-  imports: [CommonModule],
-  declarations: [components],
+  imports: [CommonModule, components],
   exports: [components],
 })
 export class ComponentRouterModule {
   static forRoot(): ModuleWithProviders<ComponentRouterModule> {
     return {
       ngModule: ComponentRouterModule,
-      providers: [
-        UrlParser,
-        { provide: LocationStrategy, useClass: PathLocationStrategy },
-        { provide: QueryParams, deps: [Router], useFactory: getQueryParams },
-      ],
+      providers: [provideComponentRouter()],
     };
   }
 }

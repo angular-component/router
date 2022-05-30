@@ -1,17 +1,17 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   OnInit,
   Input,
   Type,
   ViewContainerRef,
-  ComponentFactoryResolver,
   ContentChild,
   TemplateRef,
   ChangeDetectionStrategy,
   Self,
-  NgModuleFactory,
-  Compiler,
   OnDestroy,
+  NgModuleRef,
+  createNgModuleRef,
 } from '@angular/core';
 
 import { Subject, BehaviorSubject, of, from } from 'rxjs';
@@ -24,7 +24,7 @@ import {
   map,
 } from 'rxjs/operators';
 
-import { Load, Route, RouteOptions } from './route';
+import { Load, ModuleWithRoute, Route, RouteOptions } from './route';
 import { Params, RouteParams, RoutePath } from './route-params.service';
 import { RouterComponent } from './router.component';
 import { Router } from './router.service';
@@ -46,6 +46,8 @@ interface State {
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'route',
+  standalone: true,
+  imports: [CommonModule],
   template: `
     <ng-container
       *ngIf="(shouldRender$ | async) && template"
@@ -110,9 +112,7 @@ export class RouteComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private routerComponent: RouterComponent,
-    private resolver: ComponentFactoryResolver,
-    private viewContainerRef: ViewContainerRef,
-    private compiler: Compiler
+    private viewContainerRef: ViewContainerRef
   ) {}
 
   ngOnInit(): void {
@@ -176,32 +176,26 @@ export class RouteComponent implements OnInit, OnDestroy {
   private loadAndRender(route: Route) {
     if (route.load) {
       return from(
-        route.load().then((componentOrModule) => {
-          if (componentOrModule instanceof NgModuleFactory) {
-            const moduleRef = componentOrModule.create(
-              this.viewContainerRef.injector
-            );
-            const component = moduleRef.instance.routeComponent;
+        route
+          .load()
+          .then(
+            (componentOrModule: NgModuleRef<ModuleWithRoute> | Type<any>) => {
+              let component: Type<any>;
 
-            this.renderComponent(component);
-          } else if (componentOrModule.ɵmod) {
-            return this.compiler
-              .compileModuleAsync(componentOrModule as Type<any>)
-              .then((moduleFactory) => {
-                const moduleRef = moduleFactory.create(
-                  this.viewContainerRef.injector
-                );
-                const component = moduleRef.instance.routeComponent;
-                this.renderComponent(component);
+              if ((componentOrModule as any).ɵmod) {
+                const moduleRef: NgModuleRef<ModuleWithRoute> =
+                  createNgModuleRef(
+                    componentOrModule as Type<any>,
+                    this.viewContainerRef.injector
+                  );
+                component = moduleRef.instance.routeComponent;
+              } else {
+                component = componentOrModule as Type<any>;
+              }
 
-                return true;
-              });
-          } else {
-            this.renderComponent(componentOrModule);
-          }
-
-          return true;
-        })
+              this.renderComponent(component);
+            }
+          )
       );
     } else {
       this.showTemplate();
@@ -210,14 +204,12 @@ export class RouteComponent implements OnInit, OnDestroy {
   }
 
   private renderComponent(component: Type<any>) {
-    const componentFactory = this.resolver.resolveComponentFactory(component);
-
     this.showTemplate();
-    this.viewContainerRef.createComponent(
-      componentFactory,
-      this.viewContainerRef.length,
-      this.viewContainerRef.injector
-    );
+
+    this.viewContainerRef.createComponent(component, {
+      index: this.viewContainerRef.length,
+      injector: this.viewContainerRef.injector,
+    });
   }
 
   private clearComponent() {

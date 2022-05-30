@@ -27,6 +27,7 @@ interface State {
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'router',
+  standalone: true,
   template: '<ng-content></ng-content>',
 })
 export class RouterComponent implements OnInit, OnDestroy {

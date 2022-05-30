@@ -20,7 +20,7 @@ const DEFAULT_TARGET = '_self';
  * <a linkTo="/home/page" [queryParams]="{ id: 123 }">Home Page</a>
  * <a [linkTo]="'/pages' + page.id">Page 1</a>
  */
-@Directive({ selector: 'a[linkTo]' })
+@Directive({ selector: 'a[linkTo]', standalone: true })
 export class LinkTo {
   @Input() target = DEFAULT_TARGET;
   @HostBinding('href') linkHref?: string | null;
