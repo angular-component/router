@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ComponentRouterModule } from '@angular-component/router';
+import { provideComponentRouter } from '@angular-component/router';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -21,7 +21,6 @@ import { AppComponent } from '@example-app/core/containers';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ComponentRouterModule.forRoot(),
 
     /**
      * StoreModule.forRoot is imported once in the root module, accepting a reducer
@@ -74,5 +73,6 @@ import { AppComponent } from '@example-app/core/containers';
     CoreModule,
   ],
   bootstrap: [AppComponent],
+  providers: [provideComponentRouter()],
 })
 export class AppModule {}

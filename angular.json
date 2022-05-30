@@ -25,6 +25,14 @@
             "scripts": []
           },
           "configurations": {
+            "development": {
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "buildOptimizer": false,
+              "sourceMap": true,
+              "optimization": false,
+              "namedChunks": true
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -53,12 +61,13 @@
               ]
             }
           },
-          "outputs": ["{options.outputPath}"]
+          "outputs": ["{options.outputPath}"],
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "example-app:build"
+            "browserTarget": "example-app:build:development"
           },
           "configurations": {
             "production": {

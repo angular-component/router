@@ -35,7 +35,7 @@ export const LINK_ACTIVE_OPTIONS: LinkActiveOptions = {
  *  </li>
  * </ol>
  */
-@Directive({ selector: '[linkActive]' })
+@Directive({ selector: '[linkActive]', standalone: true })
 export class LinkActive implements AfterContentInit, OnDestroy, OnChanges {
   @ContentChildren(LinkTo, { descendants: true })
   public links: QueryList<LinkTo>;

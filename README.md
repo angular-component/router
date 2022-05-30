@@ -64,6 +64,8 @@ import { ComponentRouterModule } from '@angular-component/router';
 export class FeatureModule {}
 ```
 
+## Usage with Standalone Features (v14+)
+
 After your components are registered, use the `Router` and `Route` components to register some routes.
 
 ```html

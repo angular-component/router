@@ -1,4 +1,5 @@
 import { Location, PlatformLocation } from '@angular/common';
+import { Injector } from '@angular/core';
 
 import { Router } from './router.service';
 import { UrlParser } from './url-parser';
@@ -28,7 +29,16 @@ describe('Router', () => {
 
     urlParser = new UrlParser();
 
-    router = new Router(location, platformLocation, urlParser);
+    const injector = Injector.create({
+      providers: [
+        { provide: Router, deps: [] },
+        { provide: Location, useValue: location },
+        { provide: PlatformLocation, useValue: platformLocation },
+        { provide: UrlParser, useValue: urlParser },
+      ],
+    });
+
+    router = injector.get(Router);
   });
 
   describe('go', () => {

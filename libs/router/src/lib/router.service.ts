@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { PlatformLocation, Location } from '@angular/common';
 
 import { BehaviorSubject } from 'rxjs';
@@ -17,6 +17,10 @@ interface State {
   providedIn: 'root',
 })
 export class Router {
+  private location = inject(Location);
+  private platformLocation = inject(PlatformLocation);
+  private urlParser = inject(UrlParser);
+
   private readonly state$ = new BehaviorSubject<State>({
     url: this.location.path(),
     queryParams: {},
@@ -36,11 +40,7 @@ export class Router {
     distinctUntilChanged(compareParams)
   );
 
-  constructor(
-    private location: Location,
-    private platformLocation: PlatformLocation,
-    private urlParser: UrlParser
-  ) {
+  constructor() {
     this.location.subscribe(() => {
       this.nextState(this.getLocation());
     });
