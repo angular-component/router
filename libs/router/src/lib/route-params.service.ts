@@ -22,7 +22,7 @@ export function compareParams(previous: Params, current: Params): boolean {
  *
  * @returns RoutePath
  */
-export function getRoutePath<T extends string = string>() {
+export function getRoutePath<T extends string = string>(): Observable<T> {
   return inject<RoutePath<T>>(RoutePath);
 }
 
@@ -31,7 +31,7 @@ export function getRoutePath<T extends string = string>() {
  *
  * @returns RouteParams
  */
-export function getRouteParams<T extends Params = Params>() {
+export function getRouteParams<T extends Params = Params>(): Observable<T> {
   return inject<RouteParams<T>>(RouteParams);
 }
 
@@ -40,6 +40,6 @@ export function getRouteParams<T extends Params = Params>() {
  *
  * @returns QueryParams
  */
-export function getQueryParams<T extends Params = Params>() {
+export function getQueryParams<T extends Params = Params>(): Observable<T> {
   return inject<QueryParams<T>>(QueryParams);
 }
