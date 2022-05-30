@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { Credentials } from '@example-app/auth/models';
 
 @Component({
@@ -90,9 +90,9 @@ export class LoginFormComponent implements OnInit {
 
   @Output() submitted = new EventEmitter<Credentials>();
 
-  form: FormGroup = new FormGroup({
-    username: new FormControl('ngrx'),
-    password: new FormControl(''),
+  form: UntypedFormGroup = new UntypedFormGroup({
+    username: new UntypedFormControl('ngrx'),
+    password: new UntypedFormControl(''),
   });
 
   constructor() {}
