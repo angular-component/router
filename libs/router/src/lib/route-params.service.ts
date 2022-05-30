@@ -1,3 +1,4 @@
+import { inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface Params {
@@ -14,4 +15,31 @@ export function compareParams(previous: Params, current: Params): boolean {
   return (
     previous === current || JSON.stringify(previous) === JSON.stringify(current)
   );
+}
+
+/**
+ * Returns the RoutePath observable from the current injector
+ *
+ * @returns RoutePath
+ */
+export function getRoutePath<T extends string = string>() {
+  return inject<RoutePath<T>>(RoutePath);
+}
+
+/**
+ * Returns the RoutePath observable from the current injector
+ *
+ * @returns RouteParams
+ */
+export function getRouteParams<T extends Params = Params>() {
+  return inject<RouteParams<T>>(RouteParams);
+}
+
+/**
+ * Returns the QueryParams observable from the current injector
+ *
+ * @returns QueryParams
+ */
+export function getQueryParams<T extends Params = Params>() {
+  return inject<QueryParams<T>>(QueryParams);
 }

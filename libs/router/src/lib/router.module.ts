@@ -22,15 +22,17 @@ export const components = [
   RouteComponentTemplate,
 ];
 
-export function getQueryParams(router: Router) {
-  return router.queryParams$;
-}
-
 export function provideComponentRouter() {
   return [
     UrlParser,
     { provide: LocationStrategy, useClass: PathLocationStrategy },
-    { provide: QueryParams, deps: [Router], useFactory: getQueryParams },
+    {
+      provide: QueryParams,
+      deps: [Router],
+      useFactory(router: Router) {
+        return router.queryParams$;
+      },
+    },
   ];
 }
 

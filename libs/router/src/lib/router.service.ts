@@ -124,3 +124,12 @@ export class Router {
     return new URLSearchParams(params).toString();
   }
 }
+
+/**
+ * Returns the Router instance from the current injector
+ *
+ * @returns Router
+ */
+export function getRouter() {
+  return inject(Router);
+}

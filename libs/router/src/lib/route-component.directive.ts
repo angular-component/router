@@ -1,9 +1,9 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, Type } from '@angular/core';
 
 @Directive({
   selector: '[routeComponent]',
   standalone: true,
 })
 export class RouteComponentTemplate {
-  @Input() routeComponent: any;
+  @Input() routeComponent: Type<any>;
 }

@@ -29,14 +29,6 @@ import { Params, RouteParams, RoutePath } from './route-params.service';
 import { RouterComponent } from './router.component';
 import { Router } from './router.service';
 
-export function getRouteParams(routeComponent: RouteComponent) {
-  return routeComponent.routeParams$;
-}
-
-export function getRoutePath(routeComponent: RouteComponent) {
-  return routeComponent.routePath$;
-}
-
 interface State {
   params: Params;
   path: string;
@@ -59,12 +51,16 @@ interface State {
   providers: [
     {
       provide: RouteParams,
-      useFactory: getRouteParams,
+      useFactory(routeComponent: RouteComponent) {
+        return routeComponent.routeParams$;
+      },
       deps: [[new Self(), RouteComponent]],
     },
     {
       provide: RoutePath,
-      useFactory: getRoutePath,
+      useFactory(routeComponent: RouteComponent) {
+        return routeComponent.routePath$;
+      },
       deps: [[new Self(), RouteComponent]],
     },
   ],
