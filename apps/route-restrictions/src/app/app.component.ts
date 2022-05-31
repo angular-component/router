@@ -13,4 +13,11 @@ export class AppComponent {
   toggle() {
     this.restricted = !this.restricted;
   }
+
+  restrictedLoader() {
+    return fetch('https://jsonplaceholder.typicode.com/todos').then(
+      (response) => response.json()
+    );
+    // .then(json => console.log(json))
+  }
 }

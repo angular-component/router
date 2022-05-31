@@ -1,6 +1,7 @@
 import { Type, NgModule } from '@angular/core';
+import { LoaderFunction } from './data';
 
-import { Params } from './route-params.service';
+import type { Params } from './route-params.service';
 
 export type Load = () => Promise<NgModule | Type<any> | any>;
 
@@ -8,6 +9,7 @@ export interface Route {
   path: string;
   // component?: Type<any>;
   load?: Load;
+  loader?: LoaderFunction;
   matcher?: RegExp;
   options: RouteOptions;
 }

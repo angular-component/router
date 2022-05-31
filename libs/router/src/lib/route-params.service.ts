@@ -20,7 +20,7 @@ export function compareParams(previous: Params, current: Params): boolean {
 /**
  * Returns the RoutePath observable from the current injector
  *
- * @returns RoutePath
+ * @returns Observable<RoutePath>
  */
 export function getRoutePath<T extends string = string>(): Observable<T> {
   return inject<RoutePath<T>>(RoutePath);
@@ -29,7 +29,7 @@ export function getRoutePath<T extends string = string>(): Observable<T> {
 /**
  * Returns the RoutePath observable from the current injector
  *
- * @returns RouteParams
+ * @returns Observable<RouteParams>
  */
 export function getRouteParams<T extends Params = Params>(): Observable<T> {
   return inject<RouteParams<T>>(RouteParams);
@@ -38,7 +38,7 @@ export function getRouteParams<T extends Params = Params>(): Observable<T> {
 /**
  * Returns the QueryParams observable from the current injector
  *
- * @returns QueryParams
+ * @returns Observable<QueryParams>
  */
 export function getQueryParams<T extends Params = Params>(): Observable<T> {
   return inject<QueryParams<T>>(QueryParams);

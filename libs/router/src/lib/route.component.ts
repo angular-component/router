@@ -14,7 +14,7 @@ import {
   createNgModuleRef,
 } from '@angular/core';
 
-import { Subject, BehaviorSubject, of, from } from 'rxjs';
+import { Subject, BehaviorSubject, of, from, asyncScheduler } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
@@ -23,6 +23,7 @@ import {
   withLatestFrom,
   map,
 } from 'rxjs/operators';
+import { AppData, LoaderData, LoaderFunction } from './data';
 
 import { Load, ModuleWithRoute, Route, RouteOptions } from './route';
 import { Params, RouteParams, RoutePath } from './route-params.service';
@@ -33,6 +34,7 @@ interface State {
   params: Params;
   path: string;
   shouldRender: boolean;
+  loaderData?: AppData;
 }
 
 @Component({
@@ -63,6 +65,13 @@ interface State {
       },
       deps: [[new Self(), RouteComponent]],
     },
+    {
+      provide: LoaderData,
+      useFactory(routeComponent: RouteComponent) {
+        return routeComponent.loaderData$;
+      },
+      deps: [[new Self(), RouteComponent]],
+    },
   ],
 })
 export class RouteComponent implements OnInit, OnDestroy {
@@ -83,6 +92,7 @@ export class RouteComponent implements OnInit, OnDestroy {
   @Input() redirectTo!: string;
   @Input() exact: boolean;
   @Input() routeOptions: RouteOptions;
+  @Input() loader!: LoaderFunction;
 
   private _path: string;
   private destroy$ = new Subject();
@@ -103,6 +113,12 @@ export class RouteComponent implements OnInit, OnDestroy {
     distinctUntilChanged(),
     takeUntil(this.destroy$)
   );
+  readonly loaderData$ = this.state$.pipe(
+    map((state) => state.loaderData),
+    distinctUntilChanged(),
+    takeUntil(this.destroy$)
+  );
+
   route!: Route;
 
   constructor(
@@ -124,7 +140,7 @@ export class RouteComponent implements OnInit, OnDestroy {
         filter((ar) => ar !== null),
         distinctUntilChanged(),
         withLatestFrom(this.shouldRender$),
-        mergeMap(([current, rendered]) => {
+        mergeMap(async ([current, rendered]) => {
           if (current.route === this.route) {
             if (this.redirectTo) {
               this.router.go(this.redirectTo);
@@ -139,6 +155,16 @@ export class RouteComponent implements OnInit, OnDestroy {
             if (!rendered) {
               if (!this.reuse) {
                 this.clearView();
+              }
+
+              if (this.loader) {
+                const loaderData = await this.loader({
+                  params: current.params,
+                  path: current.path,
+                });
+                this.updateState({
+                  loaderData,
+                });
               }
 
               return this.loadAndRender(current.route);
@@ -214,7 +240,7 @@ export class RouteComponent implements OnInit, OnDestroy {
   }
 
   private showTemplate() {
-    setTimeout(() => {
+    asyncScheduler.schedule(() => {
       this.updateState({ shouldRender: true });
     });
   }

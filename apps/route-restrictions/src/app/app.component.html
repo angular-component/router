@@ -14,7 +14,10 @@
   <label>{{ restricted ? 'ON' : 'OFF' }}</label>
 
   <router>
-    <route path="/restricted" *ngIf="!restricted; else restrictedRoute">
+    <route
+      path="/restricted" 
+      [loader]="restrictedLoader"
+      *ngIf="!restricted; else restrictedRoute">
       <rr-restricted *routeComponent></rr-restricted>
     </route>
     <ng-template #restrictedRoute>
