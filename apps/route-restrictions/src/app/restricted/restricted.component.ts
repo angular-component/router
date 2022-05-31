@@ -2,12 +2,6 @@ import { getLoaderData } from '@angular-component/router';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
-export function loader() {
-  return fetch('https://jsonplaceholder.typicode.com/todos').then((response) =>
-    response.json()
-  );
-}
-
 @Component({
   selector: 'rr-restricted',
   standalone: true,

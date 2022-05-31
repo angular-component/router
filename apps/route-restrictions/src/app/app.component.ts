@@ -1,5 +1,16 @@
-import { RouteLoadMap } from '@angular-component/router';
+import {
+  DataFunctionArgs,
+  LoaderFunction,
+  RouteLoadMap,
+} from '@angular-component/router';
 import { Component } from '@angular/core';
+
+export const loader: LoaderFunction = async ({ get }: DataFunctionArgs) => {
+  return fetch('https://jsonplaceholder.typicode.com/todos').then((response) =>
+    response.json()
+  );
+  // .then(json => console.log(json))
+};
 
 @Component({
   selector: 'reactiveangular-root',
@@ -18,10 +29,5 @@ export class AppComponent {
     this.restricted = !this.restricted;
   }
 
-  restrictedLoader() {
-    return fetch('https://jsonplaceholder.typicode.com/todos').then(
-      (response) => response.json()
-    );
-    // .then(json => console.log(json))
-  }
+  restrictedLoader = loader;
 }

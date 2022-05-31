@@ -14,6 +14,9 @@ import {
   createNgModuleRef,
   NgModule,
   isDevMode,
+  InjectionToken,
+  ProviderToken,
+  InjectFlags,
 } from '@angular/core';
 
 import { Subject, BehaviorSubject, of, from, asyncScheduler } from 'rxjs';
@@ -161,8 +164,19 @@ export class RouteComponent implements OnInit, OnDestroy {
 
               if (this.loader) {
                 const loaderData = await this.loader({
+                  parent: this.routerComponent.parentRouterComponent,
                   params: current.params,
                   path: current.path,
+                  get: <T>(
+                    token: ProviderToken<T>,
+                    defaultValue?: T,
+                    flags?: InjectFlags
+                  ) =>
+                    this.viewContainerRef.injector.get(
+                      token,
+                      defaultValue,
+                      flags
+                    ),
                 });
                 this.updateState({
                   loaderData,

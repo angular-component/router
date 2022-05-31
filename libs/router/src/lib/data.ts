@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+import { inject, InjectFlags, ProviderToken, Type } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Params } from './route-params.service';
@@ -9,6 +9,8 @@ import { Params } from './route-params.service';
 export interface DataFunctionArgs {
   path: string;
   params: Params;
+  parent?: any;
+  get: <T>(token: ProviderToken<T>, defaultValue?: T, flags?: InjectFlags) => T;
 }
 
 /**
@@ -20,7 +22,7 @@ export type AppData = any;
  * A function that loads data for a route.
  */
 export interface LoaderFunction {
-  (args: DataFunctionArgs):
+  (args?: DataFunctionArgs):
     | Promise<Response>
     | Response
     | Promise<AppData>
