@@ -5,6 +5,10 @@ import type { Params } from './route-params.service';
 
 export type Load = () => Promise<NgModule | Type<any> | any>;
 
+export type RouteLoadMap = {
+  [name: string]: Load;
+};
+
 export interface Route {
   path: string;
   // component?: Type<any>;

@@ -15,10 +15,11 @@
 
   <router>
     <route
-      path="/restricted" 
+      path="/restricted"
+      [load]="components.rr"
       [loader]="restrictedLoader"
-      *ngIf="!restricted; else restrictedRoute">
-      <rr-restricted *routeComponent></rr-restricted>
+      *ngIf="!restricted; else restrictedRoute"
+    >
     </route>
     <ng-template #restrictedRoute>
       <route path="/restricted" redirectTo="/"></route>

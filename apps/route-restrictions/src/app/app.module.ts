@@ -7,17 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 
 import { AppComponent } from './app.component';
-import { RestrictedComponent } from './restricted/restricted.component';
 import { HomeComponent } from './home/home.component';
 import { UnknownComponent } from './unknown/unknown.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    RestrictedComponent,
-    HomeComponent,
-    UnknownComponent,
-  ],
+  declarations: [AppComponent, HomeComponent, UnknownComponent],
   imports: [
     BrowserModule,
     CommonModule,

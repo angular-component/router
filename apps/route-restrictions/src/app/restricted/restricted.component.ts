@@ -1,4 +1,5 @@
 import { getLoaderData } from '@angular-component/router';
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 export function loader() {
@@ -9,6 +10,8 @@ export function loader() {
 
 @Component({
   selector: 'rr-restricted',
+  standalone: true,
+  imports: [CommonModule],
   template: `
     <p>This route is restricted. Toggle restriction to disable route access.</p>
 
@@ -16,7 +19,7 @@ export function loader() {
   `,
   styles: ['host: { display: block }'],
 })
-export class RestrictedComponent implements OnInit {
+export default class RestrictedComponent implements OnInit {
   loaderData$ = getLoaderData<any[]>();
 
   constructor() {}

@@ -12,6 +12,8 @@ import {
   OnDestroy,
   NgModuleRef,
   createNgModuleRef,
+  NgModule,
+  isDevMode,
 } from '@angular/core';
 
 import { Subject, BehaviorSubject, of, from, asyncScheduler } from 'rxjs';
@@ -198,26 +200,26 @@ export class RouteComponent implements OnInit, OnDestroy {
   private loadAndRender(route: Route) {
     if (route.load) {
       return from(
-        route
-          .load()
-          .then(
-            (componentOrModule: NgModuleRef<ModuleWithRoute> | Type<any>) => {
-              let component: Type<any>;
+        route.load().then((componentOrModule: NgModule | Type<any>) => {
+          if (componentOrModule['default']) {
+            componentOrModule = componentOrModule['default'];
+          }
 
-              if ((componentOrModule as any).ɵmod) {
-                const moduleRef: NgModuleRef<ModuleWithRoute> =
-                  createNgModuleRef(
-                    componentOrModule as Type<any>,
-                    this.viewContainerRef.injector
-                  );
-                component = moduleRef.instance.routeComponent;
-              } else {
-                component = componentOrModule as Type<any>;
-              }
+          this.checkMetadata(componentOrModule);
+          let component: Type<any>;
 
-              this.renderComponent(component);
-            }
-          )
+          if ((componentOrModule as any).ɵmod) {
+            const moduleRef: NgModuleRef<ModuleWithRoute> = createNgModuleRef(
+              componentOrModule as Type<any>,
+              this.viewContainerRef.injector
+            );
+            component = moduleRef.instance.routeComponent;
+          } else {
+            component = componentOrModule as Type<any>;
+          }
+
+          this.renderComponent(component);
+        })
       );
     } else {
       this.showTemplate();
@@ -264,5 +266,19 @@ export class RouteComponent implements OnInit, OnDestroy {
 
   private updateState(newState: Partial<State>) {
     this.state$.next({ ...this.state$.value, ...newState });
+  }
+
+  private checkMetadata(componentOrModule: any) {
+    if (isDevMode()) {
+      if (!componentOrModule.ɵmod && !componentOrModule.ɵcmp) {
+        console.warn(
+          `@angular-component/router: An invalid import ` +
+            `for ${this.route.path} was lazy loaded. ` +
+            `Either export the component as a default export ` +
+            `or use .then(m => m.ComponentClass) to unwrap the ` +
+            `import.`
+        );
+      }
+    }
   }
 }

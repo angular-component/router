@@ -1,3 +1,4 @@
+import { RouteLoadMap } from '@angular-component/router';
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,6 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'route-restrictions';
+  components: RouteLoadMap = {
+    rr: () => import('./restricted/restricted.component'),
+  };
 
   restricted = false;
 
