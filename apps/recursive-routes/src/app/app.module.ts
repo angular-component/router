@@ -4,9 +4,9 @@ import { SimpsonsService } from './service/simpsons.service';
 import { NgModule } from '@angular/core';
 import { ComponentRouterModule } from '@angular-component/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatListModule } from '@angular/material/list';
+import { MatLegacyListModule as MatListModule } from '@angular/material/legacy-list';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 
 import { AppComponent } from './app.component';
 import { MemberComponent } from './member/member.component';

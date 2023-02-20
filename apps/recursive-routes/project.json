@@ -1,0 +1,83 @@
+{
+  "name": "recursive-routes",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "generators": {},
+  "sourceRoot": "apps/recursive-routes/src",
+  "prefix": "reactiveangular",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/recursive-routes",
+        "index": "apps/recursive-routes/src/index.html",
+        "main": "apps/recursive-routes/src/main.ts",
+        "polyfills": "apps/recursive-routes/src/polyfills.ts",
+        "tsConfig": "apps/recursive-routes/tsconfig.app.json",
+        "aot": true,
+        "assets": [
+          "apps/recursive-routes/src/favicon.ico",
+          "apps/recursive-routes/src/assets"
+        ],
+        "styles": ["apps/recursive-routes/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/recursive-routes/src/environments/environment.ts",
+              "with": "apps/recursive-routes/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "10kb"
+            }
+          ]
+        }
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "browserTarget": "recursive-routes:build"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "recursive-routes:build:production"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "recursive-routes:build"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "apps/recursive-routes/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/apps/recursive-routes"]
+    }
+  },
+  "tags": []
+}

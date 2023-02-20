@@ -1,0 +1,23 @@
+{
+  "name": "responsive-app-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/responsive-app-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/responsive-app-e2e/cypress.json",
+        "tsConfig": "apps/responsive-app-e2e/tsconfig.e2e.json",
+        "devServerTarget": "responsive-app:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "responsive-app:serve:production"
+        }
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["responsive-app"]
+}

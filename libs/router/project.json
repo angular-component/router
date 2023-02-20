@@ -1,0 +1,50 @@
+{
+  "name": "router",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/router/src",
+  "prefix": "reactiveangular",
+  "targets": {
+    "build-package": {
+      "executor": "@nrwl/angular:package",
+      "options": {
+        "tsConfig": "libs/router/tsconfig.lib.json",
+        "project": "libs/router/ng-package.json",
+        "buildableProjectDepsInPackageJsonType": "dependencies"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/router/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "parallel": false,
+        "commands": [
+          {
+            "command": "ng run router:build-package"
+          },
+          {
+            "command": "yarn tsc -p libs/router/tsconfig.schematics.json"
+          }
+        ]
+      },
+      "configurations": {
+        "production": {}
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/router/jest.config.ts",
+        "setupFile": "libs/router/src/test-setup.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/libs/router"]
+    }
+  },
+  "generators": {},
+  "tags": []
+}

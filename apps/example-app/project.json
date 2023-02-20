@@ -1,0 +1,92 @@
+{
+  "name": "example-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "generators": {},
+  "sourceRoot": "apps/example-app/src",
+  "prefix": "reactiveangular",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/example-app",
+        "index": "apps/example-app/src/index.html",
+        "main": "apps/example-app/src/main.ts",
+        "polyfills": "apps/example-app/src/polyfills.ts",
+        "tsConfig": "apps/example-app/tsconfig.app.json",
+        "aot": true,
+        "assets": [
+          "apps/example-app/src/favicon.ico",
+          "apps/example-app/src/assets"
+        ],
+        "styles": ["apps/example-app/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "development": {
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "buildOptimizer": false,
+          "sourceMap": true,
+          "optimization": false,
+          "namedChunks": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/example-app/src/environments/environment.ts",
+              "with": "apps/example-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "10kb"
+            }
+          ]
+        }
+      },
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "development"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "browserTarget": "example-app:build:development"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "example-app:build:production"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "example-app:build"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "apps/example-app/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/apps/example-app"]
+    }
+  },
+  "tags": []
+}

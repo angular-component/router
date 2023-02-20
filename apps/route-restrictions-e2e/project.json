@@ -1,0 +1,23 @@
+{
+  "name": "route-restrictions-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/route-restrictions-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/route-restrictions-e2e/cypress.json",
+        "tsConfig": "apps/route-restrictions-e2e/tsconfig.e2e.json",
+        "devServerTarget": "route-restrictions:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "route-restrictions:serve:production"
+        }
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["route-restrictions"]
+}

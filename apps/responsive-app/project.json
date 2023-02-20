@@ -1,0 +1,83 @@
+{
+  "name": "responsive-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "generators": {},
+  "sourceRoot": "apps/responsive-app/src",
+  "prefix": "reactiveangular",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/responsive-app",
+        "index": "apps/responsive-app/src/index.html",
+        "main": "apps/responsive-app/src/main.ts",
+        "polyfills": "apps/responsive-app/src/polyfills.ts",
+        "tsConfig": "apps/responsive-app/tsconfig.app.json",
+        "aot": true,
+        "assets": [
+          "apps/responsive-app/src/favicon.ico",
+          "apps/responsive-app/src/assets"
+        ],
+        "styles": ["apps/responsive-app/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/responsive-app/src/environments/environment.ts",
+              "with": "apps/responsive-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "10kb"
+            }
+          ]
+        }
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "browserTarget": "responsive-app:build"
+      },
+      "configurations": {
+        "production": {
+          "browserTarget": "responsive-app:build:production"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "responsive-app:build"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "apps/responsive-app/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/apps/responsive-app"]
+    }
+  },
+  "tags": []
+}

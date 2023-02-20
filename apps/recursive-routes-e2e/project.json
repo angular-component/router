@@ -1,0 +1,23 @@
+{
+  "name": "recursive-routes-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/recursive-routes-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/recursive-routes-e2e/cypress.json",
+        "tsConfig": "apps/recursive-routes-e2e/tsconfig.e2e.json",
+        "devServerTarget": "recursive-routes:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "recursive-routes:serve:production"
+        }
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["recursive-routes"]
+}
