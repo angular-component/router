@@ -10,13 +10,13 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "typeRoots": ["node_modules/@types"],
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@angular-component/router": ["libs/router/src/index.ts"],
+      "@angular-component/signals": ["libs/signals/src/index.ts"],
       "@example-app/*": ["./apps/example-app/src/app/*"]
     }
   },
