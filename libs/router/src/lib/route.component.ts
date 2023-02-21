@@ -11,18 +11,9 @@ import {
   Self,
   OnDestroy,
   NgModuleRef,
-  createNgModuleRef,
+  createNgModule,
 } from '@angular/core';
-
-import { Subject, BehaviorSubject, of, from } from 'rxjs';
-import {
-  distinctUntilChanged,
-  filter,
-  takeUntil,
-  mergeMap,
-  withLatestFrom,
-  map,
-} from 'rxjs/operators';
+import { computed, effect, signal } from '@angular-component/signals';
 
 import { Load, ModuleWithRoute, Route, RouteOptions } from './route';
 import { Params, RouteParams, RoutePath } from './route-params.service';
@@ -32,7 +23,6 @@ import { Router } from './router.service';
 interface State {
   params: Params;
   path: string;
-  shouldRender: boolean;
 }
 
 @Component({
@@ -42,7 +32,7 @@ interface State {
   imports: [CommonModule],
   template: `
     <ng-container
-      *ngIf="(shouldRender$ | async) && template"
+      *ngIf="shouldRender && template"
       [ngTemplateOutlet]="template"
     >
     </ng-container>
@@ -52,21 +42,21 @@ interface State {
     {
       provide: RouteParams,
       useFactory(routeComponent: RouteComponent) {
-        return routeComponent.routeParams$;
+        return routeComponent.routeParams;
       },
       deps: [[new Self(), RouteComponent]],
     },
     {
       provide: RoutePath,
       useFactory(routeComponent: RouteComponent) {
-        return routeComponent.routePath$;
+        return routeComponent.routePath;
       },
       deps: [[new Self(), RouteComponent]],
     },
   ],
 })
 export class RouteComponent implements OnInit, OnDestroy {
-  @ContentChild(TemplateRef) template: TemplateRef<any> | null;
+  @ContentChild(TemplateRef) template!: TemplateRef<any> | null;
 
   @Input()
   get path() {
@@ -77,32 +67,26 @@ export class RouteComponent implements OnInit, OnDestroy {
     this._path = this.sanitizePath(value);
   }
 
-  @Input() component: Type<any>;
-  @Input() load: Load;
+  @Input()
+  component!: Type<any>;
+  @Input()
+  load?: Load;
   @Input() reuse = true;
   @Input() redirectTo!: string;
-  @Input() exact: boolean;
-  @Input() routeOptions: RouteOptions;
+  @Input()
+  exact!: boolean;
+  @Input()
+  routeOptions!: RouteOptions;
 
-  private _path: string;
-  private destroy$ = new Subject();
-  private readonly state$ = new BehaviorSubject<State>({
+  private _path!: string;
+  private readonly state = signal<State>({
     params: {},
     path: '',
-    shouldRender: false,
   });
+  protected shouldRender = false;
 
-  readonly shouldRender$ = this.state$.pipe(map((state) => state.shouldRender));
-  readonly routeParams$ = this.state$.pipe(
-    map((state) => state.params),
-    distinctUntilChanged(),
-    takeUntil(this.destroy$)
-  );
-  readonly routePath$ = this.state$.pipe(
-    map((state) => state.path),
-    distinctUntilChanged(),
-    takeUntil(this.destroy$)
-  );
+  readonly routeParams = computed(() => this.state().params);
+  readonly routePath = computed(() => this.state().path);
   route!: Route;
 
   constructor(
@@ -119,49 +103,40 @@ export class RouteComponent implements OnInit, OnDestroy {
 
     this.route = this.registerRoute(path, this.exact, this.load);
 
-    this.routerComponent.activeRoute$
-      .pipe(
-        filter((ar) => ar !== null),
-        distinctUntilChanged(),
-        withLatestFrom(this.shouldRender$),
-        mergeMap(([current, rendered]) => {
-          if (current.route === this.route) {
-            if (this.redirectTo) {
-              this.router.go(this.redirectTo);
-              return of(null);
-            }
+    effect(() => {
+      const ar = this.routerComponent.activeRoute();
+      const rendered = this.shouldRender;
 
-            this.updateState({
-              params: current.params,
-              path: current.path,
-            });
-
-            if (!rendered) {
-              if (!this.reuse) {
-                this.clearView();
-              }
-
-              return this.loadAndRender(current.route);
-            }
-
-            return of(null);
-          } else if (rendered) {
-            return of(this.clearView());
+      if (ar?.route) {
+        if (ar?.route === this.route) {
+          if (this.redirectTo) {
+            this.router.go(this.redirectTo);
           }
 
-          return of(null);
-        }),
-        takeUntil(this.destroy$)
-      )
-      .subscribe();
+          this.updateState({
+            params: ar.params,
+            path: ar.path,
+          });
+
+          if (!rendered) {
+            if (!this.reuse) {
+              this.clearView();
+            }
+
+            this.loadAndRender(ar.route as Route);
+          }
+        } else if (rendered) {
+          this.clearView();
+        }
+      }
+    });
   }
 
   ngOnDestroy() {
     this.routerComponent.unregisterRoute(this.route);
-    this.destroy$.next(true);
   }
 
-  registerRoute(path: string, exact: boolean, load: Load) {
+  registerRoute(path: string, exact: boolean, load?: Load) {
     return this.routerComponent.registerRoute({
       path: path,
       load: load,
@@ -171,37 +146,30 @@ export class RouteComponent implements OnInit, OnDestroy {
 
   private loadAndRender(route: Route) {
     if (route.load) {
-      return from(
-        route
-          .load()
-          .then(
-            (componentOrModule: NgModuleRef<ModuleWithRoute> | Type<any>) => {
-              let component: Type<any>;
+      route
+        .load()
+        .then((componentOrModule: NgModuleRef<ModuleWithRoute> | Type<any>) => {
+          let component: Type<any>;
 
-              if ((componentOrModule as any).ɵmod) {
-                const moduleRef: NgModuleRef<ModuleWithRoute> =
-                  createNgModuleRef(
-                    componentOrModule as Type<any>,
-                    this.viewContainerRef.injector
-                  );
-                component = moduleRef.instance.routeComponent;
-              } else {
-                component = componentOrModule as Type<any>;
-              }
+          if ((componentOrModule as any).ɵmod) {
+            const moduleRef: NgModuleRef<ModuleWithRoute> = createNgModule(
+              componentOrModule as Type<any>,
+              this.viewContainerRef.injector
+            );
+            component = moduleRef.instance.routeComponent;
+          } else {
+            component = componentOrModule as Type<any>;
+          }
 
-              this.renderComponent(component);
-            }
-          )
-      );
+          this.renderComponent(component);
+        });
     } else {
       this.showTemplate();
-      return of(true);
     }
   }
 
   private renderComponent(component: Type<any>) {
     this.showTemplate();
-
     this.viewContainerRef.createComponent(component, {
       index: this.viewContainerRef.length,
       injector: this.viewContainerRef.injector,
@@ -214,13 +182,12 @@ export class RouteComponent implements OnInit, OnDestroy {
   }
 
   private showTemplate() {
-    setTimeout(() => {
-      this.updateState({ shouldRender: true });
-    });
+    console.log(this.template)
+    this.shouldRender = true;
   }
 
   private hideTemplate() {
-    this.updateState({ shouldRender: false });
+    this.shouldRender = false;
   }
 
   private clearView() {
@@ -237,6 +204,6 @@ export class RouteComponent implements OnInit, OnDestroy {
   }
 
   private updateState(newState: Partial<State>) {
-    this.state$.next({ ...this.state$.value, ...newState });
+    this.state.update((state) => ({ ...state, ...newState }));
   }
 }

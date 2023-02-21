@@ -2,7 +2,7 @@
  * Public API Surface of router
  */
 
-export * from './lib/link-active.directive';
+// export * from './lib/link-active.directive';
 export * from './lib/link-to.directive';
 export * from './lib/route-component.directive';
 export * from './lib/router.service';

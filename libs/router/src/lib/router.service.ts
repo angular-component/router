@@ -1,11 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { PlatformLocation, Location } from '@angular/common';
-
-import { BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { signal } from '@angular-component/signals';
 
 import { UrlParser } from './url-parser';
-import { Params, compareParams } from './route-params.service';
+import { Params } from './route-params.service';
 
 interface State {
   url: string;
@@ -21,24 +19,9 @@ export class Router {
   private platformLocation = inject(PlatformLocation);
   private urlParser = inject(UrlParser);
 
-  private readonly state$ = new BehaviorSubject<State>({
-    url: this.location.path(),
-    queryParams: {},
-    hash: '',
-  });
-
-  readonly url$ = this.state$.pipe(
-    map((state) => state.url),
-    distinctUntilChanged()
-  );
-  readonly hash$ = this.state$.pipe(
-    map((state) => state.hash),
-    distinctUntilChanged()
-  );
-  readonly queryParams$ = this.state$.pipe(
-    map((state) => state.queryParams),
-    distinctUntilChanged(compareParams)
-  );
+  readonly url = signal(this.location.path());
+  readonly hash = signal('');
+  readonly queryParams = signal<Params>({});
 
   constructor() {
     this.location.subscribe(() => {
@@ -109,11 +92,9 @@ export class Router {
   private nextState(url: string) {
     const parsedUrl = this._parseUrl(url);
 
-    this.state$.next({
-      url: parsedUrl.pathname,
-      queryParams: this.parseSearchParams(parsedUrl.searchParams),
-      hash: parsedUrl.hash ? parsedUrl.hash.split('#')[1] : '',
-    });
+    this.url.update(() => parsedUrl.pathname);
+    this.queryParams.update(() => this.parseSearchParams(parsedUrl.searchParams));
+    this.hash.update(() => parsedUrl.hash ? parsedUrl.hash.split('#')[1] : '');
   }
 
   private _parseUrl(path: string): URL {

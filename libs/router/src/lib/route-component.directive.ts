@@ -5,5 +5,5 @@ import { Directive, Input, Type } from '@angular/core';
   standalone: true,
 })
 export class RouteComponentTemplate {
-  @Input() routeComponent: Type<any>;
+  @Input() routeComponent!: Type<any> | string;
 }

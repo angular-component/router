@@ -17,7 +17,7 @@ export interface RouteOptions {
 }
 
 export interface ActiveRoute {
-  route: Route;
+  route: Route | null;
   params: Params;
   path: string;
 }

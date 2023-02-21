@@ -1,15 +1,15 @@
-import { inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { inject, InjectionToken } from '@angular/core';
+import { Signal } from '@angular-component/signals';
 
 export interface Params {
   [param: string]: any;
 }
 
-export class RoutePath<T extends string = string> extends Observable<T> {}
+export const RoutePath = new InjectionToken<Signal<string>>('Route Path');
 
-export class RouteParams<T extends Params = Params> extends Observable<T> {}
+export const RouteParams = new InjectionToken<Signal<Params>>('Route Params');
 
-export class QueryParams<T extends Params = Params> extends Observable<T> {}
+export const QueryParams = new InjectionToken<Signal<Params>>('Query Params');
 
 export function compareParams(previous: Params, current: Params): boolean {
   return (
@@ -18,28 +18,28 @@ export function compareParams(previous: Params, current: Params): boolean {
 }
 
 /**
- * Returns the RoutePath observable from the current injector
+ * Returns the RoutePath signal from the current injector
  *
  * @returns RoutePath
  */
-export function getRoutePath<T extends string = string>(): Observable<T> {
-  return inject<RoutePath<T>>(RoutePath);
+export function getRoutePath<T>(): Signal<T> {
+  return inject<Signal<T>>(RoutePath);
 }
 
 /**
- * Returns the RoutePath observable from the current injector
+ * Returns the RoutePath signal from the current injector
  *
  * @returns RouteParams
  */
-export function getRouteParams<T extends Params = Params>(): Observable<T> {
-  return inject<RouteParams<T>>(RouteParams);
+export function getRouteParams<T>(): Signal<T> {
+  return inject<Signal<T>>(RouteParams);
 }
 
 /**
- * Returns the QueryParams observable from the current injector
+ * Returns the QueryParams signal from the current injector
  *
  * @returns QueryParams
  */
-export function getQueryParams<T extends Params = Params>(): Observable<T> {
-  return inject<QueryParams<T>>(QueryParams);
+export function getQueryParams<T>(): Signal<T> {
+  return inject<Signal<T>>(QueryParams);
 }

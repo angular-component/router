@@ -12,7 +12,7 @@ import { getPathSegments } from './path-parser';
  */
 export const compareRoutes = (a: Route, b: Route): number => {
   // as matchers combine normalized path and `exact` option it's safe to compare regexps
-  if (a.matcher.toString() === b.matcher.toString()) {
+  if (a.matcher && b.matcher && a.matcher.toString() === b!.matcher.toString()) {
     return 0;
   }
   const aSegments = getPathSegments(a);

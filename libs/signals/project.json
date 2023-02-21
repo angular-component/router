@@ -1,0 +1,47 @@
+{
+  "name": "signals",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/signals/src",
+  "prefix": "reactiveangular",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/signals/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/signals/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/signals/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/signals/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/signals/**/*.ts", "libs/signals/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}
